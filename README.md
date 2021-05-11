@@ -1,1 +1,0 @@
-# sw-cannabis-front
