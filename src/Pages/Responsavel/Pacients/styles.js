@@ -59,16 +59,7 @@ export const Title = styled.p`
   }
 `
 
-export const Return = styled.img`
-    width: 90%;
-    cursor:pointer;  
-`
 
-export const ArrowDiv=styled.div`
-  width: 90%;
-  display:flex;
-  align-items:flex-start;
-`
 
 export const Card=styled.div`
   width:250px;

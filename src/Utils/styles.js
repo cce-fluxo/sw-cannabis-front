@@ -33,3 +33,24 @@ export const Button = styled.button `
       cursor: not-allowed;
     }
 `
+
+export const ButtonSmall = styled.button `
+    margin-top: 3%;
+    width: 100px;
+    height: 30px;
+    color: ${props=>
+    {return props.color==='green'?'#789D55':'red'}};
+    background-color:white;
+    font-weight: bold;
+    font-size: 18px;
+    border:1px solid ${props=>
+    {return props.color==='green'?'#789D55':'red'}};;
+    border-radius: 20px;  
+    cursor:pointer;
+    &&:disabled{
+      background: #ccc;
+      border-color: #ccc;
+      color: #666666;
+      cursor: not-allowed;
+    }
+`

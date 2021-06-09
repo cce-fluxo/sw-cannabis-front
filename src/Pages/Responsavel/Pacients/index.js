@@ -1,9 +1,10 @@
 import React from 'react';
 import Head from '../../../Components/Head';
 import Header from '../../../Components/Header';
+import Return from '../../../Components/Return';
 import {Link} from 'react-router-dom';
-import { ArrowDiv, Card, CardContainer, CardName, InnerContainerBg, ProfileBg,Return,Title, TitleContainer } from './styles';
-import Arrow from '../../../Assets/arrow.svg';
+import {Card, CardContainer, CardName, InnerContainerBg, ProfileBg,Title, TitleContainer } from './styles';
+
 import Plus from '../../../Assets/plus.svg';
 import Avatar from '../../../Assets/avatar.svg';
 
@@ -58,7 +59,7 @@ export default function Pacients(){
         <Title active={true}>PACIENTES</Title>
       </TitleContainer>
       <InnerContainerBg>
-        <ArrowDiv><Link to='/perfil'><Return src={Arrow}/></Link></ArrowDiv>
+        <Return destiny='/perfil'/>
         {first?<FirstTime/>:<DisplayCards/>}
       </InnerContainerBg>  
       

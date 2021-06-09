@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 
 export const HeaderBg = styled.div`
   background-color: #282828;
+  width: 100%;
 `
 
 export const HeaderContainer = styled.div`
@@ -65,11 +66,11 @@ export const NavOption =styled.li`
     }
     @media(max-width:800px){
     font-size: 12px;
-    color:red;
+    //color:red;
   }
   @media(max-width:1000px) and (min-width: 800px){
     font-size: 16px;
-    color: blue;
+    //color: blue;
   } 
 `
 export const LogoutContainer = styled.div`
@@ -78,4 +79,7 @@ export const LogoutContainer = styled.div`
 `
 export const LogoutIcon = styled.img`
   width:30px;
+  @media(max-width:800px){
+    width: 15px;
+  }
 `

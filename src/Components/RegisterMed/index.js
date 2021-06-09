@@ -342,7 +342,7 @@ export default function RegisterMed(){
   const {isValid: instagramIsValid } = instagramState;
   const {isValid: twitterIsValid } = twitterState;
   const {isValid: cityIsValid } = cityState;
-  const {isValid: estadoIsValid } = twitterState;
+  const {isValid: estadoIsValid } = estadoState;
   const {isValid: cepIsValid } = cepState;
   const {isValid: bairroIsValid } = bairroState;
   const {isValid: adressIsValid } = adressState;

@@ -126,7 +126,7 @@ export default function Header(){
           <NavLink to='/perfil' activeStyle={activeStyle}><NavOption>PERFIL</NavOption></NavLink>
           <LogoutContainer onClick={authCtx.onLogout}>
             <NavOption>SAIR</NavOption>
-            <LogoutIcon src={Exit} alt="Logout" />
+            <Link to='/'><LogoutIcon src={Exit} alt="Logout" /></Link>
           </LogoutContainer>
         </NavList>
     )

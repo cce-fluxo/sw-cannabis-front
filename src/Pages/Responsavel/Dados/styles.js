@@ -59,16 +59,6 @@ export const InnerContainerBg = styled.div`
   padding-top: 10px;
 `
 
-export const Return = styled.img`
-    width: 90%;
-    cursor:pointer;  
-`
-
-export const ArrowDiv=styled.div`
-  width: 90%;
-  display:flex;
-  align-items:flex-start;
-`
 
 export const InputContainer=styled.div`
   display: flex;

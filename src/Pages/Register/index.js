@@ -2,9 +2,10 @@ import React,{useState} from 'react';
 import {Link} from 'react-router-dom';
 import Header from '../../Components/Header';
 import UserType from '../../Components/UserType';
+import Return from '../../Components/Return';
 import {Title} from '../../Utils/styles';
-import { RegisterBg,Return, TitleContainer,ArrowDiv} from './styles';
-import Arrow from '../../Assets/arrow.svg';
+import { RegisterBg,TitleContainer} from './styles';
+
 
 export default function Register(){
   
@@ -15,9 +16,7 @@ export default function Register(){
     <Header/>
     <RegisterBg>
       <TitleContainer>
-        <ArrowDiv>
-          <Link to='/login' style={{ textDecoration: 'none'}}><Return src={Arrow}/></Link>
-        </ArrowDiv>
+        <Return destiny='/login'/>
         <Title style={{'margin-top':'0px'}}>CADASTRO</Title>
       </TitleContainer>
       <UserType/>

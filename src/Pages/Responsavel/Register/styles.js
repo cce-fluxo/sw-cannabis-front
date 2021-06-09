@@ -16,7 +16,7 @@ export const ProfileBg = styled.div`
 `
 export const InnerContainerBg = styled.div`
   width: 80%;
-  height: 1300px;
+  
   border-radius: 40px;
   margin-top: 20px;
   margin-bottom: 60px;
@@ -25,6 +25,8 @@ export const InnerContainerBg = styled.div`
   flex-direction: column;
   align-items:center;
   padding-top: 10px;
+  padding-bottom: 30px;
+  
 `
 
 export const TitleContainer = styled.div`
@@ -65,4 +67,42 @@ export const ArrowDiv=styled.div`
   width: 90%;
   display:flex;
   align-items:flex-start;
+`
+
+export const CheckDiv=styled.div`
+  display:flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`
+
+export const CheckTitle=styled.p`
+  font-size: 20px;
+`
+
+export const Checkbox=styled.input`
+  transform: scale(2);
+  margin-left:20px;
+`
+
+export const UploadContainer=styled.div`
+  width: 40%;
+  padding: 10px;
+  margin-bottom:20px;
+  border: 2px dashed #282828;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+`
+
+
+
+export const UploadButton=styled.div`
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+  border: 0.5px solid gray;
+  background-color: lightgray;
+  
 `

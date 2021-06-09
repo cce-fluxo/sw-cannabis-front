@@ -74,15 +74,22 @@ export const InputReverse = styled.input`
     border-color:${props=>
     {return props.validation===false?'red':'none'}};
     background-color:${props=>
-    {return props.validation===false?'#fbdada':'none'}};
+    {return props.validation===false?'#781118':'none'}};
     &&:focus{
       border-color:${props=>
     {return props.validation===false?'red':'#789D55'}};
-      
     }
     &&::placeholder{
-      color:white;
-    }    
+      color: white;
+    }
+    @media(max-width:800px){
+    width:160px;
+    font-size: 12px;
+  }
+  @media(max-width:1000px) and (min-width: 800px){
+    width:300px;
+    font-size:12px;
+  }
 `
 
 export const InputDiv = styled.div`
@@ -96,6 +103,13 @@ export const InputTitle=styled.p`
   font-size: 20px;
  // font-weight: bold;
   padding-left: 20px;
-  
+  @media(max-width:800px){
+    
+    font-size: 14px;
+  }
+  @media(max-width:1000px) and (min-width: 800px){
+    
+    font-size:16px;
+  }
 
 `

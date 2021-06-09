@@ -154,8 +154,7 @@ const window2 = () => {
               <WindowTitle>Esqueci a Senha</WindowTitle>
           <WindowText>Um email contendo o link para troca de senha foi enviado para {forgotEmailState.value}. Verifique sua caixa de spam. Caso não chegue em alguns minutos, faça o processo novamente.</WindowText>
           </ModalDiv>
-          </LoginContainer>
-                      
+          </LoginContainer>          
       </Modal>
       
   )
