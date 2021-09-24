@@ -1,4 +1,4 @@
-import React,{useEffect,useState,useReducer} from 'react';
+import React,{useEffect,useState,useReducer,useContext} from 'react';
 import {RegisterContainer} from './styles';
 import { Input, InputPassword ,VisibilityButton} from '../../Components/Input/styles';
 import User from '../../Assets/user.svg';
@@ -12,6 +12,8 @@ import RegisterSucess from '../RegisterSucess';
 import Modal from '../Modal';
 import { ModalDiv,WindowText, WindowTitle } from '../../Pages/Login/styles';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../Storage/auth-context';
+
 
 
 const emailReducer = (state,action) => {
@@ -77,6 +79,7 @@ const confPasswordReducer = (state,action) => {
 
 
 export default function RegisterResp(){
+  const ctx=useContext(AuthContext);
   const [visibility, setVisibility] = useState(NotVisible);
   const [visibilityConf, setVisibilityConf] = useState(NotVisible);
   const [formIsValid, setFormIsValid] = useState(false);
@@ -191,6 +194,7 @@ export default function RegisterResp(){
 
     const submitHandler = (event) => {
       event.preventDefault();
+      ctx.onUserRegister('responsavel',nameState.value,lastNameState.value,emailState.value, phoneState.value,passwordState.value)
       
       console.log(nameState.value,lastNameState.value,emailState.value, phoneState.value,passwordState.value);
       setRegisterMade(true);

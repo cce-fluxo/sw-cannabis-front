@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import Register from '../../Pages/Register';
 import RegisterResp from '../../Components/RegisterResp/index';
 
@@ -6,11 +6,13 @@ import {Button, Title} from '../../Utils/styles';
 import { InnerContainerBg, InnerContainer, InnerTitle, Line, SelectDiv, SelectOption } from './styles';
 import RegisterMed from '../RegisterMed';
 import RegisterAdm from '../RegisterAdm';
+import AuthContext from '../../Storage/auth-context';
 
 
 export default function UserType(){
   const [step,setStep] = useState(1)
   const [cadastro,setCadastro] = useState('')
+  const ctx=useContext(AuthContext);
   
   const FirstRegister = () =>{
     return (

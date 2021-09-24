@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import api from '../Services/api';
+import axios from 'axios';
+import { Buffer } from 'buffer';
+
 
 
 
@@ -11,12 +13,40 @@ const AuthContext = React.createContext({
   //user: 'responsavel'
 });
 export const AuthContextProvider = (props) => {
-  let history = useHistory()
+  
   const [user, setUser] = useState({});
   const [pacients, setPacients] = useState({});
+  // eslint-disable-next-line
   const [userType,setUserType]=useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
+  async function sendToStorage(photo) {
+    try {
+
+      const uriArray = photo.uri.split('.');
+
+      const tipoImagem = uriArray[uriArray.length - 1];
+
+      const firstResponse = await api.get(
+        `/files/put_url?file_format=${tipoImagem}`
+      );
+
+      const fileName = firstResponse.data.file_name;
+      const mediaUrl = firstResponse.data.media_url;
+
+      const binaryFile = Buffer.from(photo.base64, 'base64');
+// eslint-disable-next-line
+      const secondResponse = await axios.put(mediaUrl, binaryFile, {
+        headers: { 'Content-Type': tipoImagem },
+      });
+
+      return fileName;
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  }
+
+
   useEffect(() => {
     const token = localStorage.getItem('Token');
     const user=localStorage.getItem('UserType');
@@ -43,6 +73,25 @@ export const AuthContextProvider = (props) => {
         .then((res) => {
           console.log(res.data[0])
           setUser(res.data[0])
+          
+          
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+        
+        
+    }
+    else if (token && user==='medico') {
+      api.get('/medico/lista', {
+        headers: {
+          'authorization': `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          console.log(res.data[0])
+          setUser(res.data[0])
+          
           
           
         })
@@ -88,7 +137,7 @@ export const AuthContextProvider = (props) => {
     }
   }
   const logoutHandler = () => {
-    //history.push("/login");
+//    history.push("/login");
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('Token');
     localStorage.removeItem('RefreshToken');
@@ -103,19 +152,13 @@ export const AuthContextProvider = (props) => {
   };
 
   async function registerPacient(nome,sobrenome,nascimento,cpf,rg,identidade,diagnostico,laudo,receita,cidade,estado,cep,endereco,complemento,numero){
-    const id=user.id
-    //console.log(user.paciente)
-    const paciente={
-      nome:nome,sobrenome:sobrenome, nascimento:nascimento,cpf:cpf,rg:rg,identidade:identidade,diagnostico:diagnostico,laudo:laudo,receita:receita,cidade:cidade,estado:estado,cep:cep,endereco:endereco,complemento:complemento,numero:numero,
-    }
     const data={
-      'nome':nome,'sobrenome':sobrenome, 'data_nascimento':'2000-02-02','cpf':cpf,'rg':rg,'documentos_pessoais':identidade,'diagnostico':diagnostico,'laudo_medico':laudo,'receita_medica':receita,'cidade':cidade,'estado':estado,'cep':cep,'endereco':endereco,'complemento':complemento,'numero':numero,'bairro':'tijuca'
+      'nome':nome,'sobrenome':sobrenome, 'data_nascimento':'2000-02-02','cpf':cpf,'rg':rg,'documentos_pessoais':identidade,'diagnostico':diagnostico,'laudo_medico':laudo,'receita_medica':receita,'cidade':cidade,'estado':estado,'cep':cep,'endereco':endereco,'complemento':complemento,'numero':numero,'bairro':'tijuca','password':''
     }
-    
-   
     try {
-      //const rota='/responsavel/'+id
+     
       const response = await api.post('/paciente', data)
+      
       console.log(response)
       console.log(response.data)
 
@@ -123,39 +166,56 @@ export const AuthContextProvider = (props) => {
       console.log(error)
       
     }
-    localStorage.setItem(cpf,JSON.stringify(paciente));
+   
+  }
+
+   async function removeHandler(id,pacientList){
+    //const newList=pacientList.filter(x=>x.id!==id)
+    //console.log(newList)
+    const token = localStorage.getItem('Token');
+    const rota='/paciente/'+id
+    const headers={
+      'authorization': `Bearer ${token}`
+       }
+       api.delete(rota,{ headers })
+    try{
+      const response= await api.delete(rota,{ headers })
+
+      console.log(response)
+    }
+    catch(error){
+      console.log(error)
+    }
     
-    if (localStorage.getItem('Pacientes')===null){
-      const startList=[].concat(paciente)
-      localStorage.setItem('Pacientes',JSON.stringify(startList))
+    // api.delete(rota, {
+    //   headers: {
+    //     'authorization': `Bearer ${token}`
+    //   }
+    // }).then((res) => {
+    //   console.log(res)
+  
+    // })
+    // .catch((error) => {
+    //   console.error(error)
+    // })
+   }
+
+  
+  async function updatePacient(info,id){
+  
+    const data={
+      'diagnostico':info.diag,'laudo_medico':info.laudo,'receita_medica':info.receita,'cidade':info.city,'estado':info.state,'cep':info.cep,'endereco':info.adress,'complemento':info.comp,'numero':info.num,'bairro':'tijuca'
     }
-    else{
-      const oldList=JSON.parse(localStorage.getItem('Pacientes'))
-      const newList=oldList.concat(paciente);
-      localStorage.setItem('Pacientes',JSON.stringify(newList))
+    try{
+      const rota='/paciente/'+id
+      const response = await api.patch(rota, data)
+      console.log(response.data)
+    }
+    catch (error) {
+      console.log(error)
     }
   }
 
-  const removeHandler=(cpf)=>{
-    localStorage.removeItem(cpf);
-    const list=JSON.parse(localStorage.getItem('Pacientes'))
-    const index = list.findIndex(x => x.cpf ===cpf);
-    //console.log(list,index)
-    //const newList=list.splice(index);
-    const filteredList = list.filter(function(i){ 
-     const check=list.indexOf(i);
-      return check != index;
-  });
-    console.log(filteredList)
-  localStorage.setItem('Pacientes',JSON.stringify(filteredList))
-
-  }
-
-  const getInfo=(cpf)=>{
-
-    return JSON.parse(localStorage.getItem(cpf));
-    //console.log(code)
-  }
 
   
 
@@ -175,13 +235,50 @@ export const AuthContextProvider = (props) => {
       localStorage.setItem('RefreshToken', refreshToken)
       localStorage.setItem('UserType', response.data.user)
       window.location.reload()
-      //cac@poli.ufrj.br igor123456
+      //cac@poli.ufrj.br igor123456 respo
+      //cami@poli.ufrj.br igor123 medico
 
     } catch (error) {
       console.log(error)
-      window.location.reload()
+      //window.location.reload()
     }
   }
+
+  async function userRegister(userType,name,lastname,email,phone,password){
+    if(userType==='responsavel'){
+      const data={
+      'nome':name,
+      'sobrenome':lastname,
+      'email':email,
+      'celular':phone,
+      'password':password,
+      'cpf':'', 'rg':'', 'endereco':'', 'bairro':'', 'numero':'', 'complemento':'', 'cidade':'', 'estado':'',
+      }
+      try {
+        const response = await api.post("/responsavel", data)
+        console.log(response.data)
+  
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    
+  }
+
+  async function resetPasswordEmail(email){
+    const data={'email':email}
+      try {
+        const response = await api.get("/responsavel-confirm", data)
+        console.log(response.data)
+  
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    
+  
 
   return <AuthContext.Provider
     value={{
@@ -194,8 +291,10 @@ export const AuthContextProvider = (props) => {
       onDataChange:dataChange,
       onPacientRegister: registerPacient,
       onPacientRemove: removeHandler,
-      getPacientInfo: getInfo,
-
+      onPacientUpdate:updatePacient,
+      onUserRegister: userRegister,
+      onSendForgotEmail: resetPasswordEmail,
+      sendToStorage:sendToStorage,
     }}
   >{props.children}</AuthContext.Provider>
 };

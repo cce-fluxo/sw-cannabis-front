@@ -4,7 +4,7 @@ import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
 import { InnerContainerBg, ProfileBg,Title, TitleContainer } from './styles';
 
-export default function Profile(){
+export default function ProfilePro(){
 
   return(
     <>
@@ -13,12 +13,14 @@ export default function Profile(){
     <ProfileBg>
       <TitleContainer>
         <Link to='/perfil/dados'><Title>DADOS</Title></Link>
-        <Link to='/perfil/pacientes'><Title>PACIENTES</Title></Link>
+        <Link to='/perfil/calendario'><Title>CALENDÁRIO</Title></Link>
       </TitleContainer>
+      
       <InnerContainerBg>
-      <h1>Clique em algum dos títulos acima</h1>
+<h1>Clique em um dos títulos</h1>
       </InnerContainerBg>
     </ProfileBg>
     </>
   )
 }
+

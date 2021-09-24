@@ -1,50 +1,60 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import Header from '../../../Components/Header';
 import { Card, CardContainer, CardName, ContainerBg,ContainerTitle,InnerContainerBg,Title } from './styles';
 import Avatar from '../../../Assets/avatar.svg';
 import {Link} from 'react-router-dom';
+import AuthContext from '../../../Storage/auth-context';
+import {Button} from '../../../Utils/styles';
+
+
 
 export default function Consultas(){
-  const noPacient=false;
+  
 
-  const pacientes = [
-    {name:'Igor Godinho'},
-    {name:'Camila Maia'},
-    {name:'Paulo Melo'}
-  ]
-  const renderCard = pacientes.map((item,index)=>{
+  const {pacients} = useContext(AuthContext) 
+  const noPacients=pacients.length===0?true:false
+
+  
+  let newList=[]
+  for (var i = 0; i < pacients.length; i++) { newList.push(pacients[i]); }
+  console.log(newList)
+  
+
+  //console.log(test)  
+  
+  const list=newList.map(function(item){
+    const path='/consultas/paciente/'+item.id
     return(
-      <>
-        
-        <Link to='/consultas/paciente'><Card key={index}>
-          <CardName><img src={Avatar}/><br/>
-          {item.name}</CardName>
-        </Card></Link>
-      
-      </>
+      <Link to={path} key={item.id.toString()}>
+      <Card>
+               <CardName><img src={Avatar}/><br/>
+              {item.nome}</CardName>
+      </Card></Link>
     )
   })
+  
 
-  const DisplayCards=()=>{
+  
+
+  const FirstTime=()=>{
     return(
       <>
-      <ContainerTitle>Selecione um paciente para marcar o agendamento</ContainerTitle>
-      <CardContainer>
-        {renderCard}
-      </CardContainer>
-      </>
-    )
-  }
-
-  const CreatePacient=()=>{
-    return(
-      <>
-      <ContainerTitle>Ainda não há pacientes cadastrados nesse perfil</ContainerTitle>
+      <ContainerTitle>Ainda não há pacientes cadastrados nesse perfil.</ContainerTitle>
+      <ContainerTitle>Clique no botão abaixo para ser redirecionado à página de criação de paciente.</ContainerTitle>
+      <Link to='/perfil/pacientes/registro'><Button>CADASTRAR PACIENTE</Button></Link>
       </>
     )
 
   }
 
+  const DisplayPacients=()=>{
+    return(
+      <>
+      <ContainerTitle>Selecione um paciente para agendar uma consulta.</ContainerTitle>
+      <CardContainer>{list}</CardContainer>
+      </>
+    )
+  }
 
 
   return(
@@ -53,7 +63,8 @@ export default function Consultas(){
     <ContainerBg>
       <Title>CONSULTAS</Title>
       <InnerContainerBg>
-     {noPacient?<CreatePacient/>:<DisplayCards/>} 
+     
+     {noPacients?<FirstTime/>:<DisplayPacients/>} 
       </InnerContainerBg>
     </ContainerBg>
    

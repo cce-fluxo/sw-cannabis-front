@@ -78,12 +78,13 @@ export default function MenuPacient(){
   const [formIsValid, setFormIsValid] = useState(false);
   const [windoww,setWindoww]=useState(false)
   const fullUrl=window.location.pathname
-  const id=fullUrl.slice(23)
+  const id=parseInt(fullUrl.slice(23))
   console.log(id)
   const ctx=useContext(AuthContext)
-  const paciente=ctx.getPacientInfo(id)
-  console.log(paciente)
-  const [test,setTest]=useState('')
+  const pacientArray=ctx.pacients.filter(x=>x.id===id)
+  const pacient=pacientArray[0]
+  console.log(pacient)
+  
 
   const teste = () => {
     if (document.querySelector('#adress').checked){
@@ -97,32 +98,32 @@ export default function MenuPacient(){
   }
 
   const [diagState,dispatchDiag] = useReducer(diagReducer,{
-    value:paciente.diagnostico,
+    value:pacient.diagnostico,
     isValid: null,
   });
 
   const [cityState,dispatchCity] = useReducer(cityReducer,{
-    value:paciente.cidade,
+    value:pacient.cidade,
     isValid: null,
   });
   const [estadoState,dispatchEstado] = useReducer(estadoReducer,{
-    value:paciente.estado,
+    value:pacient.estado,
     isValid: null,
   });
   const [cepState,dispatchCep] = useReducer(cepReducer,{
-    value:paciente.cep,
+    value:pacient.cep,
     isValid: null,
   });
   const [adressState,dispatchAdress] = useReducer(adressReducer,{
-    value:paciente.endereco,
+    value:pacient.endereco,
     isValid: null,
   });
   const [compState,dispatchComp] = useReducer(compReducer,{
-    value:paciente.complemento,
+    value:pacient.complemento,
     isValid: null,
   });
   const [numState,dispatchNum] = useReducer(numReducer,{
-    value:paciente.numero,
+    value:pacient.numero,
     isValid: null,
   });
   
@@ -162,7 +163,7 @@ export default function MenuPacient(){
     dispatchCep({type:'USER_INPUT', val:cepMask(event.target.value)});
   };
   const numChangeHandler = (event) => {
-    dispatchNum({type:'USER_INPUT', val:event.target.value});
+    dispatchNum({type:'USER_INPUT', val:numMask(event.target.value)});
   };
   const adressChangeHandler = (event) => {
     dispatchAdress({type:'USER_INPUT', val:event.target.value});
@@ -199,25 +200,42 @@ export default function MenuPacient(){
       .replace(/(\d{5})(\d{1,2})/, '$1-$2') 
       .replace(/(-\d{3})\d+?$/, '$1')
   }
-
-  const removeHandler=()=>{
-    ctx.onPacientRemove(id)
+  const numMask = value=>{
+    return value
+      .replace(/\D/g, '')
+      
   }
+
+
+  
   const showWindow=()=>{
     setWindoww(true)
   }
+
+
+
   const exclusão = () =>{
     return(
+      
       <Modal onClose={() => setWindoww(false)}>
           <ModalDiv>
             <WindowTitle>Excluir Paciente</WindowTitle>
             <WindowText>ATENÇÃO: A exclusão de paciente é permanente. Tem certeza que deseja excluir esse paciente do seu perfil?</WindowText>
-            <Link to='/perfil/pacientes'><ButtonSmall onClick={removeHandler}>Excluir</ButtonSmall></Link>
+            <Link to='/perfil/pacientes' ><ButtonSmall onClick={function(){ctx.onPacientRemove(id,ctx.pacients)}} >Excluir</ButtonSmall></Link>
           </ModalDiv>
-      </Modal>   
+      </Modal>
+        
  ) 
 }
   
+
+  const submitHandler=()=>{
+    const info={diag:diagState.value,laudo:'laudo',receita:'receita',city:cityState.value,state:estadoState.value,
+    cep:cepState.value,adress:adressState.value,num:numState.value, comp:compState.value
+    }
+    ctx.onPacientUpdate(info,id)
+  }
+
   return(
     <>
     <Header/>
@@ -238,24 +256,24 @@ export default function MenuPacient(){
         </MenuDiv>
         <InputDiv>
           <InputTitle>Nome:</InputTitle>
-          <InputReverse disabled value={paciente.nome}/>
+          <InputReverse disabled value={pacient.nome}/>
         </InputDiv>
         <InputDiv>
           <InputTitle>Sobrenome:</InputTitle>
-          <InputReverse disabled value={paciente.sobrenome}/>
+          <InputReverse disabled value={pacient.sobrenome}/>
         </InputDiv>
         <InputDiv>
           <InputTitle>Data de nascimento:</InputTitle>
-          <InputReverse disabled value={paciente.nascimento}/>
+          <InputReverse disabled value={pacient.nascimento}/>
         </InputDiv>
         <InputDiv>
           <InputTitle>CPF:</InputTitle>
-          <InputReverse disabled value={paciente.cpf}/>
+          <InputReverse disabled value={pacient.cpf}/>
         </InputDiv>
         
         <InputDiv>
           <InputTitle>RG:</InputTitle>
-          <InputReverse disabled value={paciente.rg}/>
+          <InputReverse disabled value={pacient.rg}/>
         </InputDiv>
         <h1>envio de id</h1>
         
@@ -269,16 +287,15 @@ export default function MenuPacient(){
           <CheckTitle>Gostaria de utilizar os dados <br/>residenciais do responsável?</CheckTitle>
           <Checkbox type='checkbox' id='adress' value='endereço' onClick={teste}/>
         </CheckDiv>
-        <InputContainer>
-          <InputDiv>
+        <InputDiv>
             <InputTitle>Cidade:</InputTitle>
-            <InputReverse style={{'width':'300px'}} value={cityState.value} onChange={cityChangeHandler} onBlur={validateCityHandler} validation={cityState.isValid}/>
+            <InputReverse value={cityState.value} onChange={cityChangeHandler} onBlur={validateCityHandler} validation={cityState.isValid}/>
           </InputDiv>
           <InputDiv>
             <InputTitle>Estado:</InputTitle>
-            <InputReverse style={{'width':'100px'}} maxLength='2' value={estadoState.value} onChange={estadoChangeHandler} onBlur={validateEstadoHandler} validation={estadoState.isValid}/>
-          </InputDiv>
-        </InputContainer>
+            <InputReverse maxLength='2' value={estadoState.value} onChange={estadoChangeHandler} onBlur={validateEstadoHandler} validation={estadoState.isValid}/>
+          </InputDiv>  
+        
         <InputDiv>
           <InputTitle>CEP:</InputTitle>
           <InputReverse autoComplete='off' value={cepState.value} onChange={cepChangeHandler} onBlur={validateCepHandler} validation={cepState.isValid}/>
@@ -287,18 +304,17 @@ export default function MenuPacient(){
           <InputTitle>Endereço:</InputTitle>
           <InputReverse autoComplete='off' value={adressState.value} onChange={adressChangeHandler} onBlur={validateAdressHandler} validation={adressState.isValid}/>
         </InputDiv>
-        <InputContainer>
-          <InputDiv>
+        <InputDiv>
             <InputTitle>Número:</InputTitle>
-            <InputReverse style={{'width':'100px'}} type='number' value={numState.value} onChange={numChangeHandler} onBlur={validateNumHandler} validation={numState.isValid}/>
+            <InputReverse value={numState.value} onChange={numChangeHandler} onBlur={validateNumHandler} validation={numState.isValid}/>
           </InputDiv>
           <InputDiv>
             <InputTitle>Complemento:</InputTitle>
-            <InputReverse style={{'width':'300px'}} value={compState.value} onChange={compChangeHandler} onBlur={validateCompHandler} validation={compState.isValid}/>
+            <InputReverse  value={compState.value} onChange={compChangeHandler} onBlur={validateCompHandler} validation={compState.isValid}/>
           </InputDiv>
-        </InputContainer>
+        
         <ButtonDiv>
-          <ButtonSmall color='green'>Salvar</ButtonSmall>
+          <Link to='/perfil/pacientes'><ButtonSmall color='green' onClick={submitHandler}>Salvar</ButtonSmall></Link>
           <span style={{'width':'20px'}}></span>
           <ButtonSmall onClick={showWindow}>Excluir</ButtonSmall>
         </ButtonDiv>
@@ -308,3 +324,37 @@ export default function MenuPacient(){
     </>
   )
 }
+
+
+
+/*
+<InputContainer>
+          <InputDiv>
+            <InputTitle>Cidade:</InputTitle>
+            <InputReverse style={{'width':'300px'}} value={cityState.value} onChange={cityChangeHandler} onBlur={validateCityHandler} validation={cityState.isValid}/>
+          </InputDiv>
+          <InputDiv>
+            <InputTitle>Estado:</InputTitle>
+            <InputReverse style={{'width':'100px'}} maxLength='2' value={estadoState.value} onChange={estadoChangeHandler} onBlur={validateEstadoHandler} validation={estadoState.isValid}/>
+          </InputDiv>
+        </InputContainer>
+
+
+        ----------------------------------------
+
+
+<InputContainer>
+          <InputDiv>
+            <InputTitle>Número:</InputTitle>
+            <InputReverse style={{'width':'100px'}} type='number' value={numState.value} onChange={numChangeHandler} onBlur={validateNumHandler} validation={numState.isValid}/>
+          </InputDiv>
+          <InputDiv>
+            <InputTitle>Complemento:</InputTitle>
+            <InputReverse style={{'width':'300px'}} value={compState.value} onChange={compChangeHandler} onBlur={validateCompHandler} validation={compState.isValid}/>
+          </InputDiv>
+        </InputContainer>
+
+
+
+
+*/

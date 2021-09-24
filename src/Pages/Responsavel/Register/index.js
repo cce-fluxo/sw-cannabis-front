@@ -11,33 +11,7 @@ import { Button } from '../../../Utils/styles';
 import AuthContext from '../../../Storage/auth-context';
 
 
-function Basic(props) {
-  const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
-  
-  const files = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
 
-  return (
-    <UploadContainer>
-      <UploadButton>
-      <div {...getRootProps({className: 'dropzone'})}>
-        <input {...getInputProps()} />
-        <p>{props.title}</p>
-      </div>
-      </UploadButton>
-      <aside>
-        
-        <h4>Arquivos:</h4>
-        <ul>{files}</ul>
-        
-      </aside>
-    
-    </UploadContainer>
-  );
-}
 
 
 const nameReducer = (state,action) => {
@@ -154,12 +128,43 @@ const numReducer = (state,action) => {
 
 
 export default function Register(){
-  const {userInfo,onPacientRegister} = useContext(AuthContext)
-  //const pacientList=userInfo.paciente
-  //console.log(pacientList)
-  const [formIsValid, setFormIsValid] = useState(false);
-  //const [test,setTest]=useState('')
+  const {userInfo,onPacientRegister,sendToStorage} = useContext(AuthContext)
   
+  const [formIsValid, setFormIsValid] = useState(false);
+  
+  function Basic(props) {
+    const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
+    function teste(file){
+      console.log(file)
+    }
+    const files = acceptedFiles.map(file => (
+      
+      <li key={file.path}>
+        {file.path} - {file.size} bytes
+  
+      </li>
+    ));
+      
+    return (
+      <UploadContainer>
+        <UploadButton>
+        <div {...getRootProps({className: 'dropzone'})}>
+          <input {...getInputProps()} />
+          <p>{props.title}</p>
+        </div>
+        </UploadButton>
+        <aside>
+          
+          <h4>Arquivos:</h4>
+          <ul>{files}</ul>
+          
+        </aside>
+        <button onClick={()=>sendToStorage(files[0].key)}>teste</button>
+      </UploadContainer>
+    );
+  }
+
+
   const teste = () => {
     if (document.querySelector('#adress').checked){
       dispatchCity({type:'USER_INPUT', val:userInfo.cidade})
@@ -408,7 +413,45 @@ const cepMask = value=>{
           <CheckTitle>Gostaria de utilizar os dados <br/>residenciais do responsável?</CheckTitle>
           <Checkbox type='checkbox' id='adress' value='endereço' onClick={teste}/>
         </CheckDiv>
-        <InputContainer>
+        
+          <InputDiv>
+            <InputTitle>Cidade:</InputTitle>
+            <InputReverse  value={cityState.value} onChange={cityChangeHandler} onBlur={validateCityHandler} validation={cityState.isValid}/>
+          </InputDiv>
+          <InputDiv>
+            <InputTitle>Estado:</InputTitle>
+            <InputReverse  maxLength='2' value={estadoState.value} onChange={estadoChangeHandler} onBlur={validateEstadoHandler} validation={estadoState.isValid}/>
+          </InputDiv>
+        
+        <InputDiv>
+          <InputTitle>CEP:</InputTitle>
+          <InputReverse autoComplete='off' value={cepState.value} onChange={cepChangeHandler} onBlur={validateCepHandler} validation={cepState.isValid}/>
+        </InputDiv>
+        <InputDiv>
+          <InputTitle>Endereço:</InputTitle>
+          <InputReverse autoComplete='off' value={adressState.value} onChange={adressChangeHandler} onBlur={validateAdressHandler} validation={adressState.isValid}/>
+        </InputDiv>
+        
+          <InputDiv>
+            <InputTitle>Número:</InputTitle>
+            <InputReverse  type='number' value={numState.value} onChange={numChangeHandler} onBlur={validateNumHandler} validation={numState.isValid}/>
+          </InputDiv>
+          <InputDiv>
+            <InputTitle>Complemento:</InputTitle>
+            <InputReverse  value={compState.value} onChange={compChangeHandler} onBlur={validateCompHandler} validation={compState.isValid}/>
+          </InputDiv>
+        
+        <Link to='/perfil/pacientes'><Button disabled={!formIsValid} onClick={submitHandler}>REGISTRAR PACIENTE</Button></Link>
+      </InnerContainerBg>
+    </ProfileBg>
+
+    </>
+  )
+}
+//
+
+/*
+<InputContainer>
           <InputDiv>
             <InputTitle>Cidade:</InputTitle>
             <InputReverse style={{'width':'300px'}} value={cityState.value} onChange={cityChangeHandler} onBlur={validateCityHandler} validation={cityState.isValid}/>
@@ -418,15 +461,11 @@ const cepMask = value=>{
             <InputReverse style={{'width':'100px'}} maxLength='2' value={estadoState.value} onChange={estadoChangeHandler} onBlur={validateEstadoHandler} validation={estadoState.isValid}/>
           </InputDiv>
         </InputContainer>
-        <InputDiv>
-          <InputTitle>CEP:</InputTitle>
-          <InputReverse autoComplete='off' value={cepState.value} onChange={cepChangeHandler} onBlur={validateCepHandler} validation={cepState.isValid}/>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>Endereço:</InputTitle>
-          <InputReverse autoComplete='off' value={adressState.value} onChange={adressChangeHandler} onBlur={validateAdressHandler} validation={adressState.isValid}/>
-        </InputDiv>
-        <InputContainer>
+
+
+        ---------------
+
+<InputContainer>
           <InputDiv>
             <InputTitle>Número:</InputTitle>
             <InputReverse style={{'width':'100px'}} type='number' value={numState.value} onChange={numChangeHandler} onBlur={validateNumHandler} validation={numState.isValid}/>
@@ -436,11 +475,7 @@ const cepMask = value=>{
             <InputReverse style={{'width':'300px'}} value={compState.value} onChange={compChangeHandler} onBlur={validateCompHandler} validation={compState.isValid}/>
           </InputDiv>
         </InputContainer>
-        <Button disabled={!formIsValid} onClick={submitHandler}>REGISTRAR PACIENTE</Button>
-      </InnerContainerBg>
-    </ProfileBg>
 
-    </>
-  )
-}
-//
+
+
+*/

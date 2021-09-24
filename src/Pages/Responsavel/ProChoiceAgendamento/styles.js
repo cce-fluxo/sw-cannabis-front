@@ -55,3 +55,26 @@ export const CheckOption = styled.input`
   margin-right: 10px;
   cursor: pointer;
 `
+
+export const Table=styled.div`
+    border: 1px solid black;
+    padding: 20px;
+    display: flex;
+    font-size:20px;
+    font-weight:normal;
+    align-items: center;
+    justify-content:space-between;
+    width:60%;
+`
+
+
+export const InfoIcon=styled.img`
+    width:30px;
+    cursor:pointer;
+`
+
+export const FullCalendarContainer=styled.div`
+  width: 82%;
+  
+  //margin: 10px;
+`

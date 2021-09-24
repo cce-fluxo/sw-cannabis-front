@@ -60,9 +60,11 @@ export const NavOption =styled.li`
     font-weight: bold;
     padding: 5px;
     cursor:pointer;
+    text-decoration-color:rgb(120, 157, 85,0);
+    transition: text-decoration-color 600ms;
     &:hover{
       text-decoration:underline;
-      text-decoration-color: #789D55;
+      text-decoration-color:rgb(120, 157, 85,1)
     }
     @media(max-width:800px){
     font-size: 12px;

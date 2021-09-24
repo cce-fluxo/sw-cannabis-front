@@ -120,6 +120,7 @@ export default function Login(){
       forgotEmailState.value=''
   }
   const sendForgotEmail = () =>{
+    authCtx.onSendForgotEmail(forgotEmailState.value)
     setForgotEmailSent(true)
   }
 

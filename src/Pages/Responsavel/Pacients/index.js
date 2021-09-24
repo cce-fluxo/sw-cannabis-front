@@ -1,83 +1,18 @@
-import React,{useContext} from 'react';
+import React,{useContext,useState} from 'react';
 import Head from '../../../Components/Head';
 import Header from '../../../Components/Header';
 import Return from '../../../Components/Return';
 import AuthContext from '../../../Storage/auth-context';
 import {Link} from 'react-router-dom';
-import {Card, CardContainer, CardName, InnerContainerBg, ProfileBg,Title, TitleContainer } from './styles';
-import api from '../../../Services/api';
+import {Card, CardName, InnerContainerBg, ProfileBg,Title, TitleContainer } from './styles';
 
 import Plus from '../../../Assets/plus.svg';
 import Avatar from '../../../Assets/avatar.svg';
 
 export default function Pacients(){
   
-  
- 
   const {userInfo,onDataChange,pacients} = useContext(AuthContext) 
-  console.log(Object.values(pacients))
-  //const pacientList=userInfo.paciente
-  
-  const listagemPacientes=JSON.parse(localStorage.getItem('Pacientes'));
-  console.log(listagemPacientes)
-  //console.log(window.localStorage.getItem('Pacientes'))
-
-  if(pacients.lenght===0){
-    var first=true
-  }
-  if (!first){
-    var renderCards=''
-  }else{
-     
-     renderCards = listagemPacientes.map((item)=>{
-        console.log(item)
-        const adress='/perfil/pacientes/menu/'+item.id
-        return(
-          <>
-            
-            <Link to={adress}><Card key={item.id}>
-              <CardName><img src={Avatar}/><br/>
-              {item.nome}</CardName>
-            </Card></Link>
-          
-          </>
-        )
-      })
-  }
-
-  if(window.localStorage.getItem('Pacientes')===null || window.localStorage.getItem('Pacientes')==='[]'){
-    var first=true
-  }
-  if (first){
-    var renderCard=''
-  }else{
-    
-     renderCard = listagemPacientes.map((item,index)=>{
-        //var cpf=item.cpf
-        const adress='/perfil/pacientes/menu/'+item.cpf
-        return(
-          <>
-            
-            <Link to={adress}><Card key={index}>
-              <CardName><img src={Avatar}/><br/>
-              {item.nome}</CardName>
-            </Card></Link>
-          
-          </>
-        )
-      })
-  }
-  
-
-  const DisplayCards=()=>{
-    return(
-      <CardContainer>
-        {renderCard}
-        {renderCards}
-        <Link to='/perfil/pacientes/registro'><Card><img src={Plus} alt='Registrar paciente'/></Card></Link>
-      </CardContainer>
-    )
-  }
+  const noPacients=pacients.length===0?true:false
 
   const FirstTime = () =>{
     return(
@@ -88,7 +23,33 @@ export default function Pacients(){
       </>
     )   
   }
+  
+  let newList=[]
+  for (var i = 0; i < pacients.length; i++) { newList.push(pacients[i]); }
 
+  //console.log(test)  
+  
+  const list=newList.map(function(item){
+    const path='/perfil/pacientes/menu/'+item.id
+    return(
+      <Link to={path}>
+      <Card key={item.id}>
+               <CardName><img src={Avatar}/><br/>
+              {item.nome}</CardName>
+      </Card>
+      </Link>
+    )
+  })
+
+  const DisplayCards=()=>{
+    return(
+      <>
+      {list}
+      <Link to='/perfil/pacientes/registro'><Card><img src={Plus} alt='Registrar paciente'/></Card></Link>
+      </>
+    )
+  }
+  
   return(
 
     <>
@@ -101,7 +62,8 @@ export default function Pacients(){
       </TitleContainer>
       <InnerContainerBg>
         <Return destiny='/perfil'/>
-        {first?<FirstTime/>:<DisplayCards/>}
+        {noPacients?<FirstTime/>:<DisplayCards/>}
+        
       </InnerContainerBg>  
       
     </ProfileBg>
@@ -111,3 +73,4 @@ export default function Pacients(){
     </>
   )
 }
+//{firstTime?<FirstTime/>:renderPacients}

@@ -11,7 +11,7 @@ import MenuPacient from '../Pages/Responsavel/MenuPacient';
 import Consultas from '../Pages/Responsavel/Consultas';
 import Agendamento from '../Pages/Responsavel/Agendamento';
 import ProChoice from '../Pages/Responsavel/ProChoiceAgendamento';
-
+import CalendarDoctor from '../Pages/Responsavel/CalendarDoctor';
 
 export default function ResRoutes(){
   return(
@@ -26,8 +26,10 @@ export default function ResRoutes(){
       <Route exact path='/perfil/pacientes/registro' component={Register}/>
       <Route path='/perfil/pacientes/menu' component={MenuPacient}/>
       <Route exact path='/consultas' component={Consultas}/>
-      <Route exact path='/consultas/paciente' component={Agendamento}/>
-      <Route exact path='/consultas/paciente/agendamento' component={ProChoice}/>
+      <Route exact path='/consultas/paciente/:id' component={Agendamento}/>
+      <Route exact path='/consultas/paciente/agendamento/:id' component={ProChoice}/>
+      <Route exact path='/consultas/paciente/agendamento/calendario/:id' component={CalendarDoctor}/>
+
       
       </Switch>
     </BrowserRouter>

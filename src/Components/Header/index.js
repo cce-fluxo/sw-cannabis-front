@@ -1,5 +1,5 @@
 import React,{useContext} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import { Logo,HeaderContainer, EnterTitle,HeaderBg, EnterContainer, EnterIcon, LogoutIcon, NavList, NavOption, LogoutContainer, MenuContainer} from './styles';
 import AuthContext from '../../Storage/auth-context';
 import {Title} from '../../Utils/styles';
@@ -11,6 +11,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function Header(){
   const authCtx = useContext(AuthContext);
+  const history=useHistory()
   const gest=false
   const adm=false
   const med=false
@@ -21,7 +22,11 @@ export default function Header(){
     textDecoration:'underline',
     textDecorationColor:'#789D55'
   }
+const logout=()=>{
+  authCtx.onLogout()
+  history.push("/login");
 
+}
 
   const UserCheck = () =>{
     if (!authCtx.isLoggedIn) {
@@ -92,10 +97,10 @@ export default function Header(){
   const Medic = () => {
     return(
         <NavList>
-          <NavOption>PACIENTES</NavOption>
-          <NavOption>CONSULTAS</NavOption>
-          <NavOption>PERFIL</NavOption>
-          <LogoutContainer onClick={authCtx.onLogout}>
+          <NavLink to='/pacientes' activeStyle={activeStyle}><NavOption>PACIENTES</NavOption></NavLink>
+          <NavLink to='/consultas' activeStyle={activeStyle}><NavOption>CONSULTAS</NavOption></NavLink>
+          <NavLink to='/perfil' activeStyle={activeStyle}><NavOption>PERFIL</NavOption></NavLink>
+          <LogoutContainer onClick={logout}>
             <NavOption>SAIR</NavOption>
             <LogoutIcon src={Exit} alt="Logout" />
           </LogoutContainer>
@@ -110,7 +115,7 @@ export default function Header(){
           <NavOption>CONSULTAS</NavOption>
           <NavOption>PROFISSIONAIS</NavOption>
           <NavOption>PAGAMENTOS</NavOption>
-          <LogoutContainer onClick={authCtx.onLogout}>
+          <LogoutContainer onClick={logout}>
             <NavOption>SAIR</NavOption>
             <Link to='/'><LogoutIcon src={Exit} alt="Logout" /></Link>
           </LogoutContainer>
@@ -125,7 +130,7 @@ export default function Header(){
          
           <NavLink to='/consultas' activeStyle={activeStyle}><NavOption>CONSULTAS</NavOption></NavLink>
           <NavLink to='/perfil' activeStyle={activeStyle}><NavOption>PERFIL</NavOption></NavLink>
-          <LogoutContainer onClick={authCtx.onLogout}>
+          <LogoutContainer onClick={logout}>
             <NavOption>SAIR</NavOption>
             <Link to='/'><LogoutIcon src={Exit} alt="Logout" /></Link>
           </LogoutContainer>
@@ -137,7 +142,7 @@ export default function Header(){
     return(
         <NavList>
           <NavOption>PESQUISA</NavOption>
-          <LogoutContainer onClick={authCtx.onLogout}>
+          <LogoutContainer onClick={logout}>
             <NavOption>SAIR</NavOption>
             <LogoutIcon src={Exit} alt="Logout" />
           </LogoutContainer>
