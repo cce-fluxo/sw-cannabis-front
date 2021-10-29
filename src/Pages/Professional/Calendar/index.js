@@ -13,18 +13,20 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { INITIAL_EVENTS, createEventId } from './utils'
 import { Button } from '../../../Utils/styles';
-
+import moment from 'moment';
 
 export default function CalendarPro(){
   //window.localStorage.setItem('teste','')
-  
-  
+
+
   const [currentEvents,setCurrentEvents]=React.useState('');
   
    const handleDateSelect = (selectInfo) => {
-    let title =prompt('Por favor, escolha um nome para seu evento.')
-    let calendarApi = selectInfo.view.calendar
-
+    window.alert(`O horário ${selectInfo.startStr}-${selectInfo.endStr} agora está indisponível para os pacientes.`)
+    const title='Indisponível'
+    const calendarApi = selectInfo.view.calendar
+    moment.locale('pt-br')
+    console.log(moment((selectInfo.startStr)).format('lll'))
     calendarApi.unselect() // clear date selection
 
     if (title) {
@@ -55,7 +57,7 @@ export default function CalendarPro(){
 
   const handleEventClick = (clickInfo) => {
     if(!clickInfo.event.startEditable){
-      window.alert('vc n pode remover uma consulta')
+      window.alert('Você não pode remover uma consulta')
     }
     else{
       if (

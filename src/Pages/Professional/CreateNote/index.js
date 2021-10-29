@@ -1,15 +1,25 @@
 import SunEditor,{buttonList} from 'suneditor-react';
 //import suneditor from 'suneditor';
 import 'suneditor/dist/css/suneditor.min.css'; // Import Sun Editor's CSS File
-import React,{useState} from 'react';
+import React,{useState,useReducer,useEffect} from 'react';
 
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
 import Return from '../../../Components/Return';
+import {InputReverse} from '../../../Components/Input/styles';
 import {  ContainerBg, InnerContainerBg} from '../Pacients/styles';
 import {Title,TitleContainer, SubTitle} from '../../../Pages/Professional/Profile/styles';
 import { Button } from '../../../Utils/styles';
 
+const nameReducer = (state,action) => {
+  if(action.type ==='USER_INPUT'){
+    return {value:action.val, isValid: action.val.length>3};
+  }
+  if(action.type ==='INPUT_BLUR'){
+    return {value:state.value, isValid: state.value.length>3};
+  }
+  return {value:'', isValid:false };
+};
 
 
 export default function CreateNote(){
@@ -18,14 +28,26 @@ export default function CreateNote(){
 
   const initialContent=localStorage.getItem('Note')
   const [editorContent,setEditorContent]=useState(initialContent)
-  function submitHandler(content){
-    console.log(content)
-    localStorage.setItem('Note',content)
-  }
+  
   
   const path=['/pacientes/menu/acompanhamento/notas/'+id,'/pacientes/menu/acompanhamento/'+id]
   
+  const [nameState,dispatchName] = useReducer(nameReducer,{
+    value:'',
+    isValid: null,
+  });
+  const {isValid: nameIsValid } = nameState;
+  const nameChangeHandler = (event) => {
+    dispatchName({type:'USER_INPUT', val:event.target.value});
+  };
+  const validateNameHandler = () => {
+    dispatchName({type:'INPUT_BLUR'});
+  };
 
+  function submitHandler(){
+      console.log(editorContent,nameState.value)
+      localStorage.setItem('Note',editorContent)
+    }
   return(
     <>
     <Head title="Terapeutas Cannábicos - Criar anotação" description="Descrição da criação de anotação"/>
@@ -39,7 +61,7 @@ export default function CreateNote(){
 
       <Return destiny={path[0]}/>
       <SubTitle>Lembre sempre de salvar seu texto clicando no botão abaixo.</SubTitle>
-      
+      <InputReverse placeholder='Nome' value={nameState.value} onChange={nameChangeHandler} onBlur={validateNameHandler} validation={nameState.isValid}/>
         <SunEditor
           lang='pt_br' 
           width='80%'
@@ -75,12 +97,12 @@ export default function CreateNote(){
           //"save",
           //"template"
         ]]}}  
-          setContents={initialContent}
+          //setContents={initialContent}
           onChange={setEditorContent}
         />
      
 
-      <Button onClick={() => submitHandler(editorContent)}>SALVAR</Button>
+      <Button onClick={submitHandler} isValid={nameState.isValid}>SALVAR</Button>
       </InnerContainerBg>
     </ContainerBg>
     

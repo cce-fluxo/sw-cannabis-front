@@ -16,8 +16,10 @@ export const AuthContextProvider = (props) => {
   
   const [user, setUser] = useState({});
   const [pacients, setPacients] = useState({});
+
   // eslint-disable-next-line
   const [userType,setUserType]=useState();
+  const [userId,setUserId]=useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   async function sendToStorage(photo) {
@@ -50,8 +52,10 @@ export const AuthContextProvider = (props) => {
   useEffect(() => {
     const token = localStorage.getItem('Token');
     const user=localStorage.getItem('UserType');
+    const id=localStorage.getItem('ID');
     if (token && user==='responsavel') {
-      api.get('/paciente/lista', {
+      
+      api.get(`/paciente/lista`, {
         headers: {
           'authorization': `Bearer ${token}`
         }
@@ -65,14 +69,14 @@ export const AuthContextProvider = (props) => {
         .catch((error) => {
           console.error(error)
         })
-      api.get('/responsavel/lista', {
+      api.get(`/responsavel/${id}`, {
         headers: {
           'authorization': `Bearer ${token}`
         }
       })
         .then((res) => {
-          console.log(res.data[0])
-          setUser(res.data[0])
+          console.log(res.data)
+          setUser(res.data)
           
           
         })
@@ -89,8 +93,8 @@ export const AuthContextProvider = (props) => {
         }
       })
         .then((res) => {
-          console.log(res.data[0])
-          setUser(res.data[0])
+          console.log(res.data)
+          setUser(res.data)
           
           
           
@@ -118,6 +122,8 @@ export const AuthContextProvider = (props) => {
     const id=user.id
     
     const data={
+      //'cpf':'123.444.852.79',
+      //'celular':'(21)99971-8899',
       'telefone_secundario':cel,
       'cidade':cidade,
       'estado':estado,
@@ -131,6 +137,7 @@ export const AuthContextProvider = (props) => {
       const rota='/responsavel/'+id
       const response = await api.patch(rota, data)
       console.log(response.data)
+      window.location.reload()
     }
     catch (error) {
       console.log(error)
@@ -153,7 +160,7 @@ export const AuthContextProvider = (props) => {
 
   async function registerPacient(nome,sobrenome,nascimento,cpf,rg,identidade,diagnostico,laudo,receita,cidade,estado,cep,endereco,complemento,numero){
     const data={
-      'nome':nome,'sobrenome':sobrenome, 'data_nascimento':'2000-02-02','cpf':cpf,'rg':rg,'documentos_pessoais':identidade,'diagnostico':diagnostico,'laudo_medico':laudo,'receita_medica':receita,'cidade':cidade,'estado':estado,'cep':cep,'endereco':endereco,'complemento':complemento,'numero':numero,'bairro':'tijuca','password':''
+      'nome':nome,'sobrenome':sobrenome, 'data_nascimento':'11-22-2000','cpf':cpf,'rg':rg,'documentos_pessoais':identidade,'diagnostico':diagnostico,'laudo_medico':laudo,'receita_medica':receita,'cidade':cidade,'estado':estado,'cep':cep,'endereco':endereco,'complemento':complemento,'numero':numero,'bairro':'tijuca','password':''
     }
     try {
      
@@ -231,10 +238,11 @@ export const AuthContextProvider = (props) => {
       const refreshToken = response.data.refresh_token
       const token = response.data.token
       loginHandler(email, password);
+      localStorage.setItem('ID', response.data.id)
       localStorage.setItem('Token', token)
       localStorage.setItem('RefreshToken', refreshToken)
       localStorage.setItem('UserType', response.data.user)
-      window.location.reload()
+      //window.location.reload()
       //cac@poli.ufrj.br igor123456 respo
       //cami@poli.ufrj.br igor123 medico
 
@@ -252,7 +260,7 @@ export const AuthContextProvider = (props) => {
       'email':email,
       'celular':phone,
       'password':password,
-      'cpf':'', 'rg':'', 'endereco':'', 'bairro':'', 'numero':'', 'complemento':'', 'cidade':'', 'estado':'',
+      'cpf':'123', 'rg':'123', 'cep':'123','endereco':'123', 'bairro':'123', 'numero':'123', 'complemento':'123', 'cidade':'123', 'estado':'123',
       }
       try {
         const response = await api.post("/responsavel", data)
@@ -282,12 +290,12 @@ export const AuthContextProvider = (props) => {
 
   return <AuthContext.Provider
     value={{
-      isLoggedIn: isLoggedIn,
+      isLoggedIn:isLoggedIn,
       onLogout: logoutHandler,
       onLogin: handleSubmit,
       userInfo: user,
       pacients: pacients,
-      user: localStorage.getItem('UserType'),
+      user:localStorage.getItem('UserType'),
       onDataChange:dataChange,
       onPacientRegister: registerPacient,
       onPacientRemove: removeHandler,

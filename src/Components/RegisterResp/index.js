@@ -48,10 +48,10 @@ const lastNameReducer = (state,action) => {
 
 const phoneReducer = (state,action) => {
   if(action.type ==='USER_INPUT'){
-    return {value:action.val, isValid: action.val.trim().length===11};
+    return {value:action.val, isValid: action.val.trim().length===14};
   }
   if(action.type ==='INPUT_BLUR'){
-    return {value:state.value, isValid: state.value.trim().length===11};
+    return {value:state.value, isValid: state.value.trim().length===14};
   }
   return {value:'', isValid:false };
 };
@@ -76,7 +76,13 @@ const confPasswordReducer = (state,action) => {
   return {value:'', isValid:false };
 };
 
-
+const celMask = value=>{
+  return value
+    .replace(/\D/g, '')
+    .replace(/(\d{2})(\d)/, '($1)$2') 
+    .replace(/(\d{5})(\d{1,2})/, '$1-$2')
+    .replace(/(-\d{4})\d+?$/, '$1')
+}
 
 export default function RegisterResp(){
   const ctx=useContext(AuthContext);
@@ -122,7 +128,7 @@ export default function RegisterResp(){
 
   useEffect(() => {
      const identifier = setTimeout(() => {
-       console.log('Checking form validity!');
+       //console.log('Checking form validity!');
        setFormIsValid(
         emailIsValid && passwordIsValid && confPasswordIsValid && nameIsValid && lastNameIsValid && phoneIsValid
        );
@@ -141,7 +147,7 @@ export default function RegisterResp(){
     dispatchLastName({type:'USER_INPUT', val:event.target.value});
   };
   const phoneChangeHandler = (event) => {
-    dispatchPhone({type:'USER_INPUT', val:event.target.value});
+    dispatchPhone({type:'USER_INPUT', val:celMask(event.target.value)});
   };
 
    const emailChangeHandler = (event) => {
@@ -228,7 +234,7 @@ export default function RegisterResp(){
 <Input id='register-name' maxLength='45' placeholder="Insira seu Nome" autoComplete={'off'} icon={User} value={nameState.value} onChange={nameChangeHandler} onBlur={validateNameHandler} validation={nameState.isValid} />
 <Input id='register-lastname' maxLength='45' placeholder="Insira seu Sobrenome" autoComplete={'off'} icon={User} value={lastNameState.value} onChange={lastNameChangeHandler} onBlur={validateLastNameHandler} validation={lastNameState.isValid}/>
 <Input id='register-email' maxLength='45' placeholder="Insira seu Email" autoComplete={'off'} icon={Email} value={emailState.value} onChange={emailChangeHandler} onBlur={validateEmailHandler} validation={emailState.isValid}/>
-<Input id='register-phone' type='number' maxLength='11' placeholder="Insira seu Telefone" autoComplete={'off'} icon={Phone} value={phoneState.value} onChange={phoneChangeHandler} onBlur={validatePhoneHandler} validation={phoneState.isValid}/>
+<Input id='register-phone' placeholder="Insira seu Celular" autoComplete={'off'} icon={Phone} value={phoneState.value} onChange={phoneChangeHandler} onBlur={validatePhoneHandler} validation={phoneState.isValid}/>
 <div>
   <InputPassword id='register-password' maxLength='35' type='password' placeholder="Insira sua Senha" icon={Lock} value={passwordState.value} onChange={passwordChangeHandler} onBlur={validatePasswordHandler} validation={passwordState.isValid}/>
   <VisibilityButton src={visibility} onClick={changeVisibility}/>
