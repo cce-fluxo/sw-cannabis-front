@@ -126,8 +126,7 @@ const logout=()=>{
   const Res = () => {
     return(
         <NavList>
-          <NavOption>PRODUTOS</NavOption>
-         
+          <NavLink to="/produtos"><NavOption>PRODUTOS</NavOption></NavLink>
           <NavLink to='/consultas' activeStyle={activeStyle}><NavOption>CONSULTAS</NavOption></NavLink>
           <NavLink to='/perfil' activeStyle={activeStyle}><NavOption>PERFIL</NavOption></NavLink>
           <LogoutContainer onClick={logout}>
