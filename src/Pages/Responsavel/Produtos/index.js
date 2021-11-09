@@ -6,30 +6,23 @@ import { useCart } from '../../../hooks/useCart';
 import { ContainerBg, ProductsContainer, Title } from './styles';
 
 export default function Produtos() {
-  const { cart, setCart } = useCart()
+  const { handleEditCart } = useCart()
   const products = [
     {
       id: "1",
       name: "Produto 1",
-      price: "R$ 100,00",
+      price: 100,
+      formatedPrice: "R$ 100,00",
     },
     {
       id: "2",
       name: "Produto 2",
-      price: "R$ 200,00",
+      price: 200,
+      formatedPrice: "R$ 200,00",
     }
 
   ]
 
-  const handleAddToCart = (product, amount) => {
-    const numericAmount = amount === ""? 0: parseInt(amount)
-    const newCart = cart.filter(p => p.id !== product.id)
-    if (numericAmount === 0) {
-      setCart(newCart)
-      return;
-    }
-    setCart([...newCart, { ...product, amount: numericAmount }])
-  }
   return (
     <>
       <Header />
@@ -38,7 +31,7 @@ export default function Produtos() {
         <ProductsContainer>
           {
             products.map((product) => (
-              <Product key={product.id} handleAddToCart={handleAddToCart} product={product}/>
+              <Product key={product.id} handleEditCart={handleEditCart} product={product}/>
                 
             ))
           }

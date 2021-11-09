@@ -14,12 +14,19 @@ export const Container = styled.div`
   >div{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    >strong{
+      span{
+        margin-left: 15px;
+      }
+    }
     >p{
       font-weight: bold;
       color: #789D55;
       margin-top: 10px;
     }
+  }
+  >div +div{
+    align-items: center;
   }
 `
 
@@ -48,5 +55,31 @@ export const AddButton = styled.button`
   transition: filter .2s;
   &:hover{
     filter: brightness(90%);
+  }
+`
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+
+  button{
+    width: 35px;
+    height: 22px;
+    border-radius: 5px;
+    background-color:transparent;
+    border: 1px solid #789D55;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #789D55;
+    cursor: pointer;
+    transition: filter .2s;
+    &:hover{
+      filter: brightness(70%);
+    }
+  }
+
+  button + button{
+    margin-left: 5px;
   }
 `

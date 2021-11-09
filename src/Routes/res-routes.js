@@ -10,6 +10,7 @@ import Register from '../Pages/Responsavel/Register';
 import MenuPacient from '../Pages/Responsavel/MenuPacient';
 import Consultas from '../Pages/Responsavel/Consultas';
 import Produtos from '../Pages/Responsavel/Produtos';
+import Carrinho from '../Pages/Responsavel/Carrinho';
 import Agendamento from '../Pages/Responsavel/Agendamento';
 import ProChoice from '../Pages/Responsavel/ProChoiceAgendamento';
 import CalendarDoctor from '../Pages/Responsavel/CalendarDoctor';
@@ -31,6 +32,7 @@ export default function ResRoutes() {
           <Route exact path='/consultas/paciente/agendamento/:id' component={ProChoice} />
           <Route exact path='/consultas/paciente/agendamento/calendario/:id' component={CalendarDoctor} />
           <Route exact path='/produtos' component={Produtos} />
+          <Route exact path='/carrinho' component={Carrinho} />
 
 
         </Switch>
