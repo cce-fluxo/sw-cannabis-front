@@ -54,13 +54,17 @@ export default function CreateForm(){
     }, [questionIsValid]); 
     
     const displayQuestions=questions.map((item)=>{
-      const displayOptions=item.options.map((item)=>{
+      if(item.options){
+        var displayOptions=item.options.map((item)=>{
         return(
           <>
           <SmallInput placeholder={item.value} key={item.id} disabled/>
           </>
         )
       })
+        
+      }
+      
       return(
         <QuestionBg>
         <QuestionContainer>
