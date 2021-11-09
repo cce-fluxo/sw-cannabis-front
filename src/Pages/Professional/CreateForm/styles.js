@@ -95,6 +95,7 @@ export const UpButton=styled(BsFillArrowUpCircleFill)`
     width: 30px;
     height: 30px;
     color: black;
+    cursor: pointer;
     
 `
 
@@ -102,6 +103,8 @@ export const DownButton=styled(BsArrowDownCircleFill)`
     width: 30px;
     height: 30px;
     color: black;
+    cursor: pointer;
+    margin-left: 5px;
     
 `
 
@@ -143,7 +146,8 @@ export const RemoveIcon=styled(BsXCircleFill)`
     width: 30px;
     height: 30px;
     color: red;
-   
+    cursor: pointer;
+    margin-left: 5px;
 `
 
 export const RadioOption=styled.div`
