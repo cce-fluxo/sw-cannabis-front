@@ -6,11 +6,12 @@ export const ModalBg = styled.div`
     box-shadow: 15px 15px 5px 0px rgba(0,0,0,0.75);
     display:flex;
     justify-content: center;
-    width:600px;
-    height: 400px;
+    width:100%;
+    height: 100%;
     padding:40px;
-    margin-top:10%;
+    margin:10px;
     border-radius: 60px;
+  
     
     @media(max-width:800px){
     width:90%;
@@ -36,8 +37,8 @@ export const Background = styled.div`
     width: 100%;
     margin:0 auto;
     display: flex;
-   
     justify-content: center;
     position:fixed; top: 0px; bottom:0px; left: 0px; right:0px;z-index: 1;
     background: rgba(0,0,0,0.6);
+    
 `

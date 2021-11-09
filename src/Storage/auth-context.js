@@ -55,7 +55,7 @@ export const AuthContextProvider = (props) => {
     const id=localStorage.getItem('ID');
     if (token && user==='responsavel') {
       
-      api.get(`/paciente/lista`, {
+      api.get(`/patient/lista`, {
         headers: {
           'authorization': `Bearer ${token}`
         }
@@ -87,7 +87,7 @@ export const AuthContextProvider = (props) => {
         
     }
     else if (token && user==='medico') {
-      api.get('/medico/lista', {
+      api.get(`/medico/${id}`, {
         headers: {
           'authorization': `Bearer ${token}`
         }
@@ -160,11 +160,11 @@ export const AuthContextProvider = (props) => {
 
   async function registerPacient(nome,sobrenome,nascimento,cpf,rg,identidade,diagnostico,laudo,receita,cidade,estado,cep,endereco,complemento,numero){
     const data={
-      'nome':nome,'sobrenome':sobrenome, 'data_nascimento':'11-22-2000','cpf':cpf,'rg':rg,'documentos_pessoais':identidade,'diagnostico':diagnostico,'laudo_medico':laudo,'receita_medica':receita,'cidade':cidade,'estado':estado,'cep':cep,'endereco':endereco,'complemento':complemento,'numero':numero,'bairro':'tijuca','password':''
+      'nome':nome,'sobrenome':sobrenome, 'data_nascimento':nascimento,'cpf':cpf,'rg':rg,'documentos_pessoais':identidade,'diagnostico':diagnostico,'laudo_medico':laudo,'receita_medica':receita,'cidade':cidade,'estado':estado,'cep':cep,'endereco':endereco,'complemento':complemento,'numero':numero,'bairro':'tijuca','password':''
     }
     try {
      
-      const response = await api.post('/paciente', data)
+      const response = await api.post('/patient', data)
       
       console.log(response)
       console.log(response.data)
@@ -242,7 +242,7 @@ export const AuthContextProvider = (props) => {
       localStorage.setItem('Token', token)
       localStorage.setItem('RefreshToken', refreshToken)
       localStorage.setItem('UserType', response.data.user)
-      //window.location.reload()
+      window.location.reload()
       //cac@poli.ufrj.br igor123456 respo
       //cami@poli.ufrj.br igor123 medico
 

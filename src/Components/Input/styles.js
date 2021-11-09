@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {AiOutlineClose} from 'react-icons/ai';
 
 export const Input = styled.input`
     width: 420px;

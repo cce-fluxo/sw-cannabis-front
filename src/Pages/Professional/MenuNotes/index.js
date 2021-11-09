@@ -23,7 +23,8 @@ export default function MenuNotes(){
     )
   }
 
-  const newList=[{nome:'Anotação 1',data:'20/02/2021', id:1},{nome:'Anotação 2',data:'26/02/2021', id:2},{nome:'Anotação 3',data:'12/03/2021', id:3},{nome:'Anotação 4',data:'21/02/2021', id:4}]
+  const newList=[{nome:'Anotação 1',data:'20/02/2021', id:1},{nome:'Anotação 2',data:'26/02/2021', id:2},
+  {nome:'Anotação 3',data:'12/03/2021', id:3},{nome:'Anotação 4',data:'21/02/2021', id:4}]
   
   const list=newList.map(function(item){
     const path='/pacientes/menu/acompanhamento/ver-nota/'+item.id
