@@ -204,7 +204,7 @@ export default function CreateForm() {
           <ModalDiv>
             <WindowTitle>Criação de pergunta</WindowTitle>
             <InputReverse placeholder='Digite aqui sua pergunta' value={questionState.value}
-              onChange={questionChangeHandler} onBlur={validateQuestionHandler} validation={questionState.isValid} />
+              onChange={questionChangeHandler} onBlur={validateQuestionHandler} validation={questionState.isValid} key="a"/>
             <DivOption>
               {optionsWindow}
             </DivOption>

@@ -32,7 +32,7 @@ export default function MenuNotes(){
       <Link to={path}>
       <Card key={item.id}>
               <CardName>
-                  <img src={Nota}/><br/>
+                  <img src={Nota} alt="nota"/><br/>
                   <p>Nome: {item.nome}</p>
                   <p>Última edição: {item.data}</p>
               </CardName>

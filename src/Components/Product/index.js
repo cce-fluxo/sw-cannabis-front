@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useCart } from '../../hooks/useCart';
 
 
-import { Container, AmountDiv, AddButton, ButtonsContainer } from './styles';
+import { Container, AmountDiv, AddButton, ButtonsContainer, Image, Price, LeftContent, RightContent } from './styles';
 import { AiOutlinePlus, AiOutlineLine } from 'react-icons/ai';
 export function Product({ product, handleEditCart, isInCartPage = false }) {
   const { cart } = useCart()
@@ -12,17 +12,20 @@ export function Product({ product, handleEditCart, isInCartPage = false }) {
   });
   return (
     <Container>
-      <div>
-        <strong>{product.name}<span>{isInCartPage && `x${amount}`}</span></strong>
-        <p>{product.formatedPrice}</p>
-      </div>
+      <LeftContent>
+        <Image src={product.image} alt={product.name} />
+        <div>
+          <h3>{product.name}<span>{isInCartPage && `x${amount}`}</span></h3>
+          <Price>{product.formatedPrice}</Price>
+        </div>
+      </LeftContent>
       {
         isInCartPage ?
-          <div>
+          <RightContent>
             <ButtonsContainer>
               <button onClick={() => {
                 setAmount(amount - 1)
-                handleEditCart(product, amount -1)
+                handleEditCart(product, amount - 1)
               }
               }>
                 <AiOutlineLine />
@@ -35,9 +38,9 @@ export function Product({ product, handleEditCart, isInCartPage = false }) {
                 <AiOutlinePlus />
               </button>
             </ButtonsContainer>
-          </div>
+          </RightContent>
           :
-          <div>
+          <RightContent>
             <AmountDiv>
               <p>Quantidade</p>
               <input
@@ -50,7 +53,7 @@ export function Product({ product, handleEditCart, isInCartPage = false }) {
               Adicionar
             </AddButton>
 
-          </div>
+          </RightContent>
       }
     </Container>
 

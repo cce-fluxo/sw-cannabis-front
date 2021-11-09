@@ -13,12 +13,14 @@ export default function Produtos() {
       name: "Produto 1",
       price: 100,
       formatedPrice: "R$ 100,00",
+      image: "https://s2.glbimg.com/bsDgOxQiSHlQU_YzR2RLnpW0x7w=/512x320/smart/e.glbimg.com/og/ed/f/original/2018/03/29/maconha2.jpg"
     },
     {
       id: "2",
       name: "Produto 2",
       price: 200,
       formatedPrice: "R$ 200,00",
+      image: "https://s2.glbimg.com/bsDgOxQiSHlQU_YzR2RLnpW0x7w=/512x320/smart/e.glbimg.com/og/ed/f/original/2018/03/29/maconha2.jpg"
     }
 
   ]

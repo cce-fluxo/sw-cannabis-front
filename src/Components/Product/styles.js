@@ -11,23 +11,36 @@ export const Container = styled.div`
   @media(max-width:800px){
     width:90%;
   }
-  >div{
+`
+
+export const LeftContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  div{
+    margin-left: 50px;
     display: flex;
     flex-direction: column;
-    >strong{
+    h3{
       span{
         margin-left: 15px;
       }
     }
-    >p{
-      font-weight: bold;
-      color: #789D55;
-      margin-top: 10px;
-    }
   }
-  >div +div{
+    
+    
+`
+
+export const RightContent = styled.div`
+   display: flex;
+    flex-direction: column;
     align-items: center;
-  }
+`
+
+export const Price = styled.p`
+  font-weight: bold;
+  color: #789D55;
+  margin-top: 10px;
 `
 
 export const AmountDiv = styled.div`
@@ -56,6 +69,9 @@ export const AddButton = styled.button`
   &:hover{
     filter: brightness(90%);
   }
+`
+export const Image = styled.img`
+  max-width: 150px;
 `
 
 export const ButtonsContainer = styled.div`
