@@ -150,7 +150,7 @@ export default function CreateForm(){
       setModal(false);
       questionState.value=''
       setFormIsValid(false)
-      setOptions([1,2])
+      setOptions([{id:uuidv4(),value:'Digite a opção'},{id:uuidv4(),value:'Digite a opção'}]);
     }
 
     const optionsWindow=options.map((item)=>{
