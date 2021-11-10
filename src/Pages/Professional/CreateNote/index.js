@@ -2,7 +2,7 @@ import SunEditor,{buttonList} from 'suneditor-react';
 //import suneditor from 'suneditor';
 import 'suneditor/dist/css/suneditor.min.css'; // Import Sun Editor's CSS File
 import React,{useState,useReducer,useEffect} from 'react';
-
+import api from '../../../Services/api';
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
 import Return from '../../../Components/Return';
@@ -44,7 +44,15 @@ export default function CreateNote(){
     dispatchName({type:'INPUT_BLUR'});
   };
 
-  function submitHandler(){
+  async function submitHandler() {
+    const data = {
+      nome: nameState.value,
+      texto: editorContent,
+      pacientId: id,
+    }
+    console.log(data)
+    return 
+    await api.post(`/anotacoesmedicas/create/${2}`, data);
       console.log(editorContent,nameState.value)
       localStorage.setItem('Note',editorContent)
     }

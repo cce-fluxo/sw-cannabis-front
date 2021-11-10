@@ -1,7 +1,8 @@
-import SunEditor,{buttonList} from 'suneditor-react';
+import SunEditor, { buttonList } from 'suneditor-react';
 //import suneditor from 'suneditor';
 import 'suneditor/dist/css/suneditor.min.css'; // Import Sun Editor's CSS File
-import React,{useState,useReducer} from 'react';
+import {useHistory} from "react-router-dom"
+import React,{useState,useReducer, useEffect} from 'react';
 import {InputReverse} from '../../../Components/Input/styles';
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
@@ -9,6 +10,7 @@ import Return from '../../../Components/Return';
 import { ContainerBg,InnerContainerBg} from '../Pacients/styles';
 import {Title,TitleContainer, SubTitle} from '../../../Pages/Professional/Profile/styles';
 import { Button, ButtonSmall } from '../../../Utils/styles';
+import api from '../../../Services/api';
 
 const nameReducer = (state,action) => {
   if(action.type ==='USER_INPUT'){
@@ -20,15 +22,16 @@ const nameReducer = (state,action) => {
   return {value:'', isValid:false };
 };
 
-export default function SeeNote(){
+export default function SeeNote(props) {
+  const {state} = props.location
   const fullUrl=window.location.pathname
   const id=parseInt(fullUrl.slice(-1))
+  const history = useHistory();
 
-  const initialContent=localStorage.getItem('Note1')
-  const [editorContent,setEditorContent]=useState(initialContent)
+  const [editorContent,setEditorContent]=useState(state.text)
 
   const [nameState,dispatchName] = useReducer(nameReducer,{
-    value:'',
+    value: state.nome,
     isValid: null,
   });
   const {isValid: nameIsValid } = nameState;
@@ -39,10 +42,32 @@ export default function SeeNote(){
     dispatchName({type:'INPUT_BLUR'});
   };
 
-  function submitHandler(){
-      console.log(editorContent,nameState.value)
-      localStorage.setItem('Note',editorContent)
+  async function submitHandler() {
+    // TODO: Rever o path e os campos
+    // const data = {
+    //   text: editorContent,
+    //   nome: nameState.value
+    // }
+    // try {
+    //   const path = `/anotacoesmedicas/details/{anotacoesmedico_id}/{medico_id}${id}`
+    //   await api.put( path, data)
+    // }
+    // catch (err) {
+    //   console.log(err)
+    // }
+      history.push('/pacientes/menu/acompanhamento/notas/'+id)
     }
+    
+  async function handleRemoveNote() {
+    // TODO: Rever path
+    // try {
+    //   await api.delete(`/anotacoesmedicas/details/{anotacoesmedico_id}/{medico_id}${id}`)
+    // }
+    // catch (err) {
+    //   console.log(err)
+    // }
+    history.push('/pacientes/menu/acompanhamento/notas/'+id)
+  }
   
   const path=['/pacientes/menu/acompanhamento/notas/'+id,'/pacientes/menu/acompanhamento/'+id]
   
@@ -66,6 +91,7 @@ export default function SeeNote(){
           width='80%'
           height='600px'
           autoFocus={true}
+          defaultValue={editorContent}
           setOptions={{buttonList:[["undo",
           "redo",
           "font",
@@ -96,13 +122,12 @@ export default function SeeNote(){
           //"save",
           //"template"
         ]]}}  
-          setContents={initialContent}
           onChange={setEditorContent}
         />
      
 
       <ButtonSmall color='green' onClick={submitHandler}>Salvar</ButtonSmall>
-      <ButtonSmall>Excluir</ButtonSmall>
+      <ButtonSmall onClick={handleRemoveNote}>Excluir</ButtonSmall>
       </InnerContainerBg>
     </ContainerBg>
     

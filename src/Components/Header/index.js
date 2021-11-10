@@ -1,45 +1,48 @@
-import React,{useContext} from 'react';
-import {Link, useHistory} from 'react-router-dom';
-import { Logo,HeaderContainer, EnterTitle,HeaderBg, EnterContainer, EnterIcon, LogoutIcon, NavList, NavOption, LogoutContainer, MenuContainer} from './styles';
+import React, { useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { Logo, HeaderContainer, CartContainer, EnterTitle, HeaderBg, EnterContainer, EnterIcon, LogoutIcon, NavList, NavOption, LogoutContainer, MenuContainer } from './styles';
 import AuthContext from '../../Storage/auth-context';
-import {Title} from '../../Utils/styles';
+import { Title } from '../../Utils/styles';
 import LogoCannabis from '../../Assets/logo.svg';
+import cartImg from '../../Assets/cart.svg';
 import Enter from '../../Assets/enter.svg';
 import Exit from '../../Assets/exit.svg'
 import { NavLink } from 'react-router-dom';
+import {useCart} from '../../hooks/useCart';
 
 
-export default function Header(){
+export default function Header() {
   const authCtx = useContext(AuthContext);
-  const history=useHistory()
-  const gest=false
-  const adm=false
-  const med=false
-  const res=true
+  const {cart} = useCart()
+  const history = useHistory()
+  const gest = false
+  const adm = false
+  const med = false
+  const res = true
   //passar por context a info de qual tipo de user é
 
-  const activeStyle={
-    textDecoration:'underline',
-    textDecorationColor:'#789D55'
+  const activeStyle = {
+    textDecoration: 'underline',
+    textDecorationColor: '#789D55'
   }
-const logout=()=>{
-  authCtx.onLogout()
-  history.push("/login");
+  const logout = () => {
+    authCtx.onLogout()
+    history.push("/login");
 
-}
+  }
 
-  const UserCheck = () =>{
+  const UserCheck = () => {
     if (!authCtx.isLoggedIn) {
-      return(
-            <EnterContainer to="/login">
-              <EnterTitle>ENTRAR</EnterTitle>
-              <EnterIcon  src={ Enter }/>
-            </EnterContainer>     
+      return (
+        <EnterContainer to="/login">
+          <EnterTitle>ENTRAR</EnterTitle>
+          <EnterIcon src={Enter} />
+        </EnterContainer>
       )
     }
-    else if (authCtx.isLoggedIn){
+    else if (authCtx.isLoggedIn) {
       return (
-       
+
         <NavList>
           <NavOption>PRODUTOS</NavOption>
           <NavOption>CONSULTAS</NavOption>
@@ -49,27 +52,27 @@ const logout=()=>{
             <LogoutIcon src={Exit} alt="Logout" />
           </LogoutContainer>
         </NavList>
-        
-       
-      ) 
+
+
+      )
     }
-    else if (med){
+    else if (med) {
       return (
-       
+
         <NavList>
           <NavOption>PACIENTES</NavOption>
           <NavOption>CONSULTAS</NavOption>
           <NavOption>PERFIL</NavOption>
           <LogoutContainer>
             <NavOption>SAIR</NavOption>
-            <LogoutIcon src={Exit} alt="Logout" onClick={authCtx.onLogout}/>
+            <LogoutIcon src={Exit} alt="Logout" onClick={authCtx.onLogout} />
           </LogoutContainer>
         </NavList>
-      ) 
+      )
     }
-    else if (adm){
+    else if (adm) {
       return (
-       
+
         <NavList>
           <NavOption>CADASTRO</NavOption>
           <NavOption>CONSULTAS</NavOption>
@@ -77,89 +80,98 @@ const logout=()=>{
           <NavOption>PAGAMENTOS</NavOption>
           <LogoutContainer>
             <NavOption>SAIR</NavOption>
-            <LogoutIcon src={Exit} alt="Logout" onClick={authCtx.onLogout}/>
+            <LogoutIcon src={Exit} alt="Logout" onClick={authCtx.onLogout} />
           </LogoutContainer>
         </NavList>
-       
-      ) 
+
+      )
     }
   }
 
-  const Logged = ()=>{
-    return(
-            <EnterContainer to="/login">
-              <EnterTitle>ENTRAR</EnterTitle>
-              <EnterIcon  src={ Enter }/>
-            </EnterContainer> 
+  const Logged = () => {
+    return (
+      <EnterContainer to="/login">
+        <EnterTitle>ENTRAR</EnterTitle>
+        <EnterIcon src={Enter} />
+      </EnterContainer>
     )
   }
 
   const Medic = () => {
-    return(
-        <NavList>
-          <NavLink to='/pacientes' activeStyle={activeStyle}><NavOption>PACIENTES</NavOption></NavLink>
-          <NavLink to='/consultas' activeStyle={activeStyle}><NavOption>CONSULTAS</NavOption></NavLink>
-          <NavLink to='/perfil' activeStyle={activeStyle}><NavOption>PERFIL</NavOption></NavLink>
-          <LogoutContainer onClick={logout}>
-            <NavOption>SAIR</NavOption>
-            <LogoutIcon src={Exit} alt="Logout" />
-          </LogoutContainer>
-        </NavList>
+    return (
+      <NavList>
+        <NavLink to='/pacientes' activeStyle={activeStyle}><NavOption>PACIENTES</NavOption></NavLink>
+        <NavLink to='/consultas' activeStyle={activeStyle}><NavOption>CONSULTAS</NavOption></NavLink>
+        <NavLink to='/perfil' activeStyle={activeStyle}><NavOption>PERFIL</NavOption></NavLink>
+        <LogoutContainer onClick={logout}>
+          <NavOption>SAIR</NavOption>
+          <LogoutIcon src={Exit} alt="Logout" />
+        </LogoutContainer>
+      </NavList>
     )
   }
 
   const Adm = () => {
-    return(
-        <NavList>
-          <NavLink to='/cadastros' activeStyle={activeStyle}><NavOption>CADASTRO</NavOption></NavLink>
-          <NavOption>CONSULTAS</NavOption>
-          <NavOption>PROFISSIONAIS</NavOption>
-          <NavOption>PAGAMENTOS</NavOption>
-          <LogoutContainer onClick={logout}>
-            <NavOption>SAIR</NavOption>
-            <Link to='/'><LogoutIcon src={Exit} alt="Logout" /></Link>
-          </LogoutContainer>
-        </NavList>
+    return (
+      <NavList>
+        <NavLink to='/cadastros' activeStyle={activeStyle}><NavOption>CADASTRO</NavOption></NavLink>
+        <NavOption>CONSULTAS</NavOption>
+        <NavOption>PROFISSIONAIS</NavOption>
+        <NavOption>PAGAMENTOS</NavOption>
+        <LogoutContainer onClick={logout}>
+          <NavOption>SAIR</NavOption>
+          <Link to='/'><LogoutIcon src={Exit} alt="Logout" /></Link>
+        </LogoutContainer>
+      </NavList>
     )
   }
 
   const Res = () => {
-    return(
-        <NavList>
+    return (
+      <NavList>
+
+        <NavLink to='/consultas' activeStyle={activeStyle}><NavOption>CONSULTAS</NavOption></NavLink>
+        <NavLink to='/perfil' activeStyle={activeStyle}><NavOption>PERFIL</NavOption></NavLink>
         <NavLink to="/produtos"><NavOption>PRODUTOS</NavOption></NavLink>
-        <NavLink to="/carrinho"><NavOption>CARRINHO</NavOption></NavLink>
-          <NavLink to='/consultas' activeStyle={activeStyle}><NavOption>CONSULTAS</NavOption></NavLink>
-          <NavLink to='/perfil' activeStyle={activeStyle}><NavOption>PERFIL</NavOption></NavLink>
-          <LogoutContainer onClick={logout}>
-            <NavOption>SAIR</NavOption>
-            <Link to='/'><LogoutIcon src={Exit} alt="Logout" /></Link>
-          </LogoutContainer>
-        </NavList>
+        <NavLink to="/carrinho">
+          <CartContainer>
+            <img src={cartImg} alt="cart" />
+            <span>{
+              cart.reduce((acc, actual) => acc + actual.amount, 0)
+            }</span>
+          </CartContainer>
+        </NavLink>
+
+        <LogoutContainer onClick={logout}>
+          <NavOption>SAIR</NavOption>
+          <Link to='/'><LogoutIcon src={Exit} alt="Logout" /></Link>
+        </LogoutContainer>
+      </NavList>
     )
   }
 
   const Gest = () => {
-    return(
-        <NavList>
-          <NavOption>PESQUISA</NavOption>
-          <LogoutContainer onClick={logout}>
-            <NavOption>SAIR</NavOption>
-            <LogoutIcon src={Exit} alt="Logout" />
-          </LogoutContainer>
-        </NavList>
+    return (
+      <NavList>
+        <NavOption>PESQUISA</NavOption>
+        <LogoutContainer onClick={logout}>
+          <NavOption>SAIR</NavOption>
+          <LogoutIcon src={Exit} alt="Logout" />
+        </LogoutContainer>
+      </NavList>
     )
   }
-  
 
-  return(
+
+  return (
     <HeaderBg>
       <HeaderContainer>
-        <Logo src={LogoCannabis}/>
-        {!authCtx.isLoggedIn && (<Logged/>)}
-        {authCtx.isLoggedIn && authCtx.user==='medico' && (<Medic/>)}
-        {authCtx.isLoggedIn && authCtx.user==='responsavel' && (<Res/>)}
-        {authCtx.isLoggedIn && authCtx.user==='administrador' && (<Adm/>)}
-        {authCtx.isLoggedIn && authCtx.user==='gestor' && (<Gest/>)}
+        <Logo src={LogoCannabis} />
+        {!authCtx.isLoggedIn && (<Logged />)}
+        {authCtx.isLoggedIn && authCtx.user === 'medico' && (<Medic />)}
+        {authCtx.isLoggedIn && authCtx.user === 'responsavel' && (<Res />)}
+        {authCtx.isLoggedIn && authCtx.user === 'administrador' && (<Adm />)}
+        {authCtx.isLoggedIn && authCtx.user === 'gestor' && (<Gest />)}
       </HeaderContainer>
     </HeaderBg>
   )

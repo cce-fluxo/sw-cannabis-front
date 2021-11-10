@@ -14,6 +14,10 @@ export const ContainerBg = styled.div`
     width:90%;
   }
 `
+export const EmptyCartImg = styled.img`
+  height: 150px;
+  margin-top: 30px;
+`
 
 export const Title = styled.p`
   font-size:	48px;
@@ -39,6 +43,10 @@ export const ProductsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  h1{
+    margin-top: 50px;
+  }
 `
 
 export const Total = styled.div`

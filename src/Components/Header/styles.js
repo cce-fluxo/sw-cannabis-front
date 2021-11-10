@@ -51,6 +51,30 @@ export const NavList = styled.ul`
     align-items: center;
 `
 
+export const CartContainer = styled.div`
+  margin-left: 10px;
+  display: flex;
+  cursor: pointer;
+  img{
+    width: 25px;
+  }
+  span{
+    color: #fff;
+    background-color: red;
+    min-width: 18px;
+    height: 18px;
+    padding: 1px;
+    border-radius: 50%;
+    position: relative;
+    top: -12px;
+    left: -10px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`
+
 export const NavOption =styled.li`
     display:flex;
     justify-content: space-between;

@@ -37,6 +37,9 @@ export default function CreateForm() {
     value: '',
     isValid: null,
   });
+  useEffect(() => {
+    console.log("render")
+  },[])
 
   const { isValid: questionIsValid } = questionState;
   useEffect(() => {
@@ -56,9 +59,7 @@ export default function CreateForm() {
   const displayQuestions = questions.map((item) => {
     const displayOptions = item.options.map((item) => {
       return (
-        <>
-          <SmallInput placeholder={item.value} key={item.id} disabled />
-        </>
+        <SmallInput placeholder={item.value} key={item.id} disabled />
       )
     })
     return (
@@ -66,8 +67,8 @@ export default function CreateForm() {
         <QuestionContainer>
           <InputReverse placeholder={item.title} disabled />
           <ButtonsContainer>
-            <UpButton onClick={() =>handleMoveTop(item.id)}/>
-            <DownButton onClick={() =>handleMoveDown(item.id)}/>
+            <UpButton onClick={() => handleMoveTop(item.id)} />
+            <DownButton onClick={() => handleMoveDown(item.id)} />
             <RemoveIcon onClick={() => removeQuestion(item.id)} />
           </ButtonsContainer>
         </QuestionContainer>
@@ -98,7 +99,7 @@ export default function CreateForm() {
     }
     const firstPart = questions.slice(0, index - 1);
     const secondPart = questions.slice(index + 1)
-    const newList = [...firstPart,questions[index],questions[index-1],  ...secondPart];
+    const newList = [...firstPart, questions[index], questions[index - 1], ...secondPart];
     setQuestions(newList)
   }
   const handleMoveDown = (id) => {
@@ -108,7 +109,7 @@ export default function CreateForm() {
     }
     const firstPart = questions.slice(0, index);
     const secondPart = questions.slice(index + 2)
-    const newList = [...firstPart,questions[index + 1],questions[index],  ...secondPart];
+    const newList = [...firstPart, questions[index + 1], questions[index], ...secondPart];
     setQuestions(newList)
   }
 
@@ -175,9 +176,10 @@ export default function CreateForm() {
 
     }
     return (
-      <>
-        <OptionContainer><SmallInput placeholder={item.value} onChange={(e) => changeHandler(e)} /><RemoveIcon onClick={() => removeOption(item.id)} /></OptionContainer>
-      </>
+      <OptionContainer key={item.id}>
+        <SmallInput placeholder={item.value} onChange={(e) => changeHandler(e)} />
+        <RemoveIcon onClick={() => removeOption(item.id)} />
+      </OptionContainer>
     )
   })
 
@@ -203,13 +205,19 @@ export default function CreateForm() {
         <InnerContainerBg>
           <ModalDiv>
             <WindowTitle>Criação de pergunta</WindowTitle>
-            <InputReverse placeholder='Digite aqui sua pergunta' value={questionState.value}
-              onChange={questionChangeHandler} onBlur={validateQuestionHandler} validation={questionState.isValid} key="a"/>
+            <InputReverse placeholder='Digite aqui sua pergunta'
+              value={questionState.value}
+              onChange={questionChangeHandler}
+              onBlur={validateQuestionHandler}
+              validation={questionState.isValid}
+            />
             <DivOption>
               {optionsWindow}
             </DivOption>
             <Button color='green' onClick={() => addOption()}>Adicionar opção</Button>
-            <Button color='green' onClick={() => addQuestion(questionState.value, input.value, options)} disabled={!formIsValid}>Adicionar pergunta</Button>
+            <Button color='green' onClick={() => addQuestion(questionState.value, input.value, options)} disabled={!formIsValid}>
+              Adicionar pergunta
+            </Button>
           </ModalDiv>
         </InnerContainerBg>
       </BigModal>
