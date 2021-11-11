@@ -252,25 +252,34 @@ export const AuthContextProvider = (props) => {
     }
   }
 
-  async function userRegister(userType,name,lastname,email,phone,password){
+  async function userRegister(
+    userType,
+    data,
+    setRegisterMade
+  ) {
     if(userType==='responsavel'){
-      const data={
-      'nome':name,
-      'sobrenome':lastname,
-      'email':email,
-      'celular':phone,
-      'password':password,
-      'cpf':'123', 'rg':'123', 'cep':'123','endereco':'123', 'bairro':'123', 'numero':'123', 'complemento':'123', 'cidade':'123', 'estado':'123',
-      }
       try {
+        console.log(data)
         const response = await api.post("/responsavel", data)
         console.log(response.data)
+        setRegisterMade(true)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    else if(userType==='medico'){
+      try {
+        const response = await api.post("/medico", data)
+        console.log(response.data)
+        setRegisterMade(true)
   
       } catch (error) {
         console.log(error)
-        
       }
     }
+
+    
     
   }
 

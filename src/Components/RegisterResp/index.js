@@ -200,10 +200,15 @@ export default function RegisterResp(){
 
     const submitHandler = (event) => {
       event.preventDefault();
-      ctx.onUserRegister('responsavel',nameState.value,lastNameState.value,emailState.value, phoneState.value,passwordState.value)
+      const data = {
+        nome: nameState.value,
+        sobrenome: lastNameState.value,
+        email: emailState.value,
+        password: passwordState.value,
+        celular: phoneState.value,
+      }
+      ctx.onUserRegister('responsavel',data, setRegisterMade)
       
-      console.log(nameState.value,lastNameState.value,emailState.value, phoneState.value,passwordState.value);
-      setRegisterMade(true);
     };
 
     const RegisterFinished = () =>{
