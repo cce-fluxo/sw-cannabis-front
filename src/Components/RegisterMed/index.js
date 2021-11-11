@@ -563,29 +563,10 @@ export default function RegisterMed() {
       rg: rgState.value,
       foto_perfil: "saddsds.png"
     }
-    console.log(data)
-    return
     onUserRegister("medico", data, setRegisterMade)
   };
 
 
-
-  const changeSelect = () => {
-    setSelectColor(true)
-    if (document.getElementById("male").selected) {
-      console.log('masculino')
-    }
-    else {
-      console.log('feminino')
-    }
-  }
-  const blurSelect = () => {
-    if (document.getElementById('none').selected) {
-      setSelectColor(false)
-    }
-
-
-  }
   const RegisterFinished = () => {
     return (
       <>
