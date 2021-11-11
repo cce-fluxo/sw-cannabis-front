@@ -23,6 +23,43 @@ const questionReducer = (state, action) => {
 };
 
 
+
+const NotDiscursive = ({
+  closeWindow,
+  questionState,
+  questionChangeHandler,
+  validateQuestionHandler,
+  optionsWindow,
+  addOption,
+  addQuestion,
+  input,
+  options,
+  formIsValid
+}) => {
+  return (
+    <BigModal onClose={closeWindow}>
+      <InnerContainerBg>
+        <ModalDiv>
+          <WindowTitle>Criação de pergunta</WindowTitle>
+          <InputReverse placeholder='Digite aqui sua pergunta'
+            value={questionState.value}
+            onChange={questionChangeHandler}
+            onBlur={validateQuestionHandler}
+            validation={questionState.isValid}
+          />
+          <DivOption>
+            {optionsWindow}
+          </DivOption>
+          <Button color='green' onClick={() => addOption()}>Adicionar opção</Button>
+          <Button color='green' onClick={() => addQuestion(questionState.value, input.value, options)} disabled={!formIsValid}>
+            Adicionar pergunta
+          </Button>
+        </ModalDiv>
+      </InnerContainerBg>
+    </BigModal>
+  )
+}
+
 export default function CreateForm() {
 
   const [questions, setQuestions] = useState([]);
@@ -39,7 +76,7 @@ export default function CreateForm() {
   });
   useEffect(() => {
     console.log("render")
-  },[])
+  }, [])
 
   const { isValid: questionIsValid } = questionState;
   useEffect(() => {
@@ -199,36 +236,28 @@ export default function CreateForm() {
     )
   }
 
-  const NotDiscursive = () => {
-    return (
-      <BigModal onClose={closeWindow}>
-        <InnerContainerBg>
-          <ModalDiv>
-            <WindowTitle>Criação de pergunta</WindowTitle>
-            <InputReverse placeholder='Digite aqui sua pergunta'
-              value={questionState.value}
-              onChange={questionChangeHandler}
-              onBlur={validateQuestionHandler}
-              validation={questionState.isValid}
-            />
-            <DivOption>
-              {optionsWindow}
-            </DivOption>
-            <Button color='green' onClick={() => addOption()}>Adicionar opção</Button>
-            <Button color='green' onClick={() => addQuestion(questionState.value, input.value, options)} disabled={!formIsValid}>
-              Adicionar pergunta
-            </Button>
-          </ModalDiv>
-        </InnerContainerBg>
-      </BigModal>
-    )
-  }
+
 
   const addQuestionWindow = () => {
 
     return (
       <>
-        {input.value === 'discursive' ? <Discursive /> : <NotDiscursive />}
+        {
+          input.value === 'discursive' ?
+            <Discursive /> :
+            <NotDiscursive
+              closeWindow={closeWindow}
+              questionState={questionState}
+              questionChangeHandler={questionChangeHandler}
+              validateQuestionHandler={validateQuestionHandler}
+              optionsWindow={optionsWindow}
+              addOption={addOption}
+              addQuestion={addQuestion}
+              options={options}
+              input={input}
+              formIsValid={formIsValid}
+
+            />}
       </>
     )
   }
