@@ -229,6 +229,7 @@ export default function RegisterResp() {
       password: passwordState.value,
       cpf: cpfState.value,
       celular: phoneState.value,
+      rg: "wqsdwqwdwq"
     }
     ctx.onUserRegister('responsavel', data, setRegisterMade)
 

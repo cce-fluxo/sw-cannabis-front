@@ -208,15 +208,31 @@ const adressReducer = (state, action) => {
   }
   return { value: '', isValid: false };
 };
-const compReducer = (state, action) => {
+
+const adressNumberReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
-    return { value: action.val, isValid: action.val.trim().length > 3 };
+    return { value: action.val, isValid: action.val.trim().length > 0 };
   }
   if (action.type === 'INPUT_BLUR') {
-    return { value: state.value, isValid: state.value.trim().length > 3 };
+    return { value: state.value, isValid: state.value.trim().length > 0 };
   }
   return { value: '', isValid: false };
 };
+const compReducer = (state, action) => {
+  if (action.type === 'USER_INPUT') {
+    return { value: action.val, isValid: true};
+  }
+  if (action.type === 'INPUT_BLUR') {
+    return { value: state.value, isValid: true };
+  }
+  return { value: '', isValid: false };
+};
+
+
+
+
+
+
 const bioReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
     return { value: action.val, isValid: action.val.trim().length > 30 };
@@ -336,6 +352,12 @@ export default function RegisterMed() {
     value: '',
     isValid: null,
   });
+
+  const [adressNumberState, dispatchAdressNumber] = useReducer(adressNumberReducer, {
+    value: '',
+    isValid: null,
+  });
+
   const [compState, dispatchComp] = useReducer(compReducer, {
     value: '',
     isValid: null,
@@ -365,6 +387,7 @@ export default function RegisterMed() {
   const { isValid: cepIsValid } = cepState;
   const { isValid: bairroIsValid } = bairroState;
   const { isValid: adressIsValid } = adressState;
+  const { isValid: adressNumberIsValid } = adressNumberState;
   const { isValid: compIsValid } = compState;
   const { isValid: bioIsValid } = bioState;
 
@@ -448,6 +471,12 @@ export default function RegisterMed() {
   const compChangeHandler = (event) => {
     dispatchComp({ type: 'USER_INPUT', val: event.target.value });
   };
+
+
+  const adressNumberChangeHandler = (event) => {
+    dispatchAdressNumber({ type: 'USER_INPUT', val: event.target.value });
+  };
+
   const bioChangeHandler = (event) => {
     dispatchBio({ type: 'USER_INPUT', val: event.target.value });
   };
@@ -520,6 +549,11 @@ export default function RegisterMed() {
   const validateCompHandler = () => {
     dispatchComp({ type: 'INPUT_BLUR' });
   };
+
+  const validateAdressNumberHandler = () => {
+    dispatchAdressNumber({ type: 'INPUT_BLUR' });
+  };
+
   const validateBioHandler = () => {
     dispatchBio({ type: 'INPUT_BLUR' });
   };
@@ -557,12 +591,14 @@ export default function RegisterMed() {
       sexo: genderState.value,
       bairro: bairroState.value,
       endereco: adressState.value,
+      numero: adressNumberState.value,
       complemento: compState.value,
       especialidade: specState.value,
       cpf: cpfState.value,
       rg: rgState.value,
       foto_perfil: "saddsds.png"
     }
+    console.log(data)
     onUserRegister("medico", data, setRegisterMade)
   };
 
@@ -682,6 +718,7 @@ export default function RegisterMed() {
         <Input id='register-cep' placeholder="Insira seu CEP" autoComplete={'off'} icon={House} value={cepState.value} onChange={cepChangeHandler} onBlur={validateCepHandler} validation={cepState.isValid} />
         <Input id='register-bairro' placeholder="Insira seu Bairro" autoComplete={'off'} icon={House} value={bairroState.value} onChange={bairroChangeHandler} onBlur={validateBairroHandler} validation={bairroState.isValid} />
         <Input id='register-adress' placeholder="Insira seu Endereço" autoComplete={'off'} icon={House} value={adressState.value} onChange={adressChangeHandler} onBlur={validateAdressHandler} validation={adressState.isValid} />
+        <Input id='register-adressNumber' placeholder="Insira o Número" autoComplete={'off'} icon={House} value={adressNumberState.value} onChange={adressNumberChangeHandler} onBlur={validateAdressNumberHandler} validation={adressNumberState.isValid} />
         <Input id='register-comp' placeholder="Insira o Complemento" autoComplete={'off'} icon={House} value={compState.value} onChange={compChangeHandler} onBlur={validateCompHandler} validation={compState.isValid} />
 
         <div>

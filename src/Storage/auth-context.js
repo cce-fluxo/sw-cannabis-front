@@ -13,15 +13,15 @@ const AuthContext = React.createContext({
   //user: 'responsavel'
 });
 export const AuthContextProvider = (props) => {
-  
+
   const [user, setUser] = useState({});
   const [pacients, setPacients] = useState({});
 
   // eslint-disable-next-line
-  const [userType,setUserType]=useState();
-  const [userId,setUserId]=useState();
+  const [userType, setUserType] = useState();
+  const [userId, setUserId] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+
   async function sendToStorage(photo) {
     try {
 
@@ -37,7 +37,7 @@ export const AuthContextProvider = (props) => {
       const mediaUrl = firstResponse.data.media_url;
 
       const binaryFile = Buffer.from(photo.base64, 'base64');
-// eslint-disable-next-line
+      // eslint-disable-next-line
       const secondResponse = await axios.put(mediaUrl, binaryFile, {
         headers: { 'Content-Type': tipoImagem },
       });
@@ -51,42 +51,42 @@ export const AuthContextProvider = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem('Token');
-    const user=localStorage.getItem('UserType');
-    const id=localStorage.getItem('ID');
-    if (token && user==='responsavel') {
-      
+    const user = localStorage.getItem('UserType');
+    const id = localStorage.getItem('ID');
+    if (token && user === 'responsavel') {
+
       api.get(`/patient/lista`, {
         headers: {
-          'authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
       })
         .then((res) => {
           console.log(res.data)
           setPacients(res.data)
-          
-          
+
+
         })
         .catch((error) => {
           console.error(error)
         })
       api.get(`/responsavel/${id}`, {
         headers: {
-          'authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
       })
         .then((res) => {
           console.log(res.data)
           setUser(res.data)
-          
-          
+
+
         })
         .catch((error) => {
           console.error(error)
         })
-        
-        
+
+
     }
-    else if (token && user==='medico') {
+    else if (token && user === 'medico') {
       api.get(`/medico/${id}`, {
         headers: {
           'authorization': `Bearer ${token}`
@@ -95,15 +95,15 @@ export const AuthContextProvider = (props) => {
         .then((res) => {
           console.log(res.data)
           setUser(res.data)
-          
-          
-          
+
+
+
         })
         .catch((error) => {
           console.error(error)
         })
-        
-        
+
+
     }
     else {
       console.log('sem token')
@@ -118,23 +118,23 @@ export const AuthContextProvider = (props) => {
     }
   }, []);
 
-  async function dataChange(cel,cidade,estado,numero,endereco,comp,cep,){
-    const id=user.id
-    
-    const data={
+  async function dataChange(cel, cidade, estado, numero, endereco, comp, cep,) {
+    const id = user.id
+
+    const data = {
       //'cpf':'123.444.852.79',
       //'celular':'(21)99971-8899',
-      'telefone_secundario':cel,
-      'cidade':cidade,
-      'estado':estado,
-      'cep':cep,
-      'endereco':endereco,
-      'numero':numero,
-      'complemento':comp,
+      'telefone_secundario': cel,
+      'cidade': cidade,
+      'estado': estado,
+      'cep': cep,
+      'endereco': endereco,
+      'numero': numero,
+      'complemento': comp,
     }
     console.log(data)
-    try{
-      const rota='/responsavel/'+id
+    try {
+      const rota = '/responsavel/' + id
       const response = await api.patch(rota, data)
       console.log(response.data)
       window.location.reload()
@@ -144,7 +144,7 @@ export const AuthContextProvider = (props) => {
     }
   }
   const logoutHandler = () => {
-//    history.push("/login");
+    //    history.push("/login");
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('Token');
     localStorage.removeItem('RefreshToken');
@@ -158,63 +158,63 @@ export const AuthContextProvider = (props) => {
     //console.log(email, password);
   };
 
-  async function registerPacient(nome,sobrenome,nascimento,cpf,rg,identidade,diagnostico,laudo,receita,cidade,estado,cep,endereco,complemento,numero){
-    const data={
-      'nome':nome,'sobrenome':sobrenome, 'data_nascimento':nascimento,'cpf':cpf,'rg':rg,'documentos_pessoais':identidade,'diagnostico':diagnostico,'laudo_medico':laudo,'receita_medica':receita,'cidade':cidade,'estado':estado,'cep':cep,'endereco':endereco,'complemento':complemento,'numero':numero,'bairro':'tijuca','password':''
+  async function registerPacient(nome, sobrenome, nascimento, cpf, rg, identidade, diagnostico, laudo, receita, cidade, estado, cep, endereco, complemento, numero) {
+    const data = {
+      'nome': nome, 'sobrenome': sobrenome, 'data_nascimento': nascimento, 'cpf': cpf, 'rg': rg, 'documentos_pessoais': identidade, 'diagnostico': diagnostico, 'laudo_medico': laudo, 'receita_medica': receita, 'cidade': cidade, 'estado': estado, 'cep': cep, 'endereco': endereco, 'complemento': complemento, 'numero': numero, 'bairro': 'tijuca'
     }
     try {
-     
+
       const response = await api.post('/patient', data)
-      
+
       console.log(response)
       console.log(response.data)
 
     } catch (error) {
       console.log(error)
-      
+
     }
-   
+
   }
 
-   async function removeHandler(id,pacientList){
+  async function removeHandler(id, pacientList) {
     //const newList=pacientList.filter(x=>x.id!==id)
     //console.log(newList)
     const token = localStorage.getItem('Token');
-    const rota='/paciente/'+id
-    const headers={
-      'authorization': `Bearer ${token}`
-       }
-       api.delete(rota,{ headers })
-    try{
-      const response= await api.delete(rota,{ headers })
+    const rota = '/paciente/' + id
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+    api.delete(rota, { headers })
+    try {
+      const response = await api.delete(rota, { headers })
 
       console.log(response)
     }
-    catch(error){
+    catch (error) {
       console.log(error)
     }
-    
+
     // api.delete(rota, {
     //   headers: {
     //     'authorization': `Bearer ${token}`
     //   }
     // }).then((res) => {
     //   console.log(res)
-  
+
     // })
     // .catch((error) => {
     //   console.error(error)
     // })
-   }
+  }
 
-  
-  async function updatePacient(info,id){
-  
-    const data={
-      'diagnostico':info.diag,'laudo_medico':info.laudo,'receita_medica':info.receita,'cidade':info.city,'estado':info.state,'cep':info.cep,'endereco':info.adress,'complemento':info.comp,'numero':info.num,'bairro':'tijuca'
+
+  async function updatePacient(info, id) {
+
+    const data = {
+      'diagnostico': info.diag, 'laudo_medico': info.laudo, 'receita_medica': info.receita, 'cidade': info.city, 'estado': info.state, 'cep': info.cep, 'endereco': info.adress, 'complemento': info.comp, 'numero': info.num, 'bairro': 'tijuca'
     }
-    try{
-      const rota='/paciente/'+id
+    try {
+      const rota = '/paciente/' + id
       const response = await api.patch(rota, data)
       console.log(response.data)
     }
@@ -224,7 +224,7 @@ export const AuthContextProvider = (props) => {
   }
 
 
-  
+
 
   async function handleSubmit(email, password) {
     const data = {
@@ -257,7 +257,7 @@ export const AuthContextProvider = (props) => {
     data,
     setRegisterMade
   ) {
-    if(userType==='responsavel'){
+    if (userType === 'responsavel') {
       try {
         console.log(data)
         const response = await api.post("/responsavel", data)
@@ -268,50 +268,50 @@ export const AuthContextProvider = (props) => {
       }
     }
 
-    else if(userType==='medico'){
+    else if (userType === 'medico') {
       try {
         const response = await api.post("/medico", data)
         console.log(response.data)
         setRegisterMade(true)
-  
+
       } catch (error) {
         console.log(error)
       }
     }
 
-    
-    
+
+
   }
 
-  async function resetPasswordEmail(email){
-    const data={'email':email}
-      try {
-        const response = await api.get("/responsavel-confirm", data)
-        console.log(response.data)
-  
-      } catch (error) {
-        console.log(error)
-        
-      }
+  async function resetPasswordEmail(email) {
+    const data = { 'email': email }
+    try {
+      const response = await api.get("/responsavel-confirm", data)
+      console.log(response.data)
+
+    } catch (error) {
+      console.log(error)
+
     }
-    
-  
+  }
+
+
 
   return <AuthContext.Provider
     value={{
-      isLoggedIn:isLoggedIn,
+      isLoggedIn: isLoggedIn,
       onLogout: logoutHandler,
       onLogin: handleSubmit,
       userInfo: user,
       pacients: pacients,
-      user:localStorage.getItem('UserType'),
-      onDataChange:dataChange,
+      user: localStorage.getItem('UserType'),
+      onDataChange: dataChange,
       onPacientRegister: registerPacient,
       onPacientRemove: removeHandler,
-      onPacientUpdate:updatePacient,
+      onPacientUpdate: updatePacient,
       onUserRegister: userRegister,
       onSendForgotEmail: resetPasswordEmail,
-      sendToStorage:sendToStorage,
+      sendToStorage: sendToStorage,
     }}
   >{props.children}</AuthContext.Provider>
 };
