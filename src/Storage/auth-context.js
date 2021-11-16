@@ -18,7 +18,12 @@ export const AuthContextProvider = (props) => {
   const [pacients, setPacients] = useState({});
 
   // eslint-disable-next-line
-  const [userType, setUserType] = useState();
+  const [userType, setUserType] = useState(() => {
+    const userType = localStorage.getItem('UserType');
+    if (userType)
+      return userType;
+    return ""
+  });
   const [userId, setUserId] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 

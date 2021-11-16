@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import {BsFillArrowUpCircleFill,BsArrowDownCircleFill,BsXCircleFill} from 'react-icons/bs';
+import { BsFillArrowUpCircleFill, BsArrowDownCircleFill, BsXCircleFill } from 'react-icons/bs';
 
 
-export const TypeTitle=styled.p`
+export const TypeTitle = styled.p`
     font-size: 24px;
     font-weight: bold; 
     color: #262626;
@@ -11,7 +11,7 @@ export const TypeTitle=styled.p`
     text-align: center;
 `
 
-export const TypeContainer=styled.div`
+export const TypeContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +21,7 @@ export const TypeContainer=styled.div`
     margin-bottom:40px;
 `
 
-export const QuestionContainer=styled.div`
+export const QuestionContainer = styled.div`
     display: flex;
     align-items: center;
     align-content: center;
@@ -34,17 +34,19 @@ export const QuestionContainer=styled.div`
     //box-shadow: 5px 5px 10px 5px gray;
 `
 
-export const QuestionBg=styled.div`
+export const QuestionBg = styled.div`
     display: flex;
     align-items: center;
     align-content: center;
     flex-direction:column;
     
-    border-bottom: 1px solid gray;
     padding-bottom: 40px;
     //margin-bottom:15px;
     //border-bottom: 1px solid gray
     //box-shadow: 5px 5px 10px 5px gray;
+    &:not(:last-child){
+        border-bottom: 1px solid gray;
+    }
 `
 
 export const SmallInput = styled.input`
@@ -56,13 +58,10 @@ export const SmallInput = styled.input`
     color:white;
     padding-left: 20px;
     font-size: 16px;
-    border-color:${props=>
-    {return props.validation===false?'red':'none'}};
-    background-color:${props=>
-    {return props.validation===false?'#781118':'none'}};
+    border-color:${props => { return props.validation === false ? 'red' : 'none' }};
+    background-color:${props => { return props.validation === false ? '#781118' : 'none' }};
     &&:focus{
-      border-color:${props=>
-    {return props.validation===false?'red':'#789D55'}};
+      border-color:${props => { return props.validation === false ? 'red' : '#789D55' }};
     }
     &&::placeholder{
       color: white;
@@ -77,57 +76,53 @@ export const SmallInput = styled.input`
   }
 `
 
-export const ButtonsContainer=styled.div`
+export const ButtonsContainer = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 `
 
 
-export const ButtonTitle=styled.p`
+export const ButtonTitle = styled.p`
     font-size: 14px;
-    color: ${props=>
-    {return props.add===true?'green':'red'}};
+    color: ${props => { return props.add === true ? 'green' : 'red' }};
     
 `
 
-export const UpButton=styled(BsFillArrowUpCircleFill)`
+export const UpButton = styled(BsFillArrowUpCircleFill)`
     width: 30px;
     height: 30px;
     color: black;
-    cursor: pointer;
+    cursor: ${props => props.disabled === true ? 'not-allowed' : 'pointer'};
+
     
 `
 
-export const DownButton=styled(BsArrowDownCircleFill)`
+export const DownButton = styled(BsArrowDownCircleFill)`
     width: 30px;
     height: 30px;
     color: black;
     cursor: pointer;
     margin-left: 5px;
+    cursor: ${props => props.disabled === true ? 'not-allowed' : 'pointer'};
     
 `
 
-export const Button=styled.button`
-    
-    padding: ${props=>
-    {return props.color==='green'?'10px':'5px'}};
-    color: ${props=>
-    {return props.color==='green'?'#789D55':'red'}};
+export const Button = styled.button`
+    width: 190px;
+    padding: ${props => { return props.color === 'green' ? '10px' : '5px' }};
+    color: ${props => { return props.color === 'green' ? '#789D55' : 'red' }};
     background-color:white;
     font-weight: bold;
-    font-size:${props=>
-    {return props.color==='green'?'18px':'12px'}};
-    border:1px solid ${props=>
-    {return props.color==='green'?'#789D55':'red'}};
+    font-size:${props => { return props.color === 'green' ? '18px' : '12px' }};
+    border:1px solid ${props => { return props.color === 'green' ? '#789D55' : 'red' }};
     border-radius: 20px; 
     
     cursor:pointer;
     
     &&:hover{
         color: white;
-        background-color:${props=>
-    {return props.color==='green'?'#789D55':'red'}};
+        background-color:${props => { return props.color === 'green' ? '#789D55' : 'red' }};
     }
     &&:disabled{
       background: #ccc;
@@ -142,7 +137,7 @@ export const Button=styled.button`
 
 
 
-export const RemoveIcon=styled(BsXCircleFill)`
+export const RemoveIcon = styled(BsXCircleFill)`
     width: 30px;
     height: 30px;
     color: red;
@@ -150,13 +145,13 @@ export const RemoveIcon=styled(BsXCircleFill)`
     margin-left: 5px;
 `
 
-export const RadioOption=styled.div`
+export const RadioOption = styled.div`
     display: flex;
     align-items: center;
     flex-direction: row;
 `
 
-export const RadioContainer=styled.div`
+export const RadioContainer = styled.div`
     display:flex;
     flex-direction: column;
     align-items: flex-start;
@@ -165,7 +160,7 @@ export const RadioContainer=styled.div`
 
 `
 
-export const RadioContainerBg=styled.div`
+export const RadioContainerBg = styled.div`
     background-color: #262626;
     padding:20px;
     border-radius:20px;
@@ -175,7 +170,7 @@ export const RadioContainerBg=styled.div`
     margin: 20px 0;
 `
 
-export const RadioName=styled.label`
+export const RadioName = styled.label`
     font-size: 14px;
     margin: .4rem;
     color:white;
@@ -190,19 +185,58 @@ export const ModalDiv = styled.div`
   
 `
 
-export const DivOption=styled.div`
+export const DivOption = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
-    flex-wrap:wrap;
-    justify-content:space-between;
-    margin-bottom: 10px;
- 
-    width:900px;
+    justify-content: center;
+    margin: 10px 0;
+
+    div+div{
+        margin-top: 10px;
+    }
 `
 
-export const OptionContainer=styled.div`
+export const ButtonsDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    button+ button{
+        margin-left: 10px;
+    }
+`
+
+export const OptionContainer = styled.div`
     display:flex;
     align-items:center;
     margin-bottom:15px;
     //padding-right:40px;
+`
+
+export const InnerModal = styled.div`
+    width: 80%;
+  //min-height: 200px;
+  border-radius: 40px;
+  margin-top: 20px;
+  padding-bottom: 30px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  
+  padding-top: 30px;
+  overflow-y: auto;
+    &::-webkit-scrollbar-track {
+      background-color: #F4F4F4;
+      width: 10px;
+    }
+    &::-webkit-scrollbar {
+        background: #F4F4F4;
+        width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+        width: 5px;
+        background: #dad7d7;
+    }
 `

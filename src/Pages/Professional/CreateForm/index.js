@@ -5,7 +5,7 @@ import Return from '../../../Components/Return';
 import { ContainerBg, InnerContainerBg } from '../Pacients/styles';
 import { Title, TitleContainer } from '../../../Pages/Professional/Profile/styles';
 import { InputReverse } from '../../../Components/Input/styles';
-import { ModalDiv, Button, DivOption, InputOption, QuestionContainer, RadioContainer, RadioName, RadioOption, DownButton, RadioContainerBg, TypeContainer, TypeTitle, ButtonsContainer, UpButton, RemoveIcon, SmallInput, OptionContainer, QuestionBg } from './styles';
+import { ModalDiv, Button, DivOption, ButtonsDiv, InputOption, QuestionContainer, RadioContainer, RadioName, RadioOption, DownButton, RadioContainerBg, TypeContainer, TypeTitle, ButtonsContainer, UpButton, RemoveIcon, SmallInput, OptionContainer, QuestionBg, InnerModal } from './styles';
 import BigModal from '../../../Components/BigModal';
 import { OptContainer, WindowText, WindowTitle } from '../../Login/styles';
 import Modal from '../../../Components/Modal';
@@ -38,7 +38,7 @@ const NotDiscursive = ({
 }) => {
   return (
     <BigModal onClose={closeWindow}>
-      <InnerContainerBg>
+      <InnerModal>
         <ModalDiv>
           <WindowTitle>Criação de pergunta</WindowTitle>
           <InputReverse placeholder='Digite aqui sua pergunta'
@@ -50,15 +50,44 @@ const NotDiscursive = ({
           <DivOption>
             {optionsWindow}
           </DivOption>
-          <Button color='green' onClick={() => addOption()}>Adicionar opção</Button>
-          <Button color='green' onClick={() => addQuestion(questionState.value, input.value, options)} disabled={!formIsValid}>
-            Adicionar pergunta
-          </Button>
+          <ButtonsDiv>
+            <Button color='green' onClick={() => addOption()}>Adicionar opção</Button>
+            <Button color='green' onClick={() => addQuestion(questionState.value, input.value, options)} disabled={!formIsValid}>
+              Adicionar pergunta
+            </Button>
+          </ButtonsDiv>
         </ModalDiv>
-      </InnerContainerBg>
+      </InnerModal>
     </BigModal>
   )
 }
+
+
+const Discursive = ({
+  closeWindow,
+  questionState,
+  questionChangeHandler,
+  validateQuestionHandler,
+  addQuestion,
+  input,
+  formIsValid
+}
+) => {
+  return (
+    <Modal onClose={closeWindow}>
+      <InnerContainerBg>
+        <ModalDiv>
+          <WindowTitle>Criação de pergunta</WindowTitle>
+          <InputReverse placeholder='Digite aqui sua pergunta' value={questionState.value}
+            onChange={questionChangeHandler} onBlur={validateQuestionHandler} validation={questionState.isValid} />
+
+          <Button color='green' onClick={() => addQuestion(questionState.value, input.value)} disabled={!formIsValid}>Adicionar pergunta</Button>
+        </ModalDiv>
+      </InnerContainerBg>
+    </Modal>
+  )
+}
+
 
 export default function CreateForm() {
 
@@ -93,8 +122,8 @@ export default function CreateForm() {
     };
   }, [questionIsValid]);
 
-  const displayQuestions = questions.map((item) => {
-    const displayOptions = item.options.map((item) => {
+  const displayQuestions = questions.map((item, index) => {
+    const displayOptions = item.options?.map((item) => {
       return (
         <SmallInput placeholder={item.value} key={item.id} disabled />
       )
@@ -104,8 +133,8 @@ export default function CreateForm() {
         <QuestionContainer>
           <InputReverse placeholder={item.title} disabled />
           <ButtonsContainer>
-            <UpButton onClick={() => handleMoveTop(item.id)} />
-            <DownButton onClick={() => handleMoveDown(item.id)} />
+            <UpButton onClick={() => handleMoveTop(item.id)} disabled={index === 0}  />
+            <DownButton onClick={() => handleMoveDown(item.id)}  disabled={index === questions.length - 1}/>
             <RemoveIcon onClick={() => removeQuestion(item.id)} />
           </ButtonsContainer>
         </QuestionContainer>
@@ -220,21 +249,7 @@ export default function CreateForm() {
     )
   })
 
-  const Discursive = () => {
-    return (
-      <Modal onClose={closeWindow}>
-        <InnerContainerBg>
-          <ModalDiv>
-            <WindowTitle>Criação de pergunta</WindowTitle>
-            <InputReverse placeholder='Digite aqui sua pergunta' value={questionState.value}
-              onChange={questionChangeHandler} onBlur={validateQuestionHandler} validation={questionState.isValid} />
 
-            <Button color='green' onClick={() => addQuestion(questionState.value, input.value)} disabled={!formIsValid}>Adicionar pergunta</Button>
-          </ModalDiv>
-        </InnerContainerBg>
-      </Modal>
-    )
-  }
 
 
 
@@ -244,7 +259,16 @@ export default function CreateForm() {
       <>
         {
           input.value === 'discursive' ?
-            <Discursive /> :
+            <Discursive
+              closeWindow={closeWindow}
+              questionState={questionState}
+              questionChangeHandler={questionChangeHandler}
+              validateQuestionHandler={validateQuestionHandler}
+              addQuestion={addQuestion}
+              input={input}
+              formIsValid={formIsValid}
+
+            /> :
             <NotDiscursive
               closeWindow={closeWindow}
               questionState={questionState}
