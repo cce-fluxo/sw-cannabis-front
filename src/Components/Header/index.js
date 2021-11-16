@@ -161,7 +161,7 @@ export default function Header() {
       </NavList>
     )
   }
-
+  console.log(authCtx.user)
 
   return (
     <HeaderBg>

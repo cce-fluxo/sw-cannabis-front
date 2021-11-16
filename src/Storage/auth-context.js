@@ -160,7 +160,22 @@ export const AuthContextProvider = (props) => {
 
   async function registerPacient(nome, sobrenome, nascimento, cpf, rg, identidade, diagnostico, laudo, receita, cidade, estado, cep, endereco, complemento, numero) {
     const data = {
-      'nome': nome, 'sobrenome': sobrenome, 'data_nascimento': nascimento, 'cpf': cpf, 'rg': rg, 'documentos_pessoais': identidade, 'diagnostico': diagnostico, 'laudo_medico': laudo, 'receita_medica': receita, 'cidade': cidade, 'estado': estado, 'cep': cep, 'endereco': endereco, 'complemento': complemento, 'numero': numero, 'bairro': 'tijuca'
+      'nome': nome,
+      'sobrenome': sobrenome,
+      'data_nascimento': nascimento,
+      'cpf': cpf,
+      'rg': rg,
+      'documentos_pessoais': identidade,
+      'diagnostico': diagnostico,
+      'laudo_medico': laudo,
+      'receita_medica': receita,
+      'cidade': cidade,
+      'estado': estado,
+      'cep': cep,
+      'endereco': endereco,
+      'complemento': complemento,
+      'numero': numero,
+      'bairro': 'tijuca'
     }
     try {
 
@@ -226,7 +241,7 @@ export const AuthContextProvider = (props) => {
 
 
 
-  async function handleSubmit(email, password) {
+  async function handleSubmit(email, password, history) {
     const data = {
       "email": email,
       "password": password
@@ -242,7 +257,7 @@ export const AuthContextProvider = (props) => {
       localStorage.setItem('Token', token)
       localStorage.setItem('RefreshToken', refreshToken)
       localStorage.setItem('UserType', response.data.user)
-      window.location.reload()
+      history.push("/");
       //cac@poli.ufrj.br igor123456 respo
       //cami@poli.ufrj.br igor123 medico
 
@@ -304,7 +319,7 @@ export const AuthContextProvider = (props) => {
       onLogin: handleSubmit,
       userInfo: user,
       pacients: pacients,
-      user: localStorage.getItem('UserType'),
+      user: userType,
       onDataChange: dataChange,
       onPacientRegister: registerPacient,
       onPacientRemove: removeHandler,
