@@ -163,25 +163,8 @@ export const AuthContextProvider = (props) => {
     //console.log(email, password);
   };
 
-  async function registerPacient(nome, sobrenome, nascimento, cpf, rg, identidade, diagnostico, laudo, receita, cidade, estado, cep, endereco, complemento, numero) {
-    const data = {
-      'nome': nome,
-      'sobrenome': sobrenome,
-      'data_nascimento': nascimento,
-      'cpf': cpf,
-      'rg': rg,
-      'documentos_pessoais': identidade,
-      'diagnostico': diagnostico,
-      'laudo_medico': laudo,
-      'receita_medica': receita,
-      'cidade': cidade,
-      'estado': estado,
-      'cep': cep,
-      'endereco': endereco,
-      'complemento': complemento,
-      'numero': numero,
-      'bairro': 'tijuca'
-    }
+  async function registerPacient(data) {
+    
     try {
 
       const response = await api.post('/patient', data)
