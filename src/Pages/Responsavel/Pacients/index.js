@@ -32,9 +32,9 @@ export default function Pacients(){
   const list=newList.map(function(item){
     const path='/perfil/pacientes/menu/'+item.id
     return(
-      <Link to={path}>
-      <Card key={item.id}>
-               <CardName><img src={Avatar}/><br/>
+      <Link to={path} key={item.id}>
+      <Card>
+               <CardName><img src={Avatar} alt={item.nome}/><br/>
               {item.nome}</CardName>
       </Card>
       </Link>

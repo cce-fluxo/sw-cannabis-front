@@ -298,6 +298,16 @@ export const AuthContextProvider = (props) => {
         console.log(error)
       }
     }
+    else if (userType === 'admin') {
+      try {
+        const response = await api.post("/administrador", data)
+        console.log(response.data)
+        setRegisterMade(true)
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
 
 
 
