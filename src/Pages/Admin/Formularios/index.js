@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../../Components/Header';
-import { InnerContainerBg, ContainerBg, Card, CardName, CardDate, EditButton, AddButton } from './styles';
+import { InnerContainerBg, ContainerBg, Card, CardName, CardDate, EditButton, AddButton, StyledSelect } from './styles';
 import { Title } from '../../../Utils/styles';
 import { BiPencil, BiPlus } from "react-icons/bi"
 const fakeForms = [
@@ -85,12 +85,12 @@ export function Formularios() {
       <ContainerBg>
         <Title underline={true}>FORMULÁRIOS</Title>
         <InnerContainerBg>
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <StyledSelect value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="">Selecione a categoria</option>
             <option value="medico">Médico</option>
             <option value="nutricionista">Nutricionista</option>
             <option value="fisioterapeuta">Fisioterapeuta</option>
-          </select>
+          </StyledSelect>
           {
             forms.map(form => (
               <Card key={form.id}>

@@ -35,7 +35,16 @@ export const InnerContainerBg = styled.div`
   padding-top: 10px;
   padding-bottom: 40px;
 `
+export const StyledSelect = styled.select`
+  width: 250px;
+  height: 35px;
+  border: none;
+  border-radius: 60px;
+  background-color:#282828;
+  color: #fff;
+  padding: 0 10px;
 
+`
 export const Card=styled.div`
   width:250px;
   height:200px;
