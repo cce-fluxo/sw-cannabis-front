@@ -75,6 +75,13 @@ export const Line = styled.div`
   margin-bottom: 40px;
 `
 
+export const Options = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+`
+
 export const SelectDiv=styled.div`
 display:flex;
 align-items:center;
