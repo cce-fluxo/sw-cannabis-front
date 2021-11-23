@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Dados from '../Pages/Responsavel/Dados';
-import Homepage from '../Pages/Homepage/homepage';
+import Homepage from '../Pages/Homepage/';
 
 import LoginMade from '../Pages/LoginMade';
 import Profile from '../Pages/Responsavel/Profile';

@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
 import Aprovar from '../Pages/Admin/Aprovar';
 import Cadastros from '../Pages/Admin/Cadastros';
-import Homepage from '../Pages/Homepage/homepage';
+import Homepage from '../Pages/Homepage/';
 
 import LoginMade from '../Pages/LoginMade';
 

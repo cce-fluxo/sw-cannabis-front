@@ -21,7 +21,7 @@ paciente ser atribuído a você.</SubTitle>
     )
   }
 
-  const newList=[{nome:'Lionel Messi', id:1},{nome:'Cristiano Ronaldo', id:2},{nome:'Lebron James', id:3},{nome:'Allen Iverson', id:4},{nome:'Kyrie Irving', id:5}]
+  const newList=[{nome:'Joaquim Silva', id:1},{nome:'Cristiano Ronaldo', id:2},{nome:'Lebron James', id:3},{nome:'Allen Iverson', id:4},{nome:'Kyrie Irving', id:5}]
   
   const list=newList.map(function(item){
     const path='/pacientes/menu/'+item.id

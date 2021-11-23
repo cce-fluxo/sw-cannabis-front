@@ -10,7 +10,7 @@ export default function InfoPacient(){
   const fullUrl=window.location.pathname
   const id=parseInt(fullUrl.slice(-1))
 
-  const newList=[{nome:'Lionel Messi', id:1},{nome:'Cristiano Ronaldo', id:2},{nome:'Lebron James', id:3},{nome:'Allen Iverson', id:4},{nome:'Kyrie Irving', id:5}]
+  const newList=[{nome:'Joaquim Silva', id:1},{nome:'Cristiano Ronaldo', id:2},{nome:'Lebron James', id:3},{nome:'Allen Iverson', id:4},{nome:'Kyrie Irving', id:5}]
   const path='/pacientes/menu/'+id
   return(
     <>

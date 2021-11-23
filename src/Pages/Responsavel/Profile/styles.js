@@ -49,5 +49,8 @@ export const InnerContainerBg = styled.div`
   margin-top: 20px;
   margin-bottom: 60px;
   background-color: white;
+  display: flex;
+  justify-content: center;
+  
   
 `

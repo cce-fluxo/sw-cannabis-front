@@ -12,15 +12,13 @@ export default function Consultas() {
 
 
   const { pacients } = useContext(AuthContext)
-  const noPacients = pacients.length === 0 ? true : false
+  const noPacients = pacients.length === 0
 
 
   let newList = []
   for (var i = 0; i < pacients.length; i++) { newList.push(pacients[i]); }
   console.log(newList)
 
-
-  //console.log(test)  
 
   const list = newList.map(function (item) {
     const path = '/consultas/paciente/' + item.id
