@@ -115,6 +115,7 @@ export default function Header() {
     return (
       <NavList>
         <NavLink to='/cadastros' activeStyle={activeStyle}><NavOption>CADASTRO</NavOption></NavLink>
+        <NavLink to="/formularios" activeStyle={activeStyle}><NavOption>FORMULÁRIOS</NavOption></NavLink>
         <NavOption>CONSULTAS</NavOption>
         <NavOption>PROFISSIONAIS</NavOption>
         <NavOption>PAGAMENTOS</NavOption>
