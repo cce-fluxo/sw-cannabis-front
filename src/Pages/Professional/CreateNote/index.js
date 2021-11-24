@@ -50,8 +50,6 @@ export default function CreateNote(){
       texto: editorContent,
       pacientId: id,
     }
-    console.log(data)
-    return 
     await api.post(`/anotacoesmedicas/create/${2}`, data);
       console.log(editorContent,nameState.value)
       localStorage.setItem('Note',editorContent)

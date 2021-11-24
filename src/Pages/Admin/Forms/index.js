@@ -3,6 +3,7 @@ import Header from '../../../Components/Header';
 import { InnerContainerBg, ContainerBg, Card, CardName, CardDate, EditButton, AddButton, StyledSelect } from './styles';
 import { Title } from '../../../Utils/styles';
 import { BiPencil, BiPlus } from "react-icons/bi"
+import { useHistory } from 'react-router';
 const fakeForms = [
   {
     id: 1,
@@ -49,7 +50,8 @@ const fakeForms = [
   }
 ]
 
-export function Formularios() {
+export function Forms() {
+  const history = useHistory()
   const [category, setCategory] = useState("")
   const [forms, setForms] = useState([])
 
@@ -76,7 +78,7 @@ export function Formularios() {
     console.log(id)
   }
   const handleAddForm = () => {
-    console.log("add")
+    history.push(`criar-formulario/${category}`)
   }
 
   return (
