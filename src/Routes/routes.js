@@ -13,7 +13,7 @@ export default function Routes(){
   const {isLoggedIn,user} =useContext(AuthContext);
   const loggedResp = isLoggedIn&&user==='responsavel'
   const loggedMed = isLoggedIn&&user==='medico'
-  const loggedAdm=isLoggedIn&&user==='adm'
+  const loggedAdm=isLoggedIn&&user==='administrador'
 
   const Check = ()=>{
     if(loggedResp){

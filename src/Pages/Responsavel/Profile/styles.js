@@ -49,5 +49,11 @@ export const InnerContainerBg = styled.div`
   margin-top: 20px;
   margin-bottom: 60px;
   background-color: white;
+<<<<<<< HEAD
+=======
+  display: flex;
+  justify-content: center;
+  
+>>>>>>> carrinho
   
 `

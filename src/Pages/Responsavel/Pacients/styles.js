@@ -59,6 +59,7 @@ export const Title = styled.p`
   }
 `
 
+<<<<<<< HEAD
 export const Return = styled.img`
     width: 90%;
     cursor:pointer;  
@@ -69,6 +70,9 @@ export const ArrowDiv=styled.div`
   display:flex;
   align-items:flex-start;
 `
+=======
+
+>>>>>>> carrinho
 
 export const Card=styled.div`
   width:250px;
@@ -79,6 +83,10 @@ export const Card=styled.div`
   align-items:center;
   justify-content: center;
   background-color: #282828;
+<<<<<<< HEAD
+=======
+  margin: 20px;
+>>>>>>> carrinho
 `
 
 export const CardName=styled.div`

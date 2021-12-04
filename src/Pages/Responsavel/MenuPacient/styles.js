@@ -108,10 +108,53 @@ export const CheckDiv=styled.div`
 `
 
 export const CheckTitle=styled.p`
+<<<<<<< HEAD
   font-size: 20px;
+=======
+  font-size: 16px;
+>>>>>>> carrinho
 `
 
 export const Checkbox=styled.input`
   transform: scale(2);
   margin-left:20px;
+<<<<<<< HEAD
 `
+=======
+`
+
+export const ButtonDiv=styled.div`
+  display:flex;
+  
+  align-items:center;
+  
+
+`
+
+export const WindowTitle = styled.p`
+  font-size: 36px;
+  font-weight: bold;
+  color: #282828;
+  margin-bottom: 5%;
+  @media(max-width:600px){
+    font-size:20px;
+    
+  }
+`
+export const WindowText = styled.p`
+  font-size: 24px;
+  color: #282828;
+  margin-bottom: 5%;
+  @media(max-width:600px){
+    font-size:14px;
+    
+  }
+`
+
+export const ModalDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+`
+>>>>>>> carrinho
