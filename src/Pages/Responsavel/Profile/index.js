@@ -16,11 +16,7 @@ export default function Profile(){
         <Link to='/perfil/pacientes'><Title>PACIENTES</Title></Link>
       </TitleContainer>
       <InnerContainerBg>
-<<<<<<< HEAD
-
-=======
       <h1>Clique em algum dos títulos acima</h1>
->>>>>>> carrinho
       </InnerContainerBg>
     </ProfileBg>
     </>

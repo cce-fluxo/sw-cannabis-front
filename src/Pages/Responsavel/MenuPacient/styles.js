@@ -108,19 +108,12 @@ export const CheckDiv=styled.div`
 `
 
 export const CheckTitle=styled.p`
-<<<<<<< HEAD
-  font-size: 20px;
-=======
   font-size: 16px;
->>>>>>> carrinho
 `
 
 export const Checkbox=styled.input`
   transform: scale(2);
   margin-left:20px;
-<<<<<<< HEAD
-`
-=======
 `
 
 export const ButtonDiv=styled.div`
@@ -157,4 +150,3 @@ export const ModalDiv = styled.div`
   align-items: center;
   justify-content: space-between;
 `
->>>>>>> carrinho

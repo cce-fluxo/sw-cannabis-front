@@ -48,11 +48,7 @@ export const Title = styled.p`
 
 export const InnerContainerBg = styled.div`
   width: 80%;
-<<<<<<< HEAD
-  height: 1300px;
-=======
   
->>>>>>> carrinho
   border-radius: 40px;
   margin-top: 20px;
   margin-bottom: 60px;
@@ -61,24 +57,9 @@ export const InnerContainerBg = styled.div`
   flex-direction: column;
   align-items:center;
   padding-top: 10px;
-<<<<<<< HEAD
-`
-
-export const Return = styled.img`
-    width: 90%;
-    cursor:pointer;  
-`
-
-export const ArrowDiv=styled.div`
-  width: 90%;
-  display:flex;
-  align-items:flex-start;
-`
-=======
   padding-bottom: 40px;
 `
 
->>>>>>> carrinho
 
 export const InputContainer=styled.div`
   display: flex;

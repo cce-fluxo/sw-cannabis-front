@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-<<<<<<< HEAD
-=======
 import {AiOutlineClose} from 'react-icons/ai';
->>>>>>> carrinho
 
 export const Input = styled.input`
     width: 420px;
@@ -78,17 +75,6 @@ export const InputReverse = styled.input`
     border-color:${props=>
     {return props.validation===false?'red':'none'}};
     background-color:${props=>
-<<<<<<< HEAD
-    {return props.validation===false?'#fbdada':'none'}};
-    &&:focus{
-      border-color:${props=>
-    {return props.validation===false?'red':'#789D55'}};
-      
-    }
-    &&::placeholder{
-      color:white;
-    }    
-=======
     {return props.validation===false?'#781118':'none'}};
     &&:focus{
       border-color:${props=>
@@ -105,7 +91,6 @@ export const InputReverse = styled.input`
     width:300px;
     font-size:12px;
   }
->>>>>>> carrinho
 `
 
 export const InputDiv = styled.div`
@@ -119,9 +104,6 @@ export const InputTitle=styled.p`
   font-size: 20px;
  // font-weight: bold;
   padding-left: 20px;
-<<<<<<< HEAD
-  
-=======
   @media(max-width:800px){
     
     font-size: 14px;
@@ -130,6 +112,5 @@ export const InputTitle=styled.p`
     
     font-size:16px;
   }
->>>>>>> carrinho
 
 `

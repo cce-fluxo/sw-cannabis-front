@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import React,{useEffect,useState,useReducer} from 'react';
-import Head from '../../../Components/Head';
-import Header from '../../../Components/Header';
-import {Link} from 'react-router-dom';
-import { ArrowDiv, Card, InnerContainerBg, ProfileBg,Return,Title, TitleContainer } from './styles';
-import { InputDiv, InputReverse, InputTitle } from '../../../Components/Input/styles';
-import Arrow from '../../../Assets/arrow.svg';
-import Upload from '../../../Components/Upload';
-
-export default function Register(){
-  
-  
-  const cpfMask = value => {
-=======
 import React,{useEffect,useState,useReducer,useContext} from 'react';
 import {useDropzone} from 'react-dropzone';
 import Return from '../../../Components/Return';
@@ -344,7 +329,6 @@ export default function Register(){
 
   
 const cpfMask = value => {
->>>>>>> carrinho
     return value
     .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada
     .replace(/(\d{3})(\d)/, '$1.$2') // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
@@ -353,8 +337,6 @@ const cpfMask = value => {
     .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
 }
 
-<<<<<<< HEAD
-=======
 const birthMask = value => {
   return value
   .replace(/\D/g, '') 
@@ -364,7 +346,6 @@ const birthMask = value => {
   .replace(/(\d{4})\d+?$/, '$1') 
 }
 
->>>>>>> carrinho
 const rgMask = value=>{
   return value
     .replace(/\D/g, '')
@@ -381,8 +362,6 @@ const cepMask = value=>{
     .replace(/(-\d{3})\d+?$/, '$1')
 }
 
-<<<<<<< HEAD
-=======
   const submitHandler = () => {
     const data = {
       nome: nameState.value,
@@ -411,7 +390,6 @@ const cepMask = value=>{
     //window.location.reload()
   }
 
->>>>>>> carrinho
   return(
     <>
     <Head title='Terapeutas Cannábicos - Registro de novo paciente'/>
@@ -422,35 +400,6 @@ const cepMask = value=>{
         <Link to='/perfil/pacientes'><Title active={true}>PACIENTES</Title></Link>
       </TitleContainer>
       <InnerContainerBg>
-<<<<<<< HEAD
-        <ArrowDiv><Link to='/perfil/pacientes'><Return src={Arrow}/></Link></ArrowDiv>
-        <InputDiv>
-          <InputTitle>Nome:</InputTitle>
-          <InputReverse/>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>Sobrenome:</InputTitle>
-          <InputReverse />
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>Data de nascimento:</InputTitle>
-          <InputReverse />
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>CPF:</InputTitle>
-          <InputReverse/>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>RG:</InputTitle>
-          <InputReverse />
-        </InputDiv>
-
-        <InputDiv>
-          <InputTitle>Envio de identidade:</InputTitle>
-          <InputReverse />
-        </InputDiv>
-        
-=======
         <Return destiny='/perfil/pacientes'/>
         <InputDiv>
           <InputTitle>Nome:</InputTitle>
@@ -512,15 +461,11 @@ const cepMask = value=>{
           </InputDiv>
         
         <Link to='/perfil/pacientes'><Button disabled={!formIsValid} onClick={submitHandler}>REGISTRAR PACIENTE</Button></Link>
->>>>>>> carrinho
       </InnerContainerBg>
     </ProfileBg>
 
     </>
   )
-<<<<<<< HEAD
-}
-=======
 }
 //
 
@@ -553,4 +498,3 @@ const cepMask = value=>{
 
 
 */
->>>>>>> carrinho

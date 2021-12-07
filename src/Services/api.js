@@ -2,11 +2,6 @@ import axios from "axios";
 
 
 const api = axios.create({
-<<<<<<< HEAD
-  baseURL: "https://ddd-conhecimento.herokuapp.com/",
-  
-});
-=======
   baseURL: "https://sw-cannabis-back-orvnl.ondigitalocean.app/",
 });
 api.interceptors.request.use(async (config) => {
@@ -17,6 +12,5 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
->>>>>>> carrinho
 
 export default api;

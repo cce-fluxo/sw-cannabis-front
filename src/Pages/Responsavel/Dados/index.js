@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import React,{useContext} from 'react';
-import Head from '../../../Components/Head';
-import Header from '../../../Components/Header';
-import {Link} from 'react-router-dom';
-import { InputDiv, InputReverse, InputTitle } from '../../../Components/Input/styles';
-import { ArrowDiv, InnerContainerBg, InputContainer, ProfileBg,Return,Title, TitleContainer } from './styles';
-import Arrow from '../../../Assets/arrow.svg';
-import { Button } from '../../../Utils/styles';
-import AuthContext from '../../../Storage/auth-context';
-
-export default function Dados(){
-  const {userInfo} = useContext(AuthContext)
-
-=======
 import React,{useContext,useEffect,useState,useReducer} from 'react';
 import Head from '../../../Components/Head';
 import Return from '../../../Components/Return';
@@ -287,7 +272,6 @@ const submitHandler = (event) => {
   onDataChange(cellphoneState.value,cityState.value,estadoState.value,numState.value,adressState.value,compState.value,cepState.value)
   //window.location.reload()
 };
->>>>>>> carrinho
 
   return(
 
@@ -300,16 +284,6 @@ const submitHandler = (event) => {
         <Link to='/perfil/pacientes'><Title>PACIENTES</Title></Link>
       </TitleContainer>
       <InnerContainerBg>
-<<<<<<< HEAD
-        <ArrowDiv><Link to='/perfil'><Return src={Arrow}/></Link></ArrowDiv>
-        <InputDiv>
-          <InputTitle>Nome:</InputTitle>
-          <InputReverse disabled placeholder={userInfo.name}/>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>Sobrenome:</InputTitle>
-          <InputReverse disabled placeholder='Godinho Souza Braga'/>
-=======
         <Return destiny='/perfil'/>
         <InputDiv>
           <InputTitle>Nome:</InputTitle>
@@ -318,7 +292,6 @@ const submitHandler = (event) => {
         <InputDiv>
           <InputTitle>Sobrenome:</InputTitle>
           <InputReverse disabled placeholder={userInfo.sobrenome}/>
->>>>>>> carrinho
         </InputDiv>
         <InputDiv>
           <InputTitle>Email:</InputTitle>
@@ -326,21 +299,6 @@ const submitHandler = (event) => {
         </InputDiv>
         <InputDiv>
           <InputTitle>Telefone celular:</InputTitle>
-<<<<<<< HEAD
-          <InputReverse disabled placeholder='(21)968009372'/>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>Telefone secundário:</InputTitle>
-          <InputReverse autoComplete='off' placeholder=''/>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>CPF:</InputTitle>
-          <InputReverse autoComplete='off' placeholder=''/>
-        </InputDiv>
-        <InputDiv>
-          <InputTitle>RG:</InputTitle>
-          <InputReverse autoComplete='off' placeholder=''/>
-=======
           <InputReverse disabled placeholder={userInfo.celular}/>
         </InputDiv>
         <InputDiv>
@@ -354,35 +312,10 @@ const submitHandler = (event) => {
         <InputDiv>
           <InputTitle>RG:</InputTitle>
           <InputReverse placeholder={userInfo.rg} disabled/>
->>>>>>> carrinho
         </InputDiv>
         <InputContainer>
           <InputDiv>
             <InputTitle>Cidade:</InputTitle>
-<<<<<<< HEAD
-            <InputReverse style={{'width':'300px'}} placeholder=''/>
-          </InputDiv>
-          <InputDiv>
-            <InputTitle>Estado:</InputTitle>
-            <InputReverse style={{'width':'100px'}} placeholder=''/>
-          </InputDiv>
-        </InputContainer>
-        <InputDiv>
-          <InputTitle>Endereço:</InputTitle>
-          <InputReverse autoComplete='off' placeholder=''/>
-        </InputDiv>
-        <InputContainer>
-          <InputDiv>
-            <InputTitle>Número:</InputTitle>
-            <InputReverse style={{'width':'100px'}} placeholder=''/>
-          </InputDiv>
-          <InputDiv>
-            <InputTitle>Complemento:</InputTitle>
-            <InputReverse style={{'width':'300px'}} placeholder=''/>
-          </InputDiv>
-        </InputContainer>
-        <Button>ALTERAR DADOS</Button>
-=======
             <InputReverse style={{'width':'300px'}} value={cityState.value} onChange={cityChangeHandler} onBlur={validateCityHandler} validation={cityState.isValid}/>
           </InputDiv>
           <InputDiv>
@@ -409,7 +342,6 @@ const submitHandler = (event) => {
           </InputDiv>
         </InputContainer>
         <Button type='submit' onClick={submitHandler} disabled={!formIsValid}>SALVAR</Button>
->>>>>>> carrinho
       </InnerContainerBg>
     </ProfileBg>
 

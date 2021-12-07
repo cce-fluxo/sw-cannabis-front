@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-import React, {useState,useEffect} from 'react';
-import {  useHistory } from 'react-router-dom';
-import api from '../Services/api';
-=======
 import React, { useState, useEffect } from 'react';
 import api from '../Services/api';
 import axios from 'axios';
 import { Buffer } from 'buffer';
 
->>>>>>> carrinho
 
 
 
@@ -18,37 +12,6 @@ const AuthContext = React.createContext({
   //onLogin: (email,password) => {},
   //user: 'responsavel'
 });
-<<<<<<< HEAD
-export const AuthContextProvider =(props)=> {
-  const history=useHistory();
-  const [user,setUser]=useState();
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('Token');
-  
-    if (token) {
-      console.log('com token')
-      api.get('/user/', {
-        headers: {
-          'authorization': `Bearer ${token}`
-        }
-      })
-      .then((res) => {
-        //console.log(res.data)
-        const email=res.data.email
-        const name=res.data.name
-        const member=res.data.member
-
-        setUser({email,name,member})
-        console.log(user)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-    }
-    else{
-=======
 export const AuthContextProvider = (props) => {
 
   const [user, setUser] = useState({});
@@ -148,7 +111,6 @@ export const AuthContextProvider = (props) => {
 
     }
     else {
->>>>>>> carrinho
       console.log('sem token')
     }
   }, []);
@@ -161,18 +123,6 @@ export const AuthContextProvider = (props) => {
     }
   }, []);
 
-<<<<<<< HEAD
-  const logoutHandler = () => {
-    //history.push("/login");
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('Token');
-    localStorage.removeItem('RefreshToken');
-    setIsLoggedIn(false);
-    
-  };
-  
-  const loginHandler = (email,password) => {
-=======
   async function dataChange(cel, cidade, estado, numero, endereco, comp, cep,) {
     const id = user.id
 
@@ -208,44 +158,11 @@ export const AuthContextProvider = (props) => {
   };
 
   const loginHandler = (email, password) => {
->>>>>>> carrinho
     localStorage.setItem('isLoggedIn', '1');
     setIsLoggedIn(true);
     //console.log(email, password);
   };
 
-<<<<<<< HEAD
-  async function handleSubmit(email,password){
-        //
-        const data = {
-            "email": email,
-            "password": password
-        }
-        try {
-            const response = await api.post("/login", data)
-            const name=response.data.User.name
-            const id=response.data.User.id
-            const member=response.data.User.member
-            const token=response.data.token
-            const refreshToken=response.data.refresh_token
-            loginHandler(email,password);
-            localStorage.setItem('Token',token)
-            localStorage.setItem('RefreshToken',refreshToken)
-            console.log(response.data)
-            setUser({
-              name,
-              email,
-              id,
-              member
-            })
-            console.log(user)
-            
-        } catch (error) {
-            console.log(error)
-        }
-  }
-
-=======
   async function registerPacient(data) {
     
     try {
@@ -393,16 +310,11 @@ export const AuthContextProvider = (props) => {
 
 
 
->>>>>>> carrinho
   return <AuthContext.Provider
     value={{
       isLoggedIn: isLoggedIn,
       onLogout: logoutHandler,
       onLogin: handleSubmit,
-<<<<<<< HEAD
-      userInfo:user,
-      user:'responsavel'
-=======
       userInfo: user,
       pacients: pacients,
       user: userType,
@@ -413,13 +325,8 @@ export const AuthContextProvider = (props) => {
       onUserRegister: userRegister,
       onSendForgotEmail: resetPasswordEmail,
       sendToStorage: sendToStorage,
->>>>>>> carrinho
     }}
   >{props.children}</AuthContext.Provider>
 };
 
-<<<<<<< HEAD
 export default AuthContext;
-=======
-export default AuthContext;
->>>>>>> carrinho

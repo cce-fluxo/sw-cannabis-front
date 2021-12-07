@@ -4,12 +4,9 @@ export const Title = styled.p`
   font-size:	48px;
   font-weight:bold;
   color:white;
-<<<<<<< HEAD
-=======
   text-decoration: ${props=>
   {return props.underline===true?'underline':'none'}};
   text-decoration-color:#789D55;
->>>>>>> carrinho
   margin-top:5%;
   @media(max-width:800px){
     font-size: 24px;
@@ -23,14 +20,9 @@ export const Title = styled.p`
 
 export const Button = styled.button `
     margin-top: 3%;
-<<<<<<< HEAD
-    width: 150px;
-    height: 52px;
-=======
     //width: 150px;
     //height: 52px;
     padding:10px;
->>>>>>> carrinho
     color: white;
     background-color:#789D55;
     font-weight: bold;
@@ -44,8 +36,6 @@ export const Button = styled.button `
       color: #666666;
       cursor: not-allowed;
     }
-<<<<<<< HEAD
-=======
 `
 
 export const ButtonSmall = styled.button `
@@ -67,5 +57,4 @@ export const ButtonSmall = styled.button `
       color: #666666;
       cursor: not-allowed;
     }
->>>>>>> carrinho
 `

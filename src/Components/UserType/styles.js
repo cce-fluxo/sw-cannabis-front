@@ -75,8 +75,6 @@ export const Line = styled.div`
   margin-bottom: 40px;
 `
 
-<<<<<<< HEAD
-=======
 export const Options = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,7 +82,6 @@ export const Options = styled.div`
   justify-content: center;
 `
 
->>>>>>> carrinho
 export const SelectDiv=styled.div`
 display:flex;
 align-items:center;

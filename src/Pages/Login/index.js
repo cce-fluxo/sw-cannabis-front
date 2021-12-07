@@ -1,25 +1,15 @@
 import React,{useState, useEffect,useReducer,useContext} from 'react';
-<<<<<<< HEAD
-import AuthContext from '../../Storage/auth-context';
-import SignIn from '../../Services/auth';
-=======
 import {useHistory} from 'react-router-dom'
 import AuthContext from '../../Storage/auth-context';
->>>>>>> carrinho
 import Header from '../../Components/Header';
 import { Input, InputPassword ,VisibilityButton} from '../../Components/Input/styles';
 import { Button, Title } from '../../Utils/styles';
-import {LoginBg, LoginContainer, ModalDiv, OptContainer, Option, StyledLink, WindowText, WindowTitle} from '../Login/styles';
+import {LoginBg, LoginContainer, ModalDiv, OptContainer, Option, StyledLink, WindowText, WindowTitle} from './styles';
 import Email from '../../Assets/user.svg';
 import Lock from '../../Assets/lock.svg';
 import NotVisible from '../../Assets/notvisible.svg';
 import Visible from '../../Assets/visible.svg';
 import Modal from '../../Components/Modal';
-<<<<<<< HEAD
-import { Link } from 'react-router-dom';
-=======
-
->>>>>>> carrinho
 
 const emailReducer = (state,action) => {
   if(action.type ==='USER_INPUT'){
@@ -52,12 +42,9 @@ const forgotEmailReducer = (state,action) => {
 };
 
 export default function Login(){
-<<<<<<< HEAD
-=======
 
   const history = useHistory();
 
->>>>>>> carrinho
   const [visibility, setVisibility] = useState(NotVisible);
   const [forgotWindow, setForgotWindow] = useState(false);
   const [forgotEmailSent, setForgotEmailSent] = useState(false);
@@ -136,20 +123,13 @@ export default function Login(){
       forgotEmailState.value=''
   }
   const sendForgotEmail = () =>{
-<<<<<<< HEAD
-=======
     authCtx.onSendForgotEmail(forgotEmailState.value)
->>>>>>> carrinho
     setForgotEmailSent(true)
   }
 
   const submitHandler = (event) => {
     event.preventDefault();
-<<<<<<< HEAD
-    authCtx.onLogin(emailState.value, passwordState.value);
-=======
     authCtx.onLogin(emailState.value, passwordState.value, history);
->>>>>>> carrinho
     console.log(emailState.value, passwordState.value);
   };
   const window1 = () => {
@@ -177,12 +157,7 @@ const window2 = () => {
               <WindowTitle>Esqueci a Senha</WindowTitle>
           <WindowText>Um email contendo o link para troca de senha foi enviado para {forgotEmailState.value}. Verifique sua caixa de spam. Caso não chegue em alguns minutos, faça o processo novamente.</WindowText>
           </ModalDiv>
-<<<<<<< HEAD
-          </LoginContainer>
-                      
-=======
           </LoginContainer>          
->>>>>>> carrinho
       </Modal>
       
   )
@@ -190,15 +165,7 @@ const window2 = () => {
 }
 
 
-<<<<<<< HEAD
-  async function handleSign() {
-   
-    const response = await SignIn();
-    console.log(response);
-  }
-=======
   
->>>>>>> carrinho
   return(
     <>
     <Header/>
