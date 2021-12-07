@@ -17,7 +17,6 @@ import MenuNotes from '../Pages/Professional/MenuNotes';
 import CreateNote from '../Pages/Professional/CreateNote';
 import SeeNote from '../Pages/Professional/SeeNote';
 import FormMenu from '../Pages/Professional/FormMenu';
-import CreateForm from '../Pages/Professional/CreateForm';
 export default function MedRoutes(){
   return(
     <div>
@@ -37,7 +36,7 @@ export default function MedRoutes(){
       <Route exact path='/pacientes/menu/acompanhamento/criar-nota/:id' component={CreateNote}/>
       <Route exact path='/pacientes/menu/acompanhamento/ver-nota/:id' component={SeeNote}/>
       <Route exact path='/pacientes/menu/acompanhamento/fichas/:id' component={FormMenu}/>
-      <Route exact path='/pacientes/menu/acompanhamento/criar-ficha/:id' component={CreateForm}/>
+      
       </Switch>
     </BrowserRouter>
     </div>

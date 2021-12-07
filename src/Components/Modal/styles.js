@@ -6,8 +6,8 @@ export const ModalBg = styled.div`
     box-shadow: 15px 15px 5px 0px rgba(0,0,0,0.75);
     display:flex;
     justify-content: center;
-    width:600px;
-    height: 400px;
+    width: ${props => props.width ?? "600px"};
+    height: ${props => props.height ?? "400px"};
     padding:40px;
     margin-top:10%;
     border-radius: 60px;

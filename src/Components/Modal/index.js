@@ -4,7 +4,7 @@ import Close from '../../Assets/close.svg';
 import { Link } from 'react-router-dom';
 
 
-export default function Modal({ id = 'modal', onClose = () => { }, children, register }) {
+export default function Modal({ id = 'modal', onClose = () => { }, children, register, ...rest }) {
     const content = children
     const handleOutsideClick = (e) => {
         if (e.target.id === id && !register === true) onClose()
@@ -14,7 +14,7 @@ export default function Modal({ id = 'modal', onClose = () => { }, children, reg
 
     return (
         <Background id='modal' onClick={(e) => handleOutsideClick(e)}>
-            <ModalBg >
+            <ModalBg {...rest}>
 
                 {register ? (<Link to='login'><CloseIcon onClick={onClose} src={Close} /></Link>) : <CloseIcon onClick={onClose} src={Close} />}
 
