@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
-import Homepage from '../Pages/Homepage/homepage';
+import Homepage from '../Pages/Homepage/';
 
 import LoginMade from '../Pages/LoginMade';
 import Appointment from '../Pages/Professional/Appointment';

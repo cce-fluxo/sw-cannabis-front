@@ -1,4 +1,5 @@
 import React,{useState, useEffect,useReducer,useContext} from 'react';
+import {useHistory} from 'react-router-dom'
 import AuthContext from '../../Storage/auth-context';
 import Header from '../../Components/Header';
 import { Input, InputPassword ,VisibilityButton} from '../../Components/Input/styles';
@@ -42,6 +43,9 @@ const forgotEmailReducer = (state,action) => {
 };
 
 export default function Login(){
+
+  const history = useHistory();
+
   const [visibility, setVisibility] = useState(NotVisible);
   const [forgotWindow, setForgotWindow] = useState(false);
   const [forgotEmailSent, setForgotEmailSent] = useState(false);
@@ -126,7 +130,7 @@ export default function Login(){
 
   const submitHandler = (event) => {
     event.preventDefault();
-    authCtx.onLogin(emailState.value, passwordState.value);
+    authCtx.onLogin(emailState.value, passwordState.value, history);
     console.log(emailState.value, passwordState.value);
   };
   const window1 = () => {

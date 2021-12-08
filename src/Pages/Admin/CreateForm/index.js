@@ -2,14 +2,27 @@ import React, { useReducer, useState, useEffect } from 'react';
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
 import Return from '../../../Components/Return';
-import { ContainerBg, InnerContainerBg } from '../Pacients/styles';
+
 import { Title, TitleContainer } from '../../../Pages/Professional/Profile/styles';
 import { InputReverse } from '../../../Components/Input/styles';
-import { ModalDiv, Button, DivOption, ButtonsDiv, InputOption, QuestionContainer, RadioContainer, RadioName, RadioOption, DownButton, RadioContainerBg, TypeContainer, TypeTitle, ButtonsContainer, UpButton, RemoveIcon, SmallInput, OptionContainer, QuestionBg, InnerModal } from './styles';
+import {
+  ModalDiv, InnerModal,
+  Button, DivOption,
+  ButtonsDiv, QuestionContainer,
+  RadioContainer, RadioName,
+  RadioOption, DownButton,
+  RadioContainerBg, TypeTitle,
+  ButtonsContainer, UpButton,
+  RemoveIcon, SmallInput,
+  QuestionsContainer,
+  OptionContainer, QuestionBg,
+  ContainerBg, InnerContainerBg
+} from './styles';
 import BigModal from '../../../Components/BigModal';
-import { OptContainer, WindowText, WindowTitle } from '../../Login/styles';
+import { WindowTitle } from '../../Login/styles';
 import Modal from '../../../Components/Modal';
 import { v4 as uuidv4 } from 'uuid';
+import { useParams } from 'react-router';
 
 
 const questionReducer = (state, action) => {
@@ -21,7 +34,15 @@ const questionReducer = (state, action) => {
   }
   return { value: '', isValid: false };
 };
-
+const formNameReducer = (state, action) => {
+  if (action.type === 'USER_INPUT') {
+    return { value: action.val, isValid: action.val.trim().length > 3 };
+  }
+  if (action.type === 'INPUT_BLUR') {
+    return { value: state.value, isValid: state.value.trim().length > 3 };
+  }
+  return { value: '', isValid: false };
+};
 
 
 const NotDiscursive = ({
@@ -96,31 +117,41 @@ export default function CreateForm() {
   const [options, setOptions] = useState([{ id: uuidv4(), value: 'Digite a opção' }, { id: uuidv4(), value: 'Digite a opção' }]);
   const [modal, setModal] = useState(false)
   const [formIsValid, setFormIsValid] = useState(false);
-  const fullUrl = window.location.pathname
-  const id = parseInt(fullUrl.slice(-1))
-  const path = '/pacientes/menu/acompanhamento/' + id
+  const {category} = useParams()
+  const path = '/formularios'
   const [questionState, dispatchQuestion] = useReducer(questionReducer, {
     value: '',
     isValid: null,
   });
-  useEffect(() => {
-    console.log("render")
-  }, [])
+  const [formNameState, dispatchFormName] = useReducer(formNameReducer, {
+    value: '',
+    isValid: null,
+  });
+
 
   const { isValid: questionIsValid } = questionState;
+  const { isValid: formNameIsValid } = formNameState;
   useEffect(() => {
     const identifier = setTimeout(() => {
-      //console.log('Checking form validity!');
       setFormIsValid(
         questionIsValid
       );
     }, 500);
 
-    return () => {
-      //console.log('CLEANUP');
-      clearTimeout(identifier);
-    };
+    return () => { clearTimeout(identifier); };
   }, [questionIsValid]);
+
+
+  const handleSubmitForm = async () => {
+    const form = {
+      name: formNameState.value,
+      questions,
+      category
+    }
+    console.log(form)
+  }
+
+
 
   const displayQuestions = questions.map((item, index) => {
     const displayOptions = item.options?.map((item) => {
@@ -133,8 +164,8 @@ export default function CreateForm() {
         <QuestionContainer>
           <InputReverse placeholder={item.title} disabled />
           <ButtonsContainer>
-            <UpButton onClick={() => handleMoveTop(item.id)} disabled={index === 0}  />
-            <DownButton onClick={() => handleMoveDown(item.id)}  disabled={index === questions.length - 1}/>
+            <UpButton onClick={() => handleMoveTop(item.id)} disabled={index === 0} />
+            <DownButton onClick={() => handleMoveDown(item.id)} disabled={index === questions.length - 1} />
             <RemoveIcon onClick={() => removeQuestion(item.id)} />
           </ButtonsContainer>
         </QuestionContainer>
@@ -145,12 +176,21 @@ export default function CreateForm() {
   })
 
 
+
   const questionChangeHandler = (event) => {
     dispatchQuestion({ type: 'USER_INPUT', val: event.target.value });
   };
 
   const validateQuestionHandler = () => {
     dispatchQuestion({ type: 'INPUT_BLUR' });
+  };
+
+  const formNameChangeHandler = (event) => {
+    dispatchFormName({ type: 'USER_INPUT', val: event.target.value });
+  };
+
+  const validateFormNameHandler = () => {
+    dispatchFormName({ type: 'INPUT_BLUR' });
   };
 
   const removeQuestion = (id) => {
@@ -297,12 +337,14 @@ export default function CreateForm() {
       <Header />
       <ContainerBg>
         <TitleContainer>
-          <Title active={true}>CRIAR FICHA</Title>
+          <Title active={true}>CRIAR FORMULÁRIO</Title>
         </TitleContainer>
         <InnerContainerBg>
           <Return destiny={path} />
 
           <TypeTitle>Bem vindo à criação de formulários de acompanhamento! Escolha o tipo de pergunta desejada e clique no botão para criar a pergunta.</TypeTitle>
+          <InputReverse placeholder='Digite o nome do formulário' value={formNameState.value}
+            onChange={formNameChangeHandler} onBlur={validateFormNameHandler} validation={formNameState.isValid} />
           <RadioContainerBg>
             <RadioContainer>
               <RadioOption>
@@ -320,28 +362,20 @@ export default function CreateForm() {
             </RadioContainer>
             <Button color='green' onClick={() => createQuestion()} disabled={!isChecked} >Criar pergunta</Button>
           </RadioContainerBg>
-          {displayQuestions}
+          <QuestionsContainer>
+            {displayQuestions}
+          </QuestionsContainer>
+          {
+            questions.length > 0 &&
+            <Button
+              color='green'
+              onClick={handleSubmitForm}
+              disabled={!formNameIsValid} >
+              Enviar Formulário
+            </Button>
+          }
         </InnerContainerBg>
       </ContainerBg>
     </>
   )
 }
-
-/*
-
-<TypeContainer>
-              <TypeTitle>Perguntas discursivas</TypeTitle>
-              {displayDiscursive}
-              <Button color='green' onClick={()=>addQuestion('discursive')}>Adicionar pergunta</Button>
-            </TypeContainer>
-            <TypeContainer>
-              <TypeTitle>Perguntas objetivas<br/>(escolha única)</TypeTitle>
-              {displayRadio}
-              <Button color='green' onClick={()=>addQuestion('discursive')}>Adicionar pergunta</Button>
-            </TypeContainer>
-            <TypeContainer>
-              <TypeTitle>Perguntas objetivas<br/>(escolha múltipla)</TypeTitle>
-
-              <Button color='green' onClick={()=>addQuestion('discursive')}>Adicionar pergunta</Button>
-            </TypeContainer>
-*/

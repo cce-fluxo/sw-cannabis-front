@@ -1,11 +1,11 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect,useContext, useState} from 'react';
 import Header from '../../../Components/Header';
 import { InnerContainerBg,ContainerBg,Title } from '../Consultas/styles';
 
 import Return from '../../../Components/Return';
 import {Button} from '../../../Utils/styles';
 
-import {FullCalendarContainer } from '../ProChoiceAgendamento/styles';
+import {FullCalendarContainer } from './styles';
 import moment from 'moment';
 
 
@@ -17,7 +17,52 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import {createEventId } from './utils'
 
+import AuthContext from '../../../Storage/auth-context';
 
+function isAnOverlapEvent(events,start,end ) {
+  let validation=false
+  try{
+      if (moment(start)._isAMomentObject && moment(end)._isAMomentObject) {
+          
+          for (let i = 0; i < events.length; i++) {
+              const eventA = events[i];
+     
+                  if (moment(end).isAfter(eventA.start) && moment(end).isBefore(eventA.end)) {
+                      console.log('final durante um evento')
+                      
+                      validation=true
+                      break
+                  }
+                   else if(moment(start).isBefore(eventA.end) && moment(start).isAfter(eventA.start)){
+                     console.log("inicio durante um evento")
+                     
+                     validation=true
+                    break
+                   }
+                   else if(moment(start).isBefore(eventA.start) && moment(end).isAfter(eventA.end) ){
+                    console.log("inicio antes e fim depois")
+                    
+                    validation=true
+                   break
+                  }
+                 
+                }
+                
+          }
+          
+          else {
+          const error = 'Error, start or end are not Moment objects';
+          console.error(error);
+         throw new Error(error);
+          
+      }
+    }
+     catch (error) {
+      console.error(error);
+      throw error;
+    } 
+    return validation
+  } 
 
 
 
@@ -28,7 +73,7 @@ export default function CalendarDoctor(){
   const fullUrl=window.location.pathname
   const id=parseInt(fullUrl.slice(-1))
   const [formIsValid,setFormIsValid]=useState(false);
-  
+  const {pacients,makeApointment}=useContext(AuthContext)
 
   const fakeEvents=[
   {id:createEventId(), title:'Indisponível',start: "2021-09-04T11:00:00-03:00", end: "2021-09-04T16:00:00-03:00", display:'block', color:'darkBlue', selectable:false, editable:false},
@@ -65,46 +110,6 @@ function isBeforeLimitDate(date) {
     return date <= limitDate
   }
 
-    
-  function isAnOverlapEvent(events,start,end ) {
-    let validation=false
-    try{
-        if (moment(start)._isAMomentObject && moment(end)._isAMomentObject) {
-          console.log('yep')
-            
-            for (let i = 0; i < events.length; i++) {
-                const eventA = events[i];
-       
-                    if (moment(end).isAfter(eventA.start) && moment(end).isBefore(eventA.end)) {
-                        console.log('final durante um evento')
-                        console.log(eventA)
-                        validation=true
-                        break
-                    }
-                     else if(moment(start).isBefore(eventA.end) && moment(start).isAfter(eventA.start)){
-                       console.log("inicio durante um evento")
-                       console.log(eventA)
-                       validation=true
-                      break
-                     }
-                   
-                  }
-                  
-            }
-            
-            else {
-            const error = 'Error, start or end are not Moment objects';
-            console.error(error);
-           throw new Error(error);
-            
-        }
-      }
-       catch (error) {
-        console.error(error);
-        throw error;
-      } 
-      return validation
-    } 
   
   
   
@@ -112,12 +117,12 @@ function isBeforeLimitDate(date) {
 
   const handleDateSelect = (selectInfo) => {
     
-   let title ='Consulta ${nome}'
-   let calendarApi = selectInfo.view.calendar
-   let startDate=selectInfo.start
-  
-   let reverseStartDate=startDate.getFullYear()+'/'+addZeroBefore(startDate.getMonth()+1)+'/'+addZeroBefore(startDate.getDate())
-   let eventDuration=(selectInfo.end.getHours()*60+selectInfo.end.getMinutes())-(startDate.getHours()*60+startDate.getMinutes())
+    let title =`Consulta (nome paciente)`
+    let calendarApi = selectInfo.view.calendar
+    let startDate=selectInfo.start
+    
+    let reverseStartDate=startDate.getFullYear()+'/'+addZeroBefore(startDate.getMonth()+1)+'/'+addZeroBefore(startDate.getDate())
+    let eventDuration=(selectInfo.end.getHours()*60+selectInfo.end.getMinutes())-(startDate.getHours()*60+startDate.getMinutes())
    
    //isAnOverlapEvent(fakeEvents,selectInfo.startStr,selectInfo.endStr)
    //console.log(eventDuration)
@@ -163,7 +168,7 @@ function isBeforeLimitDate(date) {
  const handleEventClick = (clickInfo) => {
    
    //console.log(clickInfo.view)
-    if(clickInfo.event.title==='Indisponível'){
+    if(clickInfo.event.title==='Bloqueado'){
       console.log('bloqueado')
     }
     else{
@@ -202,6 +207,7 @@ function renderEventContent(eventInfo) {
 
 
 const submitHandler=()=>{
+  makeApointment(id,1,currentEvents)
  window.localStorage.setItem('Solicitação de consulta',JSON.stringify(currentEvents))
 }
 
@@ -216,6 +222,7 @@ const submitHandler=()=>{
       <Return destiny={path}/>
       <FullCalendarContainer>
           <FullCalendar
+          expandRows={true}
           plugins={[ dayGridPlugin,timeGridPlugin,interactionPlugin ]}
           headerToolbar={{
             left: 'prev,next today',
@@ -224,7 +231,7 @@ const submitHandler=()=>{
           }}
           initialView="dayGridMonth"
           locale={ptLocale}
-          themeSystem={'minty'}
+         
             overlap={false}
             selectable={true}
             selectMirror={true}

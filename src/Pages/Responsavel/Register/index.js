@@ -134,9 +134,6 @@ export default function Register(){
   
   function Basic(props) {
     const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
-    function teste(file){
-      console.log(file)
-    }
     const files = acceptedFiles.map(file => (
       
       <li key={file.path}>
@@ -343,8 +340,8 @@ const cpfMask = value => {
 const birthMask = value => {
   return value
   .replace(/\D/g, '') 
-  .replace(/(\d{2})(\d{2})/, '$1-$2') 
-  .replace(/(\d{2})(\d)/, '$1-$2')
+  .replace(/(\d{2})(\d{2})/, '$1/$2') 
+  .replace(/(\d{2})(\d)/, '$1/$2')
   //.replace(/(\d{3})(\d{1,2})/, '$1-$2')
   .replace(/(\d{4})\d+?$/, '$1') 
 }
@@ -365,8 +362,30 @@ const cepMask = value=>{
     .replace(/(-\d{3})\d+?$/, '$1')
 }
 
-  const submitHandler=()=>{
-    onPacientRegister(nameState.value,lastNameState.value,birthState.value,cpfState.value,rgState.value,'doc',diagState.value,'doc','doc',cityState.value,estadoState.value,cepState.value,adressState.value,compState.value,numState.value)
+  const submitHandler = () => {
+    const data = {
+      nome: nameState.value,
+      sobrenome: lastNameState.value,
+      data_nascimento: birthState.value,
+      cpf: cpfState.value,
+      rg: rgState.value,
+      documentos_pessoais: 'doc',
+      diagnostico: diagState.value,
+      laudo_medico: 'doc',
+      receita_medica: 'doc',
+      cidade: cityState.value,
+      estado: estadoState.value,
+      cep: cepState.value,
+      endereco: adressState.value,
+      complemento:compState.value,
+      numero: numState.value,
+      bairro: 'tijuca'
+    }
+
+
+
+
+    onPacientRegister(data)
     //nome,sobrenome,nascimento,cpf,rg,identidade,diagnostico,laudo,receita,cidade,estado,cep,endereco,complemento,numero
     //window.location.reload()
   }

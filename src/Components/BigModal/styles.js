@@ -3,15 +3,14 @@ import styled from 'styled-components';
 
 export const ModalBg = styled.div`
     background-color: white;
-    box-shadow: 15px 15px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 15px 15px 5px 0px rgba(0,0,0,0.4);
     display:flex;
     justify-content: center;
     width:100%;
-    height: 100%;
+    height: 95%;
     padding:40px;
     margin:10px;
     border-radius: 60px;
-  
     
     @media(max-width:800px){
     width:90%;

@@ -2,6 +2,35 @@ import styled from "styled-components";
 
 import { BsFillArrowUpCircleFill, BsArrowDownCircleFill, BsXCircleFill } from 'react-icons/bs';
 
+export const ContainerBg = styled.div`
+  max-width: 1280px;
+  //min-height: 500px;
+  margin: 50px auto;
+  padding-bottom: 60px;
+  border-radius: 20px;
+  background-color:#282828;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  @media(max-width:1400px) {
+    width:90%;
+  }
+`
+
+export const InnerContainerBg = styled.div`
+  width: 80%;
+  //min-height: 200px;
+  border-radius: 40px;
+  margin-top: 20px;
+  padding-bottom: 30px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  
+  padding-top: 30px;
+`
 
 export const TypeTitle = styled.p`
     font-size: 24px;
@@ -21,14 +50,18 @@ export const TypeContainer = styled.div`
     margin-bottom:40px;
 `
 
+export const QuestionsContainer = styled.div`
+    margin-bottom: 30px;
+
+`
+
 export const QuestionContainer = styled.div`
     display: flex;
     align-items: center;
     align-content: center;
     padding: 10px;
-    margin-right: 10px;
     //border-bottom: 1px solid gray;
-    margin-top:15px;
+    margin: 15px 10px 0 0;
     //margin-bottom:15px;
     //border-bottom: 1px solid gray
     //box-shadow: 5px 5px 10px 5px gray;
@@ -40,13 +73,11 @@ export const QuestionBg = styled.div`
     align-content: center;
     flex-direction:column;
     
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     //margin-bottom:15px;
     //border-bottom: 1px solid gray
     //box-shadow: 5px 5px 10px 5px gray;
-    &:not(:last-child){
-        border-bottom: 1px solid gray;
-    }
+    border-bottom: 1px solid gray;
 `
 
 export const SmallInput = styled.input`

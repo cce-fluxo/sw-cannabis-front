@@ -11,7 +11,7 @@ import Avatar from '../../../Assets/avatar.svg';
 export default function FollowUp(){
   const fullUrl=window.location.pathname
   const id=parseInt(fullUrl.slice(-1))
-  const newList=[{nome:'Lionel Messi', id:1},{nome:'Cristiano Ronaldo', id:2},{nome:'Lebron James', id:3},{nome:'Allen Iverson', id:4},{nome:'Kyrie Irving', id:5}]
+  const newList=[{nome:'Joaquim Silva', id:1},{nome:'Cristiano Ronaldo', id:2},{nome:'Lebron James', id:3},{nome:'Allen Iverson', id:4},{nome:'Kyrie Irving', id:5}]
   const path=['/pacientes/menu/acompanhamento/notas/'+id,'/pacientes/menu/'+id,'/pacientes/menu/acompanhamento/fichas/'+id,'/pacientes/menu/acompanhamento/criar-ficha/'+id]
   return(
     <>
@@ -24,7 +24,7 @@ export default function FollowUp(){
       <InnerContainerBg>
       <Return destiny={path[1]}/>
       <Card>
-      <CardName><img src={Avatar}/><br/>
+      <CardName><img src={Avatar} alt="user"/><br/>
               {newList[id-1].nome}</CardName>
       </Card>
       <Link to={path[0]}><SubTitle>Anotações</SubTitle></Link>
