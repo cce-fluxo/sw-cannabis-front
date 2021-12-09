@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
-import Return from '../../../Components/Return';
-import { Button } from '../../../Utils/styles';
+
 
 import { SubTitle, Title, TitleContainer } from '../../../Pages/Professional/Profile/styles';
 import { Card, CardContainer, CardName, InnerContainerBg, ContainerBg } from './styles';
 import Avatar from '../../../Assets/avatar.svg';
+import AuthContext from '../../../Storage/auth-context';
 
 export default function Pacients() {
   const first = false
+
+  const {getPatientFolder}=useContext(AuthContext)
+  const [patients,setPatients]=useState([])
+  useEffect(()=>{
+    getPatientFolder(localStorage.getItem('ID')).then(setPatients)
+    console.log(patients)
+  },[])
+  
+  
   const NoPacients = () => {
     return (
       <>
@@ -21,9 +30,8 @@ export default function Pacients() {
     )
   }
 
-  const newList = [{ nome: 'Joaquim Silva', id: 1 }, { nome: 'Cristiano Ronaldo', id: 2 }, { nome: 'Lebron James', id: 3 }, { nome: 'Allen Iverson', id: 4 }, { nome: 'Kyrie Irving', id: 5 }]
 
-  const list = newList.map(function (item) {
+  const list = patients.map(function (item) {
     const path = '/pacientes/menu/' + item.id
     return (
       <Link to={path}>
@@ -31,7 +39,7 @@ export default function Pacients() {
           <CardName>
             <img src={Avatar} alt={item.nome} />
             <br />
-            {item.nome}
+            {item.nome}<br />{item.sobrenome}
           </CardName>
         </Card>
       </Link>

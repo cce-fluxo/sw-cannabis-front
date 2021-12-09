@@ -67,7 +67,7 @@ const hours = [
 
 
 export default function ProChoice(){
-const {getProfessionals,professionalList}=useContext(AuthContext)
+const {getProfessionals}=useContext(AuthContext)
 const isBlocked=true
 const fullUrl=window.location.pathname
 const id=parseInt(fullUrl.slice(-1))

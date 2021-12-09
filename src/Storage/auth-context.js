@@ -13,7 +13,6 @@ const AuthContext = React.createContext({
   //user: 'responsavel'
 });
 export const AuthContextProvider = (props) => {
-  const [professionalList,setProfessionalList]=useState()
   const [user, setUser] = useState({});
   const [pacients, setPacients] = useState({});
 
@@ -193,6 +192,31 @@ export const AuthContextProvider = (props) => {
     }
   }
 
+  async function handleSubmit(email, password) {
+    const data = {
+      "email": email,
+      "password": password
+    }
+    try {
+      const response = await api.post("/login", data)
+      console.log(response.data)
+      setUserType(response.data.user)
+      const refreshToken = response.data.refresh_token
+      const token = response.data.token
+      loginHandler(email, password);
+      localStorage.setItem('ID', response.data.id)
+      localStorage.setItem('Token', token)
+      localStorage.setItem('RefreshToken', refreshToken)
+      localStorage.setItem('UserType', response.data.user)
+      
+      //cac@poli.ufrj.br igor123456 respo
+      //cami@poli.ufrj.br igor123 medico
+
+    } catch (error) {
+      console.log(error)
+      //window.location.reload()
+    }
+  }
   
 
 //------------RESPONSAVEL----------------------
@@ -287,53 +311,7 @@ export const AuthContextProvider = (props) => {
   }
 
 
-
-
-  async function handleSubmit(email, password) {
-    const data = {
-      "email": email,
-      "password": password
-    }
-    try {
-      const response = await api.post("/login", data)
-      console.log(response.data)
-      setUserType(response.data.user)
-      const refreshToken = response.data.refresh_token
-      const token = response.data.token
-      loginHandler(email, password);
-      localStorage.setItem('ID', response.data.id)
-      localStorage.setItem('Token', token)
-      localStorage.setItem('RefreshToken', refreshToken)
-      localStorage.setItem('UserType', response.data.user)
-      
-      //cac@poli.ufrj.br igor123456 respo
-      //cami@poli.ufrj.br igor123 medico
-
-    } catch (error) {
-      console.log(error)
-      //window.location.reload()
-    }
-  }
-
-
-  //------------RESPONSAVEL----------------------
-
-  
-//------------PROFISSIONAL----------------------
-
-  async function saveDocEvents(events,id){
-    
-    try {
-      const rota = '/horario/medico/create/'+id 
-      const response = await api.post(rota, events)
-      console.log(response.data)
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
-
-  async function makeApointment(patient,doctor,date){
+async function makeApointment(patient,doctor,date){
     
     try {
       const rota=`/patient/agendar/${patient}/${doctor}`
@@ -358,6 +336,39 @@ export const AuthContextProvider = (props) => {
     }
   }
 
+  
+
+
+  //------------RESPONSAVEL----------------------
+
+  
+//------------PROFISSIONAL----------------------
+
+  async function saveDocEvents(events,id){
+    
+    try {
+      const rota = '/horario/medico/create/'+id 
+      const response = await api.post(rota, events)
+      console.log(response.data)
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function getPatientFolder(id){
+    
+    try {
+      const rota = `/patientfolder/medico/${id}`
+      const response = await api.get(rota)
+      return response.data
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+  
+
 
 
   //------------PROFISSIONAL----------------------
@@ -381,7 +392,8 @@ export const AuthContextProvider = (props) => {
       onSaveDoctorCalendar:saveDocEvents,
       makeApointment:makeApointment,
       getProfessionals:getProfessionals,
-      professionalList:professionalList,
+      getPatientFolder:getPatientFolder,
+
     }}
   >{props.children}</AuthContext.Provider>
 };

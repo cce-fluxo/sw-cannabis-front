@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useContext,useEffect} from 'react';
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
 import { Link } from 'react-router-dom';
@@ -6,13 +6,18 @@ import {  ContainerBg, InnerContainerBg } from '../Pacients/styles';
 import {Title,TitleContainer, SubTitle} from '../../../Pages/Professional/Profile/styles';
 import {MenuDiv,MenuTitle} from '../../../Pages/Responsavel/MenuPacient/styles';
 import {CardName, Card, CardContainer,User,LeftContainer, RightContainer, RightText, CheckContainer, CheckText, Check } from './styles';
+import AuthContext from '../../../Storage/auth-context';
 
 export default function Appointment(){
   const [pending,setPending]=useState(true)
-  const newList=[{nome:'Lionel Messi',consulta:'24/06/2021, 15:00-16:00' ,id:1},{nome:'João Silva',consulta:'22/06/2021, 13:00-14:00', id:2},{nome:'Lebron James',consulta:'23/06/2021, 15:00-16:00', id:3},{nome:'Allen Iverson',consulta:'02/06/2021, 10:00-11:00', id:4},{nome:'Kyrie Irving',consulta:'18/06/2021, 12:00-13:00', id:5}]
-  
-  const pendingList=newList.map(function(item){
-    
+  const {getPatientFolder}=useContext(AuthContext)
+  const [patients,setPatients]=useState([])
+  useEffect(()=>{
+    getPatientFolder(localStorage.getItem('ID')).then(setPatients)
+    console.log(patients)
+  },[])
+  const pendingList=patients.map(function(item){
+  const path=`/pacientes/menu/info/${item.id}`
     return(
       <CardContainer key={item.id.toString()}>
       <Card>
@@ -22,7 +27,7 @@ export default function Appointment(){
         </LeftContainer>
         <RightContainer>
           <RightText>Consulta: {item.consulta}</RightText>
-          <Link to='/pacientes/menu/info/1' target="_blank"><RightText>Ver informações do paciente</RightText></Link>
+          <Link to={path} target="_blank"><RightText>Ver informações do paciente</RightText></Link>
           <CheckContainer>
             <Check/>
             <CheckText>Marcar como concluída</CheckText>
@@ -35,8 +40,8 @@ export default function Appointment(){
   })
 
 
-  const concludedList=newList.map(function(item){
-    
+  const concludedList=patients.map(function(item){
+    const path=`/pacientes/menu/info/${item.id}`
     return(
       <CardContainer key={item.id.toString()}>
       <Card>
@@ -46,7 +51,7 @@ export default function Appointment(){
         </LeftContainer>
         <RightContainer>
           <RightText>Consulta: {item.consulta}</RightText>
-          <Link to='/pacientes/menu/info/1' target="_blank"><RightText>Ver informações do paciente</RightText></Link>
+          <Link to={path}target="_blank"><RightText>Ver informações do paciente</RightText></Link>
         </RightContainer>
       </Card>
     </CardContainer>

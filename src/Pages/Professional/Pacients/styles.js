@@ -48,7 +48,7 @@ export const CardName=styled.div`
   color:white;
   display: flex;
   align-items:center;
-  
+  text-align: center;
   flex-direction: column;
   `
 
