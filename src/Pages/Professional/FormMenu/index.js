@@ -9,6 +9,7 @@ import {
   Card,
   CardDate,
   CardName,
+  CardsContainer,
   ContainerBg,
   DetailButton,
   InnerContainerBg,
@@ -60,29 +61,102 @@ const fakeForms = [
         ]
       }
     ],
-    lastEdition: new Date()
+    lastEdition: new Date(),
+    sentAt: new Date(),
+    answeredAt: new Date(),
+  },
+  {
+    id: 2,
+    name: "Formulario 1",
+    category: "medico",
+    questions: [
+      {
+        id: 1,
+        type: "discursiva",
+        text: "Qual é seu nome"
+      },
+      {
+        id: 2,
+        type: "objetiva",
+        text: "Quantos anos você tem?",
+        options: [
+          {
+            id: 1,
+            text: 12,
+          },
+          {
+            id: 2,
+            text: 13,
+          }
+        ]
+      },
+      {
+        id: 3,
+        type: "multipla",
+        text: "O que você comeu hoje",
+        options: [
+          {
+            id: 1,
+            text: "carne",
+          },
+          {
+            id: 2,
+            text: "pao",
+          }
+        ]
+      }
+    ],
+    lastEdition: new Date(),
+    sentAt: new Date(),
+    answeredAt: new Date(),
+  },
+  {
+    id: 3,
+    name: "Formulario 1",
+    category: "medico",
+    questions: [
+      {
+        id: 1,
+        type: "discursiva",
+        text: "Qual é seu nome"
+      },
+      {
+        id: 2,
+        type: "objetiva",
+        text: "Quantos anos você tem?",
+        options: [
+          {
+            id: 1,
+            text: 12,
+          },
+          {
+            id: 2,
+            text: 13,
+          }
+        ]
+      },
+      {
+        id: 3,
+        type: "multipla",
+        text: "O que você comeu hoje",
+        options: [
+          {
+            id: 1,
+            text: "carne",
+          },
+          {
+            id: 2,
+            text: "pao",
+          }
+        ]
+      }
+    ],
+    lastEdition: new Date(),
+    sentAt: new Date(),
+    answeredAt: new Date(),
   }
 ]
 
-
-
-const PendingCard = ({ form }) => {
-  return (
-    <Card>
-      <CardName>{form.name}</CardName>
-    </Card>
-  )
-}
-
-
-const AnsweredCard = () => {
-  return (
-    <>
-
-
-    </>
-  )
-}
 const AvailableCard = ({ form }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const handleSendForm = () => {
@@ -126,6 +200,41 @@ const AvailableCard = ({ form }) => {
 
 
 
+const PendingCard = ({ form }) => {
+  return (
+    <Card>
+      <div>
+        <CardName>
+          {form.name}
+        </CardName>
+        <CardDate>{form.questions.length} questões</CardDate>
+        <CardDate>Data de envio: {form.sentAt.toLocaleDateString()}</CardDate>
+        <DetailButton>Ver detalhes</DetailButton>
+
+      </div>
+    </Card>
+  )
+}
+
+
+const AnsweredCard = ({form}) => {
+  return (
+    <Card>
+      <div>
+        <CardName>
+          {form.name}
+        </CardName>
+        <CardDate>{form.questions.length} questões</CardDate>
+        <CardDate>Data da resposta: {form.answeredAt.toLocaleDateString()}</CardDate>
+        <DetailButton>Ver detalhes</DetailButton>
+
+      </div>
+    </Card>
+  )
+}
+
+
+
 
 export default function FormMenu(props) {
 
@@ -144,10 +253,10 @@ export default function FormMenu(props) {
         setForms(fakeForms)
       }
       else if (category === "pending") {
-        setForms([])
+        setForms(fakeForms)
       }
       else if (category === "answered") {
-        setForms([])
+        setForms(fakeForms)
       }
       setTimeout(() => setLoading(false), 2000)
     }
@@ -171,7 +280,7 @@ export default function FormMenu(props) {
       )
     }
     return (
-      <>
+      <CardsContainer>
 
         {forms.map(form => {
           return (
@@ -184,7 +293,7 @@ export default function FormMenu(props) {
         })
 
         }
-      </>
+      </CardsContainer>
     )
   }
 
