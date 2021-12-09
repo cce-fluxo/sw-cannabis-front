@@ -4,13 +4,12 @@ import AuthContext from '../../Storage/auth-context';
 import Header from '../../Components/Header';
 import { Input, InputPassword ,VisibilityButton} from '../../Components/Input/styles';
 import { Button, Title } from '../../Utils/styles';
-import {LoginBg, LoginContainer, ModalDiv, OptContainer, Option, StyledLink, WindowText, WindowTitle} from '../Login/styles';
+import {LoginBg, LoginContainer, ModalDiv, OptContainer, Option, StyledLink, WindowText, WindowTitle} from './styles';
 import Email from '../../Assets/user.svg';
 import Lock from '../../Assets/lock.svg';
 import NotVisible from '../../Assets/notvisible.svg';
 import Visible from '../../Assets/visible.svg';
 import Modal from '../../Components/Modal';
-
 
 const emailReducer = (state,action) => {
   if(action.type ==='USER_INPUT'){

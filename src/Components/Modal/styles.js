@@ -12,12 +12,9 @@ export const ModalBg = styled.div`
     margin-top:10%;
     border-radius: 60px;
     @media(max-width:800px){
-    width:90%;
-    
   }
 `
 export const ModalDiv = styled.div`
-display:flex;
 
 `
 

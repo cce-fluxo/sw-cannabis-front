@@ -16,7 +16,11 @@ export const ProfileBg = styled.div`
 `
 export const InnerContainerBg = styled.div`
   width: 80%;
+<<<<<<< HEAD
+  height: 1300px;
+=======
   
+>>>>>>> carrinho
   border-radius: 40px;
   margin-top: 20px;
   margin-bottom: 60px;
@@ -25,8 +29,11 @@ export const InnerContainerBg = styled.div`
   flex-direction: column;
   align-items:center;
   padding-top: 10px;
+<<<<<<< HEAD
+=======
   padding-bottom: 30px;
   
+>>>>>>> carrinho
 `
 
 export const TitleContainer = styled.div`
@@ -67,6 +74,8 @@ export const ArrowDiv=styled.div`
   width: 90%;
   display:flex;
   align-items:flex-start;
+<<<<<<< HEAD
+=======
 `
 
 export const CheckDiv=styled.div`
@@ -105,4 +114,5 @@ export const UploadButton=styled.div`
   border: 0.5px solid gray;
   background-color: lightgray;
   
+>>>>>>> carrinho
 `

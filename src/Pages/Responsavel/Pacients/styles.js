@@ -60,7 +60,6 @@ export const Title = styled.p`
 `
 
 
-
 export const Card=styled.div`
   width:250px;
   height:200px;
@@ -81,10 +80,7 @@ export const CardName=styled.div`
   `
 
 export const CardContainer=styled.div`
-  width: 90%;
-  display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
 
