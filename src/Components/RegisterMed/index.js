@@ -18,12 +18,13 @@ import House from '../../Assets/house.svg';
 import Bio from '../../Assets/bio.svg';
 import { Button } from '../../Utils/styles';
 import Modal from '../Modal';
-import { ModalDiv,WindowText, WindowTitle } from '../../Pages/Login/styles';
+import { ModalDiv, WindowText, WindowTitle } from '../../Pages/Login/styles';
 import AuthContext from '../../Storage/auth-context';
 
 
-const emailReducer = (state,action) => {
-  if(action.type ==='USER_INPUT'){
+const emailReducer = (state, action) => {
+  if (action.type === 'USER_INPUT') {
+    return { value: action.val, isValid: action.val.includes('@') };
   }
   if (action.type === 'INPUT_BLUR') {
     return { value: state.value, isValid: state.value.includes('@') };
@@ -242,9 +243,9 @@ const bioReducer = (state, action) => {
   return { value: '', isValid: false };
 };
 
-export default function RegisterMed(){
 
 
+export default function RegisterMed() {
   const [visibility, setVisibility] = useState(NotVisible);
   const [visibilityConf, setVisibilityConf] = useState(NotVisible);
   const [formIsValid, setFormIsValid] = useState(false);

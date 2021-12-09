@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter,Route,Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Aprovar from '../Pages/Admin/Aprovar';
 import Cadastros from '../Pages/Admin/Cadastros';
 import CreateForm from '../Pages/Admin/CreateForm';
@@ -7,7 +7,6 @@ import { Forms } from '../Pages/Admin/Forms';
 import Homepage from '../Pages/Homepage/';
 
 import LoginMade from '../Pages/LoginMade';
-
 
 
 export default function AdmRoutes() {

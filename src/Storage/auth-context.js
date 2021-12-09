@@ -13,7 +13,7 @@ const AuthContext = React.createContext({
   //user: 'responsavel'
 });
 export const AuthContextProvider = (props) => {
-
+  const [professionalList,setProfessionalList]=useState()
   const [user, setUser] = useState({});
   const [pacients, setPacients] = useState({});
 
@@ -123,31 +123,7 @@ export const AuthContextProvider = (props) => {
     }
   }, []);
 
-  async function dataChange(cel, cidade, estado, numero, endereco, comp, cep,) {
-    const id = user.id
 
-    const data = {
-      //'cpf':'123.444.852.79',
-      //'celular':'(21)99971-8899',
-      'telefone_secundario': cel,
-      'cidade': cidade,
-      'estado': estado,
-      'cep': cep,
-      'endereco': endereco,
-      'numero': numero,
-      'complemento': comp,
-    }
-    console.log(data)
-    try {
-      const rota = '/responsavel/' + id
-      const response = await api.patch(rota, data)
-      console.log(response.data)
-      window.location.reload()
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
   const logoutHandler = () => {
     //    history.push("/login");
     localStorage.removeItem('isLoggedIn');
@@ -163,97 +139,6 @@ export const AuthContextProvider = (props) => {
     //console.log(email, password);
   };
 
-  async function registerPacient(data) {
-    
-    try {
-
-      const response = await api.post('/patient', data)
-
-      console.log(response)
-      console.log(response.data)
-
-    } catch (error) {
-      console.log(error)
-
-    }
-
-  }
-
-  async function removeHandler(id, pacientList) {
-    //const newList=pacientList.filter(x=>x.id!==id)
-    //console.log(newList)
-    const token = localStorage.getItem('Token');
-    const rota = '/paciente/' + id
-    const headers = {
-      'Authorization': `Bearer ${token}`
-    }
-    api.delete(rota, { headers })
-    try {
-      const response = await api.delete(rota, { headers })
-
-      console.log(response)
-    }
-    catch (error) {
-      console.log(error)
-    }
-
-    // api.delete(rota, {
-    //   headers: {
-    //     'authorization': `Bearer ${token}`
-    //   }
-    // }).then((res) => {
-    //   console.log(res)
-
-    // })
-    // .catch((error) => {
-    //   console.error(error)
-    // })
-  }
-
-
-  async function updatePacient(info, id) {
-
-    const data = {
-      'diagnostico': info.diag, 'laudo_medico': info.laudo, 'receita_medica': info.receita, 'cidade': info.city, 'estado': info.state, 'cep': info.cep, 'endereco': info.adress, 'complemento': info.comp, 'numero': info.num, 'bairro': 'tijuca'
-    }
-    try {
-      const rota = '/paciente/' + id
-      const response = await api.patch(rota, data)
-      console.log(response.data)
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
-
-
-
-
-  async function handleSubmit(email, password, history) {
-    const data = {
-      "email": email,
-      "password": password
-    }
-    try {
-      const response = await api.post("/login", data)
-      console.log(response.data)
-      setUserType(response.data.user)
-      const refreshToken = response.data.refresh_token
-      const token = response.data.token
-      loginHandler(email, password);
-      localStorage.setItem('ID', response.data.id)
-      localStorage.setItem('Token', token)
-      localStorage.setItem('RefreshToken', refreshToken)
-      localStorage.setItem('UserType', response.data.user)
-      history.push("/");
-      //cac@poli.ufrj.br igor123456 respo
-      //cami@poli.ufrj.br igor123 medico
-
-    } catch (error) {
-      console.log(error)
-      //window.location.reload()
-    }
-  }
 
   async function userRegister(
     userType,
@@ -308,6 +193,174 @@ export const AuthContextProvider = (props) => {
     }
   }
 
+  
+
+//------------RESPONSAVEL----------------------
+
+  async function dataChange(cel, cidade, estado, numero, endereco, comp, cep,) {
+    const id = user.id
+
+    const data = {
+      //'cpf':'123.444.852.79',
+      //'celular':'(21)99971-8899',
+      'telefone_secundario': cel,
+      'cidade': cidade,
+      'estado': estado,
+      'cep': cep,
+      'endereco': endereco,
+      'numero': numero,
+      'complemento': comp,
+    }
+    console.log(data)
+    try {
+      const rota = '/responsavel/' + id
+      const response = await api.patch(rota, data)
+      console.log(response.data)
+      window.location.reload()
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  async function registerPacient(data) {
+    
+    try {
+
+      const response = await api.post('/patient', data)
+
+      console.log(response)
+      console.log(response.data)
+
+    } catch (error) {
+      console.log(error)
+
+    }
+
+  }
+
+  async function removeHandler(id, pacientList) {
+    //const newList=pacientList.filter(x=>x.id!==id)
+    //console.log(newList)
+    const token = localStorage.getItem('Token');
+    const rota = '/paciente/' + id
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+    api.delete(rota, { headers })
+    try {
+      const response = await api.delete(rota, { headers })
+
+      console.log(response)
+    }
+    catch (error) {
+      console.log(error)
+    }
+    // api.delete(rota, {
+    //   headers: {
+    //     'authorization': `Bearer ${token}`
+    //   }
+    // }).then((res) => {
+    //   console.log(res)
+
+    // })
+    // .catch((error) => {
+    //   console.error(error)
+    // })
+  }
+
+
+  async function updatePacient(info, id) {
+
+    const data = {
+      'diagnostico': info.diag, 'laudo_medico': info.laudo, 'receita_medica': info.receita, 'cidade': info.city, 'estado': info.state, 'cep': info.cep, 'endereco': info.adress, 'complemento': info.comp, 'numero': info.num, 'bairro': 'tijuca'
+    }
+    try {
+      const rota = '/paciente/' + id
+      const response = await api.patch(rota, data)
+      console.log(response.data)
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
+
+  async function handleSubmit(email, password) {
+    const data = {
+      "email": email,
+      "password": password
+    }
+    try {
+      const response = await api.post("/login", data)
+      console.log(response.data)
+      setUserType(response.data.user)
+      const refreshToken = response.data.refresh_token
+      const token = response.data.token
+      loginHandler(email, password);
+      localStorage.setItem('ID', response.data.id)
+      localStorage.setItem('Token', token)
+      localStorage.setItem('RefreshToken', refreshToken)
+      localStorage.setItem('UserType', response.data.user)
+      
+      //cac@poli.ufrj.br igor123456 respo
+      //cami@poli.ufrj.br igor123 medico
+
+    } catch (error) {
+      console.log(error)
+      //window.location.reload()
+    }
+  }
+
+
+  //------------RESPONSAVEL----------------------
+
+  
+//------------PROFISSIONAL----------------------
+
+  async function saveDocEvents(events,id){
+    
+    try {
+      const rota = '/horario/medico/create/'+id 
+      const response = await api.post(rota, events)
+      console.log(response.data)
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function makeApointment(patient,doctor,date){
+    
+    try {
+      const rota=`/patient/agendar/${patient}/${doctor}`
+      const response = await api.post(rota, date)
+      console.log(response.data)
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  async function getProfessionals(specialty){
+    
+    try {
+      const rota=`/lista/medico/${specialty}`
+      const response = await api.get(rota)
+      return response.data
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
+  //------------PROFISSIONAL----------------------
 
 
   return <AuthContext.Provider
@@ -325,6 +378,10 @@ export const AuthContextProvider = (props) => {
       onUserRegister: userRegister,
       onSendForgotEmail: resetPasswordEmail,
       sendToStorage: sendToStorage,
+      onSaveDoctorCalendar:saveDocEvents,
+      makeApointment:makeApointment,
+      getProfessionals:getProfessionals,
+      professionalList:professionalList,
     }}
   >{props.children}</AuthContext.Provider>
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
-
 import Homepage from '../Pages/Homepage/';
 
 import LoginMade from '../Pages/LoginMade';
@@ -18,6 +17,7 @@ import CreateNote from '../Pages/Professional/CreateNote';
 import SeeNote from '../Pages/Professional/SeeNote';
 import FormMenu from '../Pages/Professional/FormMenu';
 import CreateForm from '../Pages/Professional/CreateForm';
+
 export default function MedRoutes(){
   return(
     <div>

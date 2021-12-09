@@ -18,11 +18,6 @@ export const DropOptions = styled.select`
     border: 2px solid black;
     border-radius: 60px;
     padding-left:160px;
-<<<<<<< HEAD
-    color:${props=>
-    {return props.selected===true?'black':'gray'}};
-=======
->>>>>>> carrinho
     font-size: 16px;
     font-weight:bold;
     background-image: url(${props => props.icon});
@@ -37,17 +32,12 @@ export const DropOptions = styled.select`
     &&:focus{
       border-color:${props=>
     {return props.validation===false?'red':'#789D55'}};
-<<<<<<< HEAD
-      
-    }   
-=======
     }
     color: ${props => props.value === "" ? "grey":"black"};
     option{
       color: black;
       background-color: white;
     }
->>>>>>> carrinho
 `
 
 export const ScrollContainer=styled.div`

@@ -8,7 +8,6 @@ import Profile from '../Pages/Responsavel/Profile';
 import Pacients from '../Pages/Responsavel/Pacients';
 import Register from '../Pages/Responsavel/Register';
 import MenuPacient from '../Pages/Responsavel/MenuPacient';
-
 import Consultas from '../Pages/Responsavel/Consultas';
 import Produtos from '../Pages/Responsavel/Produtos';
 import Carrinho from '../Pages/Responsavel/Carrinho';

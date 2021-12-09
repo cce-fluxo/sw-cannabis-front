@@ -65,7 +65,6 @@ export default function Header() {
           <NavOption>PERFIL</NavOption>
           <LogoutContainer>
             <NavOption>SAIR</NavOption>
-
             <LogoutIcon src={Exit} alt="Logout" onClick={authCtx.onLogout} />
           </LogoutContainer>
         </NavList>
@@ -73,6 +72,7 @@ export default function Header() {
     }
     else if (adm) {
       return (
+
         <NavList>
           <NavOption>CADASTRO</NavOption>
           <NavOption>CONSULTAS</NavOption>
@@ -80,7 +80,6 @@ export default function Header() {
           <NavOption>PAGAMENTOS</NavOption>
           <LogoutContainer>
             <NavOption>SAIR</NavOption>
-
             <LogoutIcon src={Exit} alt="Logout" onClick={authCtx.onLogout} />
           </LogoutContainer>
         </NavList>
@@ -113,7 +112,6 @@ export default function Header() {
   }
 
   const Adm = () => {
-
     return (
       <NavList>
         <NavLink to='/cadastros' activeStyle={activeStyle}><NavOption>CADASTRO</NavOption></NavLink>
