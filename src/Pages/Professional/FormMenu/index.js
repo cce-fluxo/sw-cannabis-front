@@ -19,6 +19,8 @@ import { Title, TitleContainer, SubTitle } from '../../../Pages/Professional/Pro
 import { MenuDiv, MenuTitle } from '../../../Pages/Responsavel/MenuPacient/styles';
 import Return from '../../../Components/Return';
 import Modal from '../../../Components/Modal';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 const fakeForms = [
   {
     id: 1,
@@ -157,10 +159,16 @@ const fakeForms = [
   }
 ]
 
-const AvailableCard = ({ form }) => {
+const AvailableCard = ({ form, userId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSendingForm, setIsSendingForm] = useState(false)
   const handleSendForm = () => {
+    setIsSendingForm(true)
     console.log("sending")
+    setTimeout(() => {
+      setIsSendingForm(false)
+      setIsModalOpen(false)
+    }, 100000)
   }
   const ConfirmationModal = () => {
     return (
@@ -169,7 +177,12 @@ const AvailableCard = ({ form }) => {
           <h2>Deseja mesmo enviar esse formulário? </h2>
           <div>
             <button onClick={() => setIsModalOpen(false)}>Cancelar</button>
-            <button onClick={handleSendForm}>Enviar</button>
+            <button onClick={handleSendForm}>
+              {isSendingForm ?
+                <ReactLoading type="bubbles" color="#fff" width={"20%"} /> :
+                "Enviar"
+              }
+            </button>
           </div>
         </ModalConfirmationContent>
       </Modal>
@@ -189,9 +202,11 @@ const AvailableCard = ({ form }) => {
         <CardName>
           {form.name}
         </CardName>
-        <CardDate>{form.questions.length} questões</CardDate>
+        <CardDate>{form.questions.length} perguntas</CardDate>
         <CardDate>Ultima edição: {form.lastEdition.toLocaleDateString()}</CardDate>
-        <DetailButton>Ver detalhes</DetailButton>
+        <Link to={`/pacientes/menu/acompanhamento/fichas/${userId}/disponivel/${form.id}`}>
+          <DetailButton>Ver detalhes</DetailButton>
+        </Link>
 
       </div>
     </Card>
@@ -200,16 +215,18 @@ const AvailableCard = ({ form }) => {
 
 
 
-const PendingCard = ({ form }) => {
+const PendingCard = ({ form, userId }) => {
   return (
     <Card>
       <div>
         <CardName>
           {form.name}
         </CardName>
-        <CardDate>{form.questions.length} questões</CardDate>
+        <CardDate>{form.questions.length} perguntas</CardDate>
         <CardDate>Data de envio: {form.sentAt.toLocaleDateString()}</CardDate>
-        <DetailButton>Ver detalhes</DetailButton>
+        <Link to={`/pacientes/menu/acompanhamento/fichas/${userId}/enviado/${form.id}`}>
+          <DetailButton>Ver detalhes</DetailButton>
+        </Link>
 
       </div>
     </Card>
@@ -217,16 +234,18 @@ const PendingCard = ({ form }) => {
 }
 
 
-const AnsweredCard = ({form}) => {
+const AnsweredCard = ({form, userId}) => {
   return (
     <Card>
       <div>
         <CardName>
           {form.name}
         </CardName>
-        <CardDate>{form.questions.length} questões</CardDate>
+        <CardDate>{form.questions.length} perguntas</CardDate>
         <CardDate>Data da resposta: {form.answeredAt.toLocaleDateString()}</CardDate>
-        <DetailButton>Ver detalhes</DetailButton>
+        <Link to={`/pacientes/menu/acompanhamento/fichas/${userId}/respondido/${form.id}`}>
+          <DetailButton>Ver detalhes</DetailButton>
+        </Link>
 
       </div>
     </Card>
@@ -238,8 +257,7 @@ const AnsweredCard = ({form}) => {
 
 export default function FormMenu(props) {
 
-  const fullUrl = window.location.pathname
-  const id = parseInt(fullUrl.slice(-1))
+  const {id} = useParams();
   const path = '/pacientes/menu/acompanhamento/' + id
   const [category, setCategory] = useState("available")
   const [forms, setForms] = useState([])
@@ -272,7 +290,7 @@ export default function FormMenu(props) {
 
   const DisplayCards = () => {
     if (loading) {
-      return <ReactLoading type="spin" width={30} height={30} color="#789D55" />
+      return <ReactLoading type="spin" width={60} height={60} color="#789D55" />
     }
     if (forms.length === 0) {
       return (
@@ -285,10 +303,10 @@ export default function FormMenu(props) {
         {forms.map(form => {
           return (
             category === "pending" ?
-              <PendingCard form={form} key={form.id} /> :
+              <PendingCard form={form} userId={id} key={form.id} /> :
               category === "answered" ?
-                <AnsweredCard form={form} key={form.id} /> :
-                <AvailableCard form={form} key={form.id} />
+                <AnsweredCard form={form} userId={id} key={form.id} /> :
+                <AvailableCard form={form} userId={id} key={form.id} />
           )
         })
 

@@ -24,7 +24,7 @@ export const InnerTitle = styled.p`
 
 export const InnerContainerBg = styled.div`
   width: 80%;
-  min-height: 300px;
+  min-height: 400px;
   border-radius: 40px;
   margin-top: 20px;
   margin-bottom: 60px;
@@ -145,6 +145,10 @@ export const ModalConfirmationContent = styled.div`
       width: 100px;
       height: 30px;
       border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
       border: none;
       color: #fff;
       background-color: #dd2342;
@@ -157,6 +161,9 @@ export const ModalConfirmationContent = styled.div`
     button + button{
       margin-left: 20px;
       background-color: #789D55;
+      div{
+        margin-bottom: 25px;
+      }
     }
   }
 

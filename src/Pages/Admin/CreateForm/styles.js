@@ -116,7 +116,7 @@ export const ButtonsContainer = styled.div`
 
 export const ButtonTitle = styled.p`
     font-size: 14px;
-    color: ${props => { return props.add === true ? 'green' : 'red' }};
+    color: ${props =>  props.add === true ? 'green' : 'red' };
     
 `
 
@@ -125,8 +125,6 @@ export const UpButton = styled(BsFillArrowUpCircleFill)`
     height: 30px;
     color: black;
     cursor: ${props => props.disabled === true ? 'not-allowed' : 'pointer'};
-
-    
 `
 
 export const DownButton = styled(BsArrowDownCircleFill)`
