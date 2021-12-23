@@ -5,17 +5,13 @@ import { Buffer } from 'buffer';
 
 
 
-
 const AuthContext = React.createContext({
   isLoggedIn: false,
-  //onLogout: () => {},
-  //onLogin: (email,password) => {},
-  //user: 'responsavel'
+  
 });
 export const AuthContextProvider = (props) => {
   const [user, setUser] = useState({});
-  const [pacients, setPacients] = useState({});
-
+ 
   // eslint-disable-next-line
   const [userType, setUserType] = useState(() => {
     const userType = localStorage.getItem('UserType');
@@ -23,7 +19,7 @@ export const AuthContextProvider = (props) => {
       return userType;
     return ""
   });
-  const [userId, setUserId] = useState();
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   async function sendToStorage(photo) {
@@ -52,27 +48,14 @@ export const AuthContextProvider = (props) => {
     }
   }
 
+  
+  
 
   useEffect(() => {
     const token = localStorage.getItem('Token');
     const user = localStorage.getItem('UserType');
     const id = localStorage.getItem('ID');
     if (token && user === 'responsavel') {
-
-      api.get(`/patient/lista`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-        .then((res) => {
-          console.log(res.data)
-          setPacients(res.data)
-
-
-        })
-        .catch((error) => {
-          console.error(error)
-        })
       api.get(`/responsavel/${id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -124,7 +107,6 @@ export const AuthContextProvider = (props) => {
 
 
   const logoutHandler = () => {
-    //    history.push("/login");
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('Token');
     localStorage.removeItem('RefreshToken');
@@ -135,9 +117,9 @@ export const AuthContextProvider = (props) => {
   const loginHandler = (email, password) => {
     localStorage.setItem('isLoggedIn', '1');
     setIsLoggedIn(true);
-    //console.log(email, password);
   };
 
+  
 
   async function userRegister(
     userType,
@@ -221,6 +203,21 @@ export const AuthContextProvider = (props) => {
 
 //------------RESPONSAVEL----------------------
 
+async function getPatients(){
+  const token = localStorage.getItem('Token');
+    try {
+      const rota = `/patient/lista`
+      const response = await api.get(rota, 
+        { headers: {'Authorization': `Bearer ${token}`} })
+      return response.data
+    }
+    catch (error) {
+      console.log(error)
+    }
+}
+
+
+
   async function dataChange(cel, cidade, estado, numero, endereco, comp, cep,) {
     const id = user.id
 
@@ -264,7 +261,7 @@ export const AuthContextProvider = (props) => {
 
   }
 
-  async function removeHandler(id, pacientList) {
+  async function removeHandler(id) {
     //const newList=pacientList.filter(x=>x.id!==id)
     //console.log(newList)
     const token = localStorage.getItem('Token');
@@ -368,7 +365,18 @@ async function makeApointment(patient,doctor,date){
     }
   }
   
-
+async function getNotes(id){
+  
+  try{
+    const rota=`/anotacoesmedicas/lista`
+    const response = await api.get(rota)
+    console.log(response.data)
+    return response.data
+  }
+  catch(error){
+    console.log(error)
+  }
+}
 
 
   //------------PROFISSIONAL----------------------
@@ -380,8 +388,9 @@ async function makeApointment(patient,doctor,date){
       onLogout: logoutHandler,
       onLogin: handleSubmit,
       userInfo: user,
-      pacients: pacients,
+      
       user: userType,
+      getPatients:getPatients,
       onDataChange: dataChange,
       onPacientRegister: registerPacient,
       onPacientRemove: removeHandler,
@@ -393,6 +402,7 @@ async function makeApointment(patient,doctor,date){
       makeApointment:makeApointment,
       getProfessionals:getProfessionals,
       getPatientFolder:getPatientFolder,
+      getNotes:getNotes,
 
     }}
   >{props.children}</AuthContext.Provider>

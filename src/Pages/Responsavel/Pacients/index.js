@@ -1,4 +1,4 @@
-import React,{useContext,useState} from 'react';
+import React,{useContext,useState,useEffect} from 'react';
 import Head from '../../../Components/Head';
 import Header from '../../../Components/Header';
 import Return from '../../../Components/Return';
@@ -10,8 +10,8 @@ import Plus from '../../../Assets/plus.svg';
 import Avatar from '../../../Assets/avatar.svg';
 
 export default function Pacients(){
-  
-  const {userInfo,onDataChange,pacients} = useContext(AuthContext) 
+  const [patients,setPatients]=useState()
+  const {getPatients,pacients} = useContext(AuthContext) 
   const noPacients=pacients.length===0?true:false
 
   const FirstTime = () =>{
@@ -23,13 +23,17 @@ export default function Pacients(){
       </>
     )   
   }
+
+  useEffect(()=>{
+    getPatients().then(setPatients)
+  },[])
   
   let newList=[]
   for (var i = 0; i < pacients.length; i++) { newList.push(pacients[i]); }
-
+  getPatients().then(console.log)
   //console.log(test)  
   
-  const list=newList.map(function(item){
+  const list=patients?patients.map(function(item){
     const path='/perfil/pacientes/menu/'+item.id
     return(
       <Link to={path} key={item.id}>
@@ -39,7 +43,7 @@ export default function Pacients(){
       </Card>
       </Link>
     )
-  })
+  }):''
 
   const DisplayCards=()=>{
     return(

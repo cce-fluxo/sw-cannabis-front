@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useContext,useState} from 'react';
 import {Link} from 'react-router-dom';
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
@@ -7,10 +7,19 @@ import { Card, ContainerBg, CardName, InnerContainerBg } from '../Pacients/style
 import {Title,TitleContainer} from '../../../Pages/Professional/Profile/styles';
 import { SubTitle } from '../MenuPacient/styles';
 import Avatar from '../../../Assets/avatar.svg';
+import AuthContext from '../../../Storage/auth-context';
+
 
 export default function FollowUp(){
   const fullUrl=window.location.pathname
   const id=parseInt(fullUrl.slice(-1))
+  const {getPatientFolder}=useContext(AuthContext)
+  const [patients,setPatients]=useState([])
+  useEffect(()=>{
+    getPatientFolder(localStorage.getItem('ID')).then(setPatients)
+    
+  },[])
+  const patientInfo=patients.find(x=>x.id===id)
   const newList=[{nome:'Joaquim Silva', id:1},{nome:'Cristiano Ronaldo', id:2},{nome:'Lebron James', id:3},{nome:'Allen Iverson', id:4},{nome:'Kyrie Irving', id:5}]
   const path=['/pacientes/menu/acompanhamento/notas/'+id,'/pacientes/menu/'+id,'/pacientes/menu/acompanhamento/fichas/'+id,'/pacientes/menu/acompanhamento/criar-ficha/'+id]
   return(
@@ -25,7 +34,8 @@ export default function FollowUp(){
       <Return destiny={path[1]}/>
       <Card>
       <CardName><img src={Avatar} alt="user"/><br/>
-              {newList[id-1].nome}</CardName>
+              {patientInfo?patientInfo.nome:''}    <br/>
+              {patientInfo?patientInfo.sobrenome:''}</CardName>
       </Card>
       <Link to={path[0]}><SubTitle>Anotações</SubTitle></Link>
       <Link to={path[2]}><SubTitle>Fichas de acompanhamento</SubTitle></Link>

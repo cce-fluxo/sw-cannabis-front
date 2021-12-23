@@ -2,7 +2,7 @@ import SunEditor, { buttonList } from 'suneditor-react';
 //import suneditor from 'suneditor';
 import 'suneditor/dist/css/suneditor.min.css'; // Import Sun Editor's CSS File
 import {useHistory} from "react-router-dom"
-import React,{useState,useReducer, useEffect} from 'react';
+import React,{useState,useReducer, useEffect, useContext} from 'react';
 import {InputReverse} from '../../../Components/Input/styles';
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
@@ -11,6 +11,7 @@ import { ContainerBg,InnerContainerBg} from '../Pacients/styles';
 import {Title,TitleContainer, SubTitle} from '../../../Pages/Professional/Profile/styles';
 import { Button, ButtonSmall } from '../../../Utils/styles';
 import api from '../../../Services/api';
+import AuthContext from '../../../Storage/auth-context';
 
 const nameReducer = (state,action) => {
   if(action.type ==='USER_INPUT'){
@@ -27,9 +28,9 @@ export default function SeeNote(props) {
   const fullUrl=window.location.pathname
   const id=parseInt(fullUrl.slice(-1))
   const history = useHistory();
-
+  const {getNotes}=useContext(AuthContext)
   const [editorContent,setEditorContent]=useState(state.text)
-
+  getNotes(localStorage.getItem('ID')).then(console.log)
   const [nameState,dispatchName] = useReducer(nameReducer,{
     value: state.nome,
     isValid: null,

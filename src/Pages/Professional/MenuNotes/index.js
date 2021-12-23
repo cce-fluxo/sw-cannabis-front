@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
@@ -8,10 +8,18 @@ import { Card, ContainerBg, CardName, InnerContainerBg, CardContainer } from '..
 import { Title, TitleContainer, SubTitle } from '../../../Pages/Professional/Profile/styles';
 import Plus from '../../../Assets/plus.svg';
 import Nota from '../../../Assets/notes.svg';
+import AuthContext from '../../../Storage/auth-context';
 
 export default function MenuNotes() {
   const fullUrl = window.location.pathname
   const id = parseInt(fullUrl.slice(-1))
+  const {getPatientFolder,getNotes}=useContext(AuthContext)
+  const [patients,setPatients]=useState([])
+  useEffect(()=>{
+    getPatientFolder(localStorage.getItem('ID')).then(setPatients)
+    
+  },[])
+  const patientInfo=patients.find(x=>x.id===id)
   const path = ['/pacientes/menu/acompanhamento/criar-nota/' + id, '/pacientes/menu/acompanhamento/' + id]
   const [notes, setNotes] = useState([
     { nome: 'Anotação 1', text: "<p>thrhtrhthtrhtrhtrhtrh</p>", data: '20/02/2021', id: 1 },
@@ -19,8 +27,7 @@ export default function MenuNotes() {
     { nome: 'Anotação 3', text: "<p>thrhtrhthtrhtrhtrhtrh</p>", data: '12/03/2021', id: 3 },
     { nome: 'Anotação 4', text: "<p>thrhtrhthtrhtrhtrhtrh</p>", data: '21/02/2021', id: 4 }
   ])
-
-
+  getNotes(localStorage.getItem('ID')).then(console.log)
   const fetchNotes = async () => {
     // TODO: Rever a rota e se os campos passados estão de acordos
     try {

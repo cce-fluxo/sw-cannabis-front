@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
+
 import { Link } from 'react-router-dom';
 import Header from '../../../Components/Header';
 import Head from '../../../Components/Head';
@@ -9,15 +10,20 @@ import { SubTitle, Title, TitleContainer } from '../../../Pages/Professional/Pro
 import { Card, CardContainer, CardName, InnerContainerBg, ContainerBg } from './styles';
 import Avatar from '../../../Assets/avatar.svg';
 import AuthContext from '../../../Storage/auth-context';
+import LoadingIndicator from '../../../Components/LoadingIndicator';
 
 export default function Pacients() {
   const first = false
-
+  const [loading,setLoading]=useState(true)
   const {getPatientFolder}=useContext(AuthContext)
   const [patients,setPatients]=useState([])
+  
   useEffect(()=>{
-    getPatientFolder(localStorage.getItem('ID')).then(setPatients)
-    console.log(patients)
+    getPatientFolder(localStorage.getItem('ID')).then(setPatients,
+      setTimeout(function() {
+        setLoading(false)
+      }, 1500)
+      )
   },[])
   
   
@@ -31,7 +37,7 @@ export default function Pacients() {
   }
 
 
-  const list = patients.map(function (item) {
+  const list = patients?patients.map(function (item) {
     const path = '/pacientes/menu/' + item.id
     return (
       <Link to={path}>
@@ -44,7 +50,7 @@ export default function Pacients() {
         </Card>
       </Link>
     )
-  })
+  }):''
 
   const DisplayCards = () => {
     return (
@@ -54,7 +60,7 @@ export default function Pacients() {
       </CardContainer>
     )
   }
-
+  
   return (
     <>
       <Head title="Terapeutas Cannábicos - Menu de pacientes" description="Descrição do menu de pacientes" />
@@ -64,8 +70,7 @@ export default function Pacients() {
           <Title active={true}>PACIENTES</Title>
         </TitleContainer>
         <InnerContainerBg>
-          {first ? <NoPacients /> : <DisplayCards />}
-
+          {!patients || loading ? <LoadingIndicator/> : (first ? <NoPacients /> : <DisplayCards />)} 
         </InnerContainerBg>
       </ContainerBg>
     </>

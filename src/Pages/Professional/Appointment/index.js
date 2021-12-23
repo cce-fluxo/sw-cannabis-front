@@ -16,7 +16,7 @@ export default function Appointment(){
     getPatientFolder(localStorage.getItem('ID')).then(setPatients)
     console.log(patients)
   },[])
-  const pendingList=patients.map(function(item){
+  const pendingList=patients?patients.map(function(item){
   const path=`/pacientes/menu/info/${item.id}`
     return(
       <CardContainer key={item.id.toString()}>
@@ -37,10 +37,10 @@ export default function Appointment(){
     </CardContainer>
       
     )
-  })
+  }):''
 
 
-  const concludedList=patients.map(function(item){
+  const concludedList=patients?patients.map(function(item){
     const path=`/pacientes/menu/info/${item.id}`
     return(
       <CardContainer key={item.id.toString()}>
@@ -57,7 +57,7 @@ export default function Appointment(){
     </CardContainer>
       
     )
-  })
+  }):''
 
   const changeView=(option)=>{
     setPending(option)

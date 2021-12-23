@@ -7,64 +7,65 @@ import { InputDiv, InputReverse, InputTitle } from '../../../Components/Input/st
 import {InnerContainerBg, InputContainer, ProfileBg,Title, TitleContainer } from './styles';
 import { Button } from '../../../Utils/styles';
 import AuthContext from '../../../Storage/auth-context';
+import LoadingIndicator from '../../../Components/LoadingIndicator';
 
-export default function ProfileData(){
-  const {userInfo}=useContext(AuthContext);
-  console.log(userInfo)
-
-  const cpfMask = value => {
-    return value
-    .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada
-    .replace(/(\d{3})(\d)/, '$1.$2') // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d{1,2})/, '$1-$2')
-    .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
+const cpfMask = value => {
+  return value
+  .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada
+  .replace(/(\d{3})(\d)/, '$1.$2') // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
+  .replace(/(\d{3})(\d)/, '$1.$2')
+  .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+  .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
 }
 
 const rgMask = value=>{
-  return value
-    .replace(/\D/g, '')
-    .replace(/(\d{2})(\d)/, '$1.$2') 
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d{1,2})/, '$1-$2')
-    .replace(/(-\d{1})\d+?$/, '$1') 
+return value
+  .replace(/\D/g, '')
+  .replace(/(\d{2})(\d)/, '$1.$2') 
+  .replace(/(\d{3})(\d)/, '$1.$2')
+  .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+  .replace(/(-\d{1})\d+?$/, '$1') 
 }
 
 const telMask = value=>{
-  return value
-    .replace(/\D/g, '')
-    .replace(/(\d{2})(\d)/, '($1)$2') 
-    .replace(/(\d{4})(\d{1,2})/, '$1-$2')
-    .replace(/(-\d{4})\d+?$/, '$1')
+return value
+  .replace(/\D/g, '')
+  .replace(/(\d{2})(\d)/, '($1)$2') 
+  .replace(/(\d{4})(\d{1,2})/, '$1-$2')
+  .replace(/(-\d{4})\d+?$/, '$1')
 }
 
 const cepMask = value=>{
-  return value
-    .replace(/\D/g, '')
-    .replace(/(\d{5})(\d{1,2})/, '$1-$2') 
-    .replace(/(-\d{3})\d+?$/, '$1')
+return value
+  .replace(/\D/g, '')
+  .replace(/(\d{5})(\d{1,2})/, '$1-$2') 
+  .replace(/(-\d{3})\d+?$/, '$1')
 }
 
 const celMask = value=>{
-  return value
-    .replace(/\D/g, '')
-    .replace(/(\d{2})(\d)/, '($1)$2') 
-    .replace(/(\d{5})(\d{1,2})/, '$1-$2')
-    .replace(/(-\d{4})\d+?$/, '$1')
+return value
+  .replace(/\D/g, '')
+  .replace(/(\d{2})(\d)/, '($1)$2') 
+  .replace(/(\d{5})(\d{1,2})/, '$1-$2')
+  .replace(/(-\d{4})\d+?$/, '$1')
 }
 
+export default function ProfileData(){
+  const {userInfo}=useContext(AuthContext);
+  const [loading,setLoading]=useState(true)
+  
+  useEffect(()=>{  
+      setTimeout(function() {
+        setLoading(false)
+      }, 1500)
+  },[])
+
+ 
+
+const Data=()=>{
   return(
     <>
-    <Head title="Terapeutas Cannábicos - Dados do perfil" description="Descrição do dados"/>
-    <Header/>
-    <ProfileBg>
-      <TitleContainer>
-        <Title active={true}>DADOS</Title>
-        <Link to='/perfil/calendario'><Title>CALENDÁRIO</Title></Link>
-      </TitleContainer>
-      <InnerContainerBg>
-        <Return destiny='/perfil'/>
-        <InputDiv>
+    <InputDiv>
           <InputTitle>Nome:</InputTitle>
           <InputReverse disabled placeholder={userInfo.nome}/>
         </InputDiv>
@@ -121,6 +122,25 @@ const celMask = value=>{
           </InputDiv>
         
         <Button type='submit' >SALVAR</Button>
+    </>
+  )
+}
+
+  return(
+    <>
+    <Head title="Terapeutas Cannábicos - Dados do perfil" description="Descrição do dados"/>
+    <Header/>
+    <ProfileBg>
+      <TitleContainer>
+        <Title active={true}>DADOS</Title>
+        <Link to='/perfil/calendario'><Title>CALENDÁRIO</Title></Link>
+      </TitleContainer>
+      <InnerContainerBg>
+        <Return destiny='/perfil'/>
+        {
+          !userInfo || loading ?<LoadingIndicator/>:
+          <Data/>
+        }
       </InnerContainerBg>
     </ProfileBg>
     </>

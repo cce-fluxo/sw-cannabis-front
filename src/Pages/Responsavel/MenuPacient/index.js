@@ -79,51 +79,54 @@ export default function MenuPacient(){
   const [windoww,setWindoww]=useState(false)
   const fullUrl=window.location.pathname
   const id=parseInt(fullUrl.slice(23))
-  console.log(id)
-  const ctx=useContext(AuthContext)
-  const pacientArray=ctx.pacients.filter(x=>x.id===id)
-  const pacient=pacientArray[0]
-  console.log(pacient)
-  
+  const {userInfo,getPatients,onPacientRemove,onPacientUpdate}=useContext(AuthContext)
+  const [patients,setPatients]=useState([])
+  useEffect(()=>{
+    getPatients(localStorage.getItem('ID')).then(setPatients)
+    
+  },[])
+  const patientInfo=patients.find(x=>x.id===id)
+ 
 
-  const teste = () => {
+  const useAdress = () => {
     if (document.querySelector('#adress').checked){
-      dispatchCity({type:'USER_INPUT', val:ctx.userInfo.cidade})
-      dispatchEstado({type:'USER_INPUT', val:ctx.userInfo.estado})
-      dispatchCep({type:'USER_INPUT', val:ctx.userInfo.cep})
-      dispatchAdress({type:'USER_INPUT', val:ctx.userInfo.endereco})
-      dispatchComp({type:'USER_INPUT', val:ctx.userInfo.complemento})
-      dispatchNum({type:'USER_INPUT', val:(ctx.userInfo.numero).toString()})
+      dispatchCity({type:'USER_INPUT', val:userInfo.cidade})
+      dispatchEstado({type:'USER_INPUT', val:userInfo.estado})
+      dispatchCep({type:'USER_INPUT', val:userInfo.cep})
+      dispatchAdress({type:'USER_INPUT', val:userInfo.endereco})
+      dispatchComp({type:'USER_INPUT', val:userInfo.complemento})
+      dispatchNum({type:'USER_INPUT', val:(userInfo.numero).toString()})
     }
   }
 
+
   const [diagState,dispatchDiag] = useReducer(diagReducer,{
-    value:pacient.diagnostico,
+    value:patientInfo?patientInfo.diagnostico:'',
     isValid: null,
   });
 
   const [cityState,dispatchCity] = useReducer(cityReducer,{
-    value:pacient.cidade,
+    value:patientInfo?patientInfo.cidade:'',
     isValid: null,
   });
   const [estadoState,dispatchEstado] = useReducer(estadoReducer,{
-    value:pacient.estado,
+    value:patientInfo?patientInfo.estado:'',
     isValid: null,
   });
   const [cepState,dispatchCep] = useReducer(cepReducer,{
-    value:pacient.cep,
+    value:patientInfo?patientInfo.cep:'',
     isValid: null,
   });
   const [adressState,dispatchAdress] = useReducer(adressReducer,{
-    value:pacient.endereco,
+    value:patientInfo?patientInfo.endereco:'',
     isValid: null,
   });
   const [compState,dispatchComp] = useReducer(compReducer,{
-    value:pacient.complemento,
+    value:patientInfo?patientInfo.complemento:'',
     isValid: null,
   });
   const [numState,dispatchNum] = useReducer(numReducer,{
-    value:pacient.numero,
+    value:patientInfo?patientInfo.numero:'',
     isValid: null,
   });
   
@@ -137,18 +140,31 @@ export default function MenuPacient(){
   
   useEffect(() => {
     const identifier = setTimeout(() => {
-      //console.log('Checking form validity!');
+      
       setFormIsValid(
        cityIsValid && estadoIsValid && cepIsValid && numIsValid && adressIsValid && compIsValid && diagIsValid
       );
     }, 500);
 
     return () => {
-      //console.log('CLEANUP');
+   
       clearTimeout(identifier);
     };
   }, [ cityIsValid,estadoIsValid , cepIsValid , numIsValid , adressIsValid , compIsValid, diagIsValid]); 
 
+
+  useEffect(()=>{
+    if(patientInfo){
+      dispatchDiag({type:'USER_INPUT', val:patientInfo.diagnostico})
+      dispatchCity({type:'USER_INPUT', val:patientInfo.cidade});
+      dispatchEstado({type:'USER_INPUT', val:patientInfo.estado});
+      dispatchCep({type:'USER_INPUT', val:patientInfo.cep});
+      dispatchNum({type:'USER_INPUT', val:patientInfo.numero.toString()});
+      dispatchAdress({type:'USER_INPUT', val:patientInfo.endereco});
+      dispatchComp({type:'USER_INPUT', val:patientInfo.complemento});
+      
+    }
+  },[patientInfo])
 
   const diagChangeHandler = (event) => {
     dispatchDiag({type:'USER_INPUT', val:(event.target.value)});
@@ -221,7 +237,7 @@ export default function MenuPacient(){
           <ModalDiv>
             <WindowTitle>Excluir Paciente</WindowTitle>
             <WindowText>ATENÇÃO: A exclusão de paciente é permanente. Tem certeza que deseja excluir esse paciente do seu perfil?</WindowText>
-            <Link to='/perfil/pacientes' ><ButtonSmall onClick={function(){ctx.onPacientRemove(id,ctx.pacients)}} >Excluir</ButtonSmall></Link>
+            <Link to='/perfil/pacientes' ><ButtonSmall onClick={function(){onPacientRemove(id,patients)}} >Excluir</ButtonSmall></Link>
           </ModalDiv>
       </Modal>
         
@@ -233,7 +249,8 @@ export default function MenuPacient(){
     const info={diag:diagState.value,laudo:'laudo',receita:'receita',city:cityState.value,state:estadoState.value,
     cep:cepState.value,adress:adressState.value,num:numState.value, comp:compState.value
     }
-    ctx.onPacientUpdate(info,id)
+    
+    onPacientUpdate(info,id)
   }
 
   return(
@@ -256,36 +273,38 @@ export default function MenuPacient(){
         </MenuDiv>
         <InputDiv>
           <InputTitle>Nome:</InputTitle>
-          <InputReverse disabled value={pacient.nome}/>
+          <InputReverse disabled value={patientInfo?patientInfo.nome:''}/>
         </InputDiv>
         <InputDiv>
           <InputTitle>Sobrenome:</InputTitle>
-          <InputReverse disabled value={pacient.sobrenome}/>
+          <InputReverse disabled value={patientInfo?patientInfo.sobrenome:''}/>
         </InputDiv>
         <InputDiv>
           <InputTitle>Data de nascimento:</InputTitle>
-          <InputReverse disabled value={pacient.nascimento}/>
+          <InputReverse disabled value={patientInfo?patientInfo.data_nascimento:''}/>
         </InputDiv>
         <InputDiv>
           <InputTitle>CPF:</InputTitle>
-          <InputReverse disabled value={pacient.cpf}/>
+          <InputReverse disabled value={patientInfo?patientInfo.cpf:''}/>
         </InputDiv>
         
         <InputDiv>
           <InputTitle>RG:</InputTitle>
-          <InputReverse disabled value={pacient.rg}/>
+          <InputReverse disabled value={patientInfo?patientInfo.rg:''}/>
         </InputDiv>
         <h1>envio de id</h1>
         
         <InputDiv>
           <InputTitle>Diagnóstico:</InputTitle>
-          <InputReverse autoComplete='off' value={diagState.value} onChange={diagChangeHandler} onBlur={validateDiagHandler} validation={diagState.isValid}/>
+          <InputReverse autoComplete='off'  
+          value={patientInfo?diagState.value:''} onChange={diagChangeHandler} 
+          onBlur={validateDiagHandler} validation={diagState.isValid}/>
         </InputDiv>
         <h1>laudo medico</h1>
         <h1>receita</h1>
         <CheckDiv>
           <CheckTitle>Gostaria de utilizar os dados <br/>residenciais do responsável?</CheckTitle>
-          <Checkbox type='checkbox' id='adress' value='endereço' onClick={teste}/>
+          <Checkbox type='checkbox' id='adress' value='endereço' onClick={useAdress}/>
         </CheckDiv>
         <InputDiv>
             <InputTitle>Cidade:</InputTitle>
